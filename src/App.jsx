@@ -1,5 +1,5 @@
-import NavBar from "./components/NavBar/NavBar.jsx"
-import ItemListContainer from "./components/ItemListContainer/ItemListContainer.jsx"
+import NavBar from "./components/NavBar/NavBar"
+import ItemListContainer from "./components/ItemListContainer/ItemListContainer"
 
 function App() {
     const greeting = "¡Bienvenidos a la tienda de react-coderhouse!"

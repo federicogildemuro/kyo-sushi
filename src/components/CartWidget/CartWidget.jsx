@@ -8,7 +8,7 @@ function CartWidget() {
 
             <span>5</span>
         </a>
-    );
+    )
 }
 
 export default CartWidget

@@ -1,4 +1,4 @@
-import CartWidget from "../CartWidget/CartWidget.jsx";
+import CartWidget from "../CartWidget/CartWidget"
 
 function NavBar() {
     return (
@@ -47,7 +47,7 @@ function NavBar() {
                 <CartWidget />
             </div>
         </nav>
-    );
+    )
 }
 
-export default NavBar;
+export default NavBar
