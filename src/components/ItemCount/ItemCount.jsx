@@ -1,9 +1,7 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-function ItemCount() {
-    const stock = 5;
-    const initial = stock ? 1 : 0;
-    const [count, setCount] = useState(initial);
+function ItemCount({ stock }) {
+    const [count, setCount] = useState(stock ? 1 : 0);
 
     const add = () => {
         if (count < stock) {
@@ -19,10 +17,10 @@ function ItemCount() {
 
     const onAdd = () => {
         if (stock === 0) {
-            console.log('No hay stock');
+            alert('No hay stock disponible');
             return;
         }
-        console.log(`Agregaste ${count} productos al carrito`);
+        alert(`Agregaste ${count} productos al carrito`);
     }
 
     return (
