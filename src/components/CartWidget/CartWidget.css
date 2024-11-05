@@ -1,0 +1,27 @@
+.nav-link svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    fill: #ffcfcf;
+    transition: fill .5s ease;
+}
+
+.nav-link:hover svg {
+    fill: var(--bs-nav-link-hover-color);
+    transition: fill .5s ease;
+}
+
+.cart-widget-quantity {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 1.5rem;
+    right: .25rem;
+    font-size: .75rem;
+    font-weight: bold;
+    color: white;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
