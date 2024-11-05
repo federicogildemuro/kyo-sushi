@@ -1,19 +1,7 @@
-import { useState } from 'react'
+import useCount from "../../hooks/useCount"
 
 function ItemCount({ stock }) {
-    const [count, setCount] = useState(stock ? 1 : 0);
-
-    const add = () => {
-        if (count < stock) {
-            setCount(count + 1);
-        }
-    }
-
-    const substract = () => {
-        if (count > 1) {
-            setCount(count - 1);
-        }
-    }
+    const { count, increment, decrement } = useCount(stock ? 1 : 0, 1, stock);
 
     const onAdd = () => {
         if (stock === 0) {
@@ -24,12 +12,17 @@ function ItemCount({ stock }) {
     }
 
     return (
-        <>
-            <button onClick={substract}>-</button>
-            <input type="text" value={count} />
-            <button onClick={add}>+</button>
-            <button onClick={onAdd}>Agregar al carrito</button>
-        </>
+        <div className="d-flex align-items-center mt-3">
+            <button className="btn btn-outline-secondary me-2" onClick={decrement} disabled={count <= 1}>-</button>
+            <input
+                type="text"
+                className="form-control text-center"
+                value={count}
+                readOnly
+            />
+            <button className="btn btn-outline-secondary ms-2" onClick={increment} disabled={count >= stock}>+</button>
+            <button className="btn btn-primary ms-2" onClick={onAdd}>Agregar</button>
+        </div>
     )
 }
 
