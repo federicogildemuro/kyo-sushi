@@ -1,0 +1,25 @@
+.navbar-custom {
+    background-color: #f6592c;
+}
+
+.nav-link {
+    color: #ffcfcf;
+}
+
+.nav-link:hover {
+    transition: color .5s ease;
+}
+
+.dropdown-menu {
+    background-color: #ffcfcf;
+}
+
+.dropdown-item {
+    color: #f6592c;
+}
+
+.dropdown-item:hover {
+    color: #ffcfcf;
+    background-color: #f6592c;
+    transition: color .5s ease, background-color .5s ease;
+}
