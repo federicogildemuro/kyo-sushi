@@ -1,13 +1,22 @@
-import NavBar from "./components/NavBar/NavBar"
-import ItemListContainer from "./components/ItemListContainer/ItemListContainer"
+import 'normalize.css'
+import NavBar from './components/NavBar/NavBar'
+import ItemListContainer from './components/ItemListContainer/ItemListContainer'
+import Footer from './components/Footer/Footer'
 
 function App() {
-    const greeting = "¡Bienvenidos a la tienda de react-coderhouse!"
-
     return (
         <>
-            <NavBar />
-            <ItemListContainer greeting={greeting} />
+            <header>
+                <NavBar />
+            </header>
+
+            <main>
+                <ItemListContainer />
+            </main>
+
+            <footer>
+                <Footer />
+            </footer>
         </>
     )
 }
