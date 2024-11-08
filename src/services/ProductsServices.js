@@ -469,14 +469,10 @@ const getProducts = () => {
 }
 
 const getProduct = (id) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         setTimeout(() => {
             const product = products.find(product => product.id === id);
-            if (product) {
-                resolve(product);
-            } else {
-                reject('Product not found');
-            }
+            resolve(product);
         }, 2000);
     });
 }
