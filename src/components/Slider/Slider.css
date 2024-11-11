@@ -1,0 +1,25 @@
+.carousel-item {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.carousel-caption {
+    bottom: 40%;
+    left: 10%;
+    right: 10%;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.carousel-caption h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.carousel-caption p {
+    font-size: 1.2rem;
+}
