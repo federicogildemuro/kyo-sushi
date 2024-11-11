@@ -6,10 +6,11 @@ import Spinner from '../Spinner/Spinner'
 import ItemList from '../ItemList/ItemList'
 
 function ItemListContainer() {
-    const [h1, setH1] = useState('Bienvenidos a Kyo Sushi');
+    const defaultH1 = 'Nuestros productos';
+    const [h1, setH1] = useState(defaultH1);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { id: category } = useParams();
+    const { category } = useParams();
 
     const fetchItems = async () => {
         try {
@@ -39,7 +40,7 @@ function ItemListContainer() {
         } else {
             setLoading(true);
             fetchItems();
-            setH1('Bienvenidos a Kyo Sushi');
+            setH1(defaultH1);
         }
     }, [category]);
 

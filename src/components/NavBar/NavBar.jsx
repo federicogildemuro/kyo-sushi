@@ -37,12 +37,16 @@ function NavBar() {
                         </li>
 
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menú</a>
+                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
 
                             <ul className="dropdown-menu">
+                                <li>
+                                    <Link className="dropdown-item" to="/tienda">Todos</Link>
+                                </li>
+
                                 {categories.map(category => (
                                     <li key={category}>
-                                        <NavLink className="dropdown-item" to={`/category/${category}`}>{category}</NavLink>
+                                        <NavLink className="dropdown-item" to={`/tienda/${category}`}>{category}</NavLink>
                                     </li>
                                 ))}
                             </ul>
