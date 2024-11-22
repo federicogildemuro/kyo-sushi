@@ -1,6 +1,6 @@
-import './CartWidget.css'
-import { Link } from 'react-router-dom'
-import useCart from '../../hooks/useCart'
+import './CartWidget.css';
+import { Link } from 'react-router-dom';
+import useCart from '../../hooks/useCart';
 
 function CartWidget() {
     const { cart } = useCart();
@@ -20,4 +20,4 @@ function CartWidget() {
     )
 }
 
-export default CartWidget
+export default CartWidget;

@@ -1,6 +1,14 @@
-import ItemCount from '../ItemCount/ItemCount'
+import useCart from '../../hooks/useCart';
+import ItemCount from '../ItemCount/ItemCount';
 
 function ItemDetail({ item }) {
+    const { addItem } = useCart();
+
+    const onAddToCart = (quantity) => {
+        addItem({ ...item, quantity });
+        alert(`Agregaste ${quantity} productos al carrito`);
+    };
+
     return (
         <div className="container mt-5">
             <div className="card h-100">
@@ -22,7 +30,21 @@ function ItemDetail({ item }) {
                                 <small className="text-muted">{item.stock} unidades en stock</small>
                             </p>
                             <div className="mt-auto">
-                                <ItemCount stock={item.stock} />
+                                <ItemCount stock={item.stock} onAddToCart={onAddToCart} />
+                            </div>
+                            <div className="d-flex justify-content-between mt-4">
+                                <button
+                                    className="btn btn-outline-secondary rounded px-4"
+                                    onClick={() => window.history.back()}
+                                >
+                                    ← Volver
+                                </button>
+                                <button
+                                    className="btn btn-primary rounded px-4"
+                                    onClick={() => (window.location.href = '/cart')}
+                                >
+                                    Ir al carrito →
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -32,4 +54,4 @@ function ItemDetail({ item }) {
     );
 }
 
-export default ItemDetail
+export default ItemDetail;
