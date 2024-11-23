@@ -5,20 +5,13 @@ const CartContext = createContext();
 
 function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     const fetchCart = useCallback(async () => {
-        setLoading(true);
-        setError(null);
         try {
             const cart = await getCart();
             setCart(cart);
         } catch (error) {
             console.error(error);
-            setError('Error al cargar el carrito');
-        } finally {
-            setLoading(false);
         }
     }, []);
 
@@ -66,14 +59,17 @@ function CartProvider({ children }) {
         }
     }, []);
 
+    const totalPrice = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
+
     const obj = {
         cart,
-        loading,
-        error,
         addItem,
         updateItem,
         removeItem,
         emptyCart,
+        totalPrice
     };
 
     return <CartContext.Provider value={obj}>{children}</CartContext.Provider>;

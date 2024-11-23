@@ -2,7 +2,7 @@ import useCart from '../../hooks/useCart';
 import ItemCount from '../ItemCount/ItemCount';
 
 function ItemDetail({ item }) {
-    const { addItem } = useCart();
+    const { cart, addItem } = useCart();
 
     const onAddToCart = (quantity) => {
         addItem({ ...item, quantity });
@@ -27,7 +27,10 @@ function ItemDetail({ item }) {
                             <p className="card-text">{item.description}</p>
                             <h3 className="card-text">€{item.price}</h3>
                             <p className="card-text">
-                                <small className="text-muted">{item.stock} unidades en stock</small>
+                                {item.stock > 0
+                                    ? (<small className="text-muted">{item.stock} unidades en stock</small>)
+                                    : (<small className="text-danger">Producto no disponible</small>)
+                                }
                             </p>
                             <div className="mt-auto">
                                 <ItemCount stock={item.stock} onAddToCart={onAddToCart} />
@@ -39,12 +42,15 @@ function ItemDetail({ item }) {
                                 >
                                     ← Volver
                                 </button>
-                                <button
-                                    className="btn btn-primary rounded px-4"
-                                    onClick={() => (window.location.href = '/cart')}
-                                >
-                                    Ir al carrito →
-                                </button>
+
+                                {cart && cart.length > 0 && (
+                                    <button
+                                        className="btn btn-primary rounded px-4"
+                                        onClick={() => (window.location.href = '/cart')}
+                                    >
+                                        Comprar →
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
