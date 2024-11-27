@@ -1,9 +1,9 @@
-import './ItemListContainer.css'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { getProducts, getProductsByCategory } from '../../services/ProductsServices'
-import Spinner from '../Spinner/Spinner'
-import ItemList from '../ItemList/ItemList'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchProducts, fetchProductsByCategory } from '../../services/ProductsServices';
+import Spinner from '../Spinner/Spinner';
+import ItemList from '../ItemList/ItemList';
+import './ItemListContainer.css';
 
 function ItemListContainer() {
     const defaultH1 = 'Nuestros productos';
@@ -14,7 +14,7 @@ function ItemListContainer() {
 
     const fetchItems = async () => {
         try {
-            const data = await getProducts();
+            const data = await fetchProducts();
             setItems(data);
             setLoading(false);
         } catch (error) {
@@ -24,7 +24,7 @@ function ItemListContainer() {
 
     const fetchItemsByCategory = async () => {
         try {
-            const data = await getProductsByCategory(category);
+            const data = await fetchProductsByCategory(category);
             setItems(data);
             setLoading(false);
         } catch (error) {
@@ -55,6 +55,6 @@ function ItemListContainer() {
             {!loading && items.length === 0 && <p>No hay productos disponibles</p>}
         </>
     );
-}
+};
 
-export default ItemListContainer
+export default ItemListContainer;

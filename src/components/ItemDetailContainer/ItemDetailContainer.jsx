@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProduct } from '../../services/ProductsServices'
-import Spinner from '../Spinner/Spinner'
-import ItemDetail from '../ItemDetail/ItemDetail'
+import { fetchProductById } from '../../services/ProductsServices';
+import Spinner from '../Spinner/Spinner';
+import ItemDetail from '../ItemDetail/ItemDetail';
 
 function ItemDetailContainer() {
     const { id } = useParams();
@@ -11,7 +11,7 @@ function ItemDetailContainer() {
 
     const fetchItem = async (id) => {
         try {
-            const data = await getProduct(id);
+            const data = await fetchProductById(id);
             setItem(data);
             setLoading(false);
         } catch (error) {
@@ -32,7 +32,7 @@ function ItemDetailContainer() {
 
             {!loading && !item && <p>No se encontró el producto</p>}
         </>
-    )
-}
+    );
+};
 
-export default ItemDetailContainer
+export default ItemDetailContainer;
