@@ -1,64 +1,38 @@
-let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-const saveCart = () => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-};
+const saveCart = () => localStorage.setItem('cart', JSON.stringify(cart));
 
-const getCart = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve([...cart]);
-        }, 2000);
-    });
-};
+const getCart = () => [...cart];
 
 const addToCart = (item) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const index = cart.findIndex((product) => product.id === item.id);
-            if (index === -1) {
-                cart = [...cart, item];
-            } else {
-                cart = cart.map((product, i) =>
-                    i === index ? { ...product, quantity: product.quantity + item.quantity } : product
-                );
-            }
-            saveCart();
-            resolve([...cart]);
-        }, 2000);
-    });
+    const index = cart.findIndex((product) => product.id === item.id);
+    if (index === -1) {
+        cart.push(item);
+    } else {
+        cart[index].quantity += item.quantity;
+    }
+    saveCart();
+    return getCart();
 };
 
 const removeFromCart = (id) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            cart = cart.filter((item) => item.id !== id);
-            saveCart();
-            resolve([...cart]);
-        }, 2000);
-    });
+    cart = cart.filter((item) => item.id !== id);
+    saveCart();
+    return getCart();
 };
 
 const updateQuantity = (id, quantity) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            cart = cart.map((item) =>
-                item.id === id ? { ...item, quantity } : item
-            );
-            saveCart();
-            resolve([...cart]);
-        }, 2000);
-    });
+    cart = cart.map((item) =>
+        item.id === id ? { ...item, quantity } : item
+    );
+    saveCart();
+    return getCart();
 };
 
 const clearCart = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            cart = [];
-            saveCart();
-            resolve([...cart]);
-        }, 2000);
-    });
+    cart = [];
+    saveCart();
+    return getCart();
 };
 
 export { getCart, addToCart, removeFromCart, updateQuantity, clearCart };
