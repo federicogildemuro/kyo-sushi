@@ -1,58 +1,27 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProducts, fetchProductsByCategory } from '../../services/ProductsServices';
+import useAsync from '../../hooks/useAsync';
+import { fetchProducts } from '../../services/ProductsServices';
 import Spinner from '../Spinner/Spinner';
 import ItemList from '../ItemList/ItemList';
 import './ItemListContainer.css';
 
 function ItemListContainer() {
-    const defaultH1 = 'Nuestros productos';
-    const [h1, setH1] = useState(defaultH1);
-    const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState(true);
     const { category } = useParams();
+    const { data, loading, error } = useAsync(() => fetchProducts(category), [category]);
 
-    const fetchItems = async () => {
-        try {
-            const data = await fetchProducts();
-            setItems(data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    if (loading) return <Spinner />;
 
-    const fetchItemsByCategory = async () => {
-        try {
-            const data = await fetchProductsByCategory(category);
-            setItems(data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    if (error) return <p>Error al cargar los productos</p>;
 
-    useEffect(() => {
-        if (category) {
-            setLoading(true);
-            fetchItemsByCategory();
-            setH1(`${category}`);
-        } else {
-            setLoading(true);
-            fetchItems();
-            setH1(defaultH1);
-        }
-    }, [category]);
+    if (!data) return <p>No hay productos disponibles</p>;
 
     return (
         <>
-            <h1>{h1}</h1>
-
-            {loading && <Spinner />}
-
-            {!loading && items.length > 0 && <ItemList items={items} />}
-
-            {!loading && items.length === 0 && <p>No hay productos disponibles</p>}
+            {category
+                ? <h1>{category}</h1>
+                : <h1>Nuestros productos</h1>
+            }
+            <ItemList items={data} />;
         </>
     );
 };

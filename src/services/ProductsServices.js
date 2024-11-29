@@ -1,8 +1,13 @@
 import { db } from './FirebaseServices';
 import { getDocs, collection, doc, getDoc, query, where } from 'firebase/firestore';
 
-const fetchProducts = async () => {
+const fetchProducts = async (category) => {
     try {
+        if (category) {
+            const q = query(collection(db, 'products'), where('category', '==', category));
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        }
         const querySnapshot = await getDocs(collection(db, 'products'));
         return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
@@ -27,15 +32,4 @@ const fetchProductById = async (id) => {
     }
 };
 
-const fetchProductsByCategory = async (category) => {
-    try {
-        const q = query(collection(db, 'products'), where('category', '==', category));
-        const querySnapshot = await getDocs(q);
-        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    } catch (error) {
-        console.error(`Error fetching products by category "${category}":`, error);
-        throw error;
-    }
-};
-
-export { fetchProducts, fetchProductById, fetchProductsByCategory };
+export { fetchProducts, fetchProductById };

@@ -1,38 +1,20 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../../services/ProductsServices';
+import useAsync from '../../hooks/useAsync';
 import Spinner from '../Spinner/Spinner';
 import ItemDetail from '../ItemDetail/ItemDetail';
 
 function ItemDetailContainer() {
     const { id } = useParams();
-    const [item, setItem] = useState({});
-    const [loading, setLoading] = useState(true);
+    const { data, loading, error } = useAsync(() => fetchProductById(id), [id]);
 
-    const fetchItem = async (id) => {
-        try {
-            const data = await fetchProductById(id);
-            setItem(data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    if (loading) return <Spinner />;
 
-    useEffect(() => {
-        setLoading(true);
-        fetchItem(id);
-    }, [id]);
+    if (error) return <p>Error al cargar el producto</p>;
 
-    return (
-        <>
-            {loading && <Spinner />}
+    if (!data) return <p>Producto no encontrado</p>;
 
-            {!loading && item && <ItemDetail item={item} />}
-
-            {!loading && !item && <p>No se encontró el producto</p>}
-        </>
-    );
-};
+    return <ItemDetail item={data} />;
+}
 
 export default ItemDetailContainer;

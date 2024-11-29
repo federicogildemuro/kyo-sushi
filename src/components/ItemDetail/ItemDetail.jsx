@@ -5,7 +5,7 @@ function ItemDetail({ item }) {
     const { cart, addItem } = useCart();
 
     const onAddToCart = (quantity) => {
-        addItem({ ...item, quantity });
+        addItem({ id: item.id, title: item.title, price: item.price, quantity });
         alert(`Agregaste ${quantity} productos al carrito`);
     };
 
