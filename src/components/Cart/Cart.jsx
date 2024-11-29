@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 import useCart from '../../hooks/useCart';
+import CartItem from '../CartItem/CartItem';
 
 function Cart() {
-    const { cart, removeItem, emptyCart, totalPrice } = useCart();
+    const { cart, emptyCart, totalPrice } = useCart();
 
     return (
         <div className="container mt-4">
             <h1 className="mb-4">Tu Carrito</h1>
-            {cart.length === 0 ? (
-                <div className="text-center">
+            {cart.length === 0
+                ?
+                (<div className="text-center">
                     <p>No hay ítems en tu carrito.</p>
-                    <Link to="/" className="btn btn-primary">
-                        Volver a la tienda
-                    </Link>
-                </div>
-            ) : (
-                <div>
+                    <Link to="/" className="btn btn-primary">Volver a la tienda</Link>
+                </div>)
+                :
+                (<div>
                     <table className="table">
                         <thead>
                             <tr>
@@ -28,20 +28,7 @@ function Cart() {
                         </thead>
                         <tbody>
                             {cart.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.title}</td>
-                                    <td>{item.quantity}</td>
-                                    <td>${item.price.toFixed(2)}</td>
-                                    <td>${(item.price * item.quantity).toFixed(2)}</td>
-                                    <td>
-                                        <button
-                                            className="btn btn-danger btn-sm"
-                                            onClick={() => removeItem(item.id)}
-                                        >
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
+                                <CartItem key={item.id} item={item} />
                             ))}
                         </tbody>
                     </table>
@@ -51,14 +38,12 @@ function Cart() {
                             <button className="btn btn-secondary me-2" onClick={emptyCart}>
                                 Vaciar Carrito
                             </button>
-
                             <Link to="/checkout" className="btn btn-success">Finalizar Compra</Link>
-
                             <Link to="/tienda" className="btn btn-primary ms-2">Seguir comprando</Link>
                         </div>
                     </div>
-                </div>
-            )}
+                </div>)
+            }
         </div>
     );
 };
