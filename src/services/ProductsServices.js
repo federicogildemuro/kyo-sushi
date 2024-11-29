@@ -1,15 +1,18 @@
 import { db } from './FirebaseServices';
 import { getDocs, collection, doc, getDoc, query, where } from 'firebase/firestore';
+import createProductAdapterFromFirebase from '../adapters/ProductAdapter';
 
 const fetchProducts = async (category) => {
     try {
         if (category) {
             const q = query(collection(db, 'products'), where('category', '==', category));
             const querySnapshot = await getDocs(q);
-            return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const products = querySnapshot.docs.map(doc => createProductAdapterFromFirebase(doc));
+            return products;
         }
         const querySnapshot = await getDocs(collection(db, 'products'));
-        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const products = querySnapshot.docs.map(doc => createProductAdapterFromFirebase(doc));
+        return products;
     } catch (error) {
         console.error('Error fetching products:', error);
         throw error;
@@ -25,7 +28,8 @@ const fetchProductById = async (id) => {
             throw new Error(`Product with id "${id}" not found.`);
         }
 
-        return { id: docSnap.id, ...docSnap.data() };
+        const product = createProductAdapterFromFirebase(docSnap);
+        return product;
     } catch (error) {
         console.error(`Error fetching product by id "${id}":`, error);
         throw error;
