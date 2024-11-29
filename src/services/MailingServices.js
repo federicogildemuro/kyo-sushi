@@ -3,10 +3,10 @@ import emailjs from '@emailjs/browser';
 const sendEmail = async (form) => {
     try {
         const result = await emailjs.sendForm(
-            'service_sxmc1we',
-            'template_5w4lzbf',
+            import.meta.env.VITE_EMAILJS_SERVICE_ID,
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
             form,
-            'FT5xKsccS4HGg3pNV'
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         );
         return { success: true, result };
     } catch (error) {
