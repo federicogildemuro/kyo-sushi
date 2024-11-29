@@ -51,10 +51,10 @@ function Cart() {
                             <button className="btn btn-secondary me-2" onClick={emptyCart}>
                                 Vaciar Carrito
                             </button>
-                            <button className="btn btn-success">Finalizar Compra</button>
-                            <Link to="/tienda" className="btn btn-primary ms-2">
-                                Seguir comprando
-                            </Link>
+
+                            <Link to="/checkout" className="btn btn-success">Finalizar Compra</Link>
+
+                            <Link to="/tienda" className="btn btn-primary ms-2">Seguir comprando</Link>
                         </div>
                     </div>
                 </div>
