@@ -1,6 +1,6 @@
-import { db } from './FirebaseServices';
-import { getDocs, collection, doc, getDoc, query, where } from 'firebase/firestore';
-import createProductAdapterFromFirebase from '../adapters/ProductAdapter';
+import { db } from "./FirebaseServices";
+import { getDocs, collection, doc, getDoc, query, where } from "firebase/firestore";
+import createProductAdapterFromFirebase from "../adapters/ProductAdapter";
 
 const fetchProducts = async (category) => {
     try {
@@ -25,7 +25,7 @@ const fetchProductById = async (id) => {
         const docSnap = await getDoc(docRef);
 
         if (!docSnap.exists()) {
-            throw new Error(`Product with id "${id}" not found.`);
+            return null;
         }
 
         const product = createProductAdapterFromFirebase(docSnap);
