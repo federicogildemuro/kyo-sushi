@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
-import useCart from '../../hooks/useCart';
-import CartItem from '../CartItem/CartItem';
+import { Link } from "react-router-dom";
+import useCart from "../../hooks/useCart";
+import CartItem from "../CartItem/CartItem";
 
 function Cart() {
-    const { cart, emptyCart, totalPrice } = useCart();
+    const { cart, clearCart, totalPrice } = useCart();
 
     return (
         <div className="container mt-4">
@@ -35,7 +35,7 @@ function Cart() {
                     <div className="d-flex justify-content-between align-items-center mt-4">
                         <h3>Total: ${totalPrice().toFixed(2)}</h3>
                         <div>
-                            <button className="btn btn-secondary me-2" onClick={emptyCart}>
+                            <button className="btn btn-secondary me-2" onClick={clearCart}>
                                 Vaciar Carrito
                             </button>
                             <Link to="/checkout" className="btn btn-success">Finalizar Compra</Link>

@@ -1,14 +1,14 @@
-import { createContext, useEffect, useState, useCallback } from 'react';
-import { getCart, addToCart, updateQuantity, removeFromCart, clearCart } from '../services/CartsServices';
+import { createContext, useEffect, useState, useCallback } from "react";
+import { getCart, isItemInCart, addItemToCart, removeItemFromCart, calculateCartTotal, clearCartItems } from "../services/CartsServices";
 
 const CartContext = createContext();
 
 function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
 
-    const fetchCart = useCallback(async () => {
+    const fetchCart = useCallback(() => {
         try {
-            const cart = await getCart();
+            const cart = getCart();
             setCart(cart);
         } catch (error) {
             console.error(error);
@@ -19,40 +19,27 @@ function CartProvider({ children }) {
         fetchCart();
     }, [fetchCart]);
 
-    const addItem = useCallback(async (item) => {
+    const isInCart = useCallback((id) => {
+        return isItemInCart(id);
+    }, []);
+
+
+    const addCartItem = useCallback((item) => {
         if (!item || !item.id || !item.quantity) {
             console.error('Datos inválidos para añadir al carrito');
             return;
         }
         try {
-            const newCart = await addToCart(item);
+            const newCart = addItemToCart(item);
             setCart(newCart);
         } catch (error) {
             console.error(error);
         }
     }, []);
 
-    const updateItem = useCallback(async (id, quantity) => {
+    const removeCartItem = useCallback((id) => {
         try {
-            const newCart = await updateQuantity(id, quantity);
-            setCart(newCart);
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
-
-    const removeItem = useCallback(async (id) => {
-        try {
-            const newCart = await removeFromCart(id);
-            setCart(newCart);
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
-
-    const emptyCart = useCallback(async () => {
-        try {
-            const newCart = await clearCart();
+            const newCart = removeItemFromCart(id);
             setCart(newCart);
         } catch (error) {
             console.error(error);
@@ -60,15 +47,24 @@ function CartProvider({ children }) {
     }, []);
 
     const totalPrice = () => {
-        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        return calculateCartTotal();
     };
+
+    const clearCart = useCallback(() => {
+        try {
+            const newCart = clearCartItems();
+            setCart(newCart);
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
 
     const obj = {
         cart,
-        addItem,
-        updateItem,
-        removeItem,
-        emptyCart,
+        isInCart,
+        addCartItem,
+        removeCartItem,
+        clearCart,
         totalPrice
     };
 

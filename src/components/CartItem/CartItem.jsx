@@ -1,7 +1,7 @@
-import useCart from '../../hooks/useCart';
+import useCart from "../../hooks/useCart";
 
 function CartItem({ item }) {
-    const { removeItem } = useCart();
+    const { removeCartItem } = useCart();
 
     return (
         <tr key={item.id}>
@@ -12,7 +12,7 @@ function CartItem({ item }) {
             <td>
                 <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeCartItem(item.id)}
                 >
                     Eliminar
                 </button>

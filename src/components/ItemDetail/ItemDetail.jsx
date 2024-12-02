@@ -1,12 +1,11 @@
-import useCart from '../../hooks/useCart';
-import ItemCount from '../ItemCount/ItemCount';
+import useCart from "../../hooks/useCart";
+import ItemCount from "../ItemCount/ItemCount";
 
 function ItemDetail({ item }) {
-    const { cart, addItem } = useCart();
+    const { cart, addCartItem } = useCart();
 
     const onAddToCart = (quantity) => {
-        addItem({ id: item.id, title: item.title, price: item.price, quantity });
-        alert(`Agregaste ${quantity} productos al carrito`);
+        addCartItem({ ...item, quantity });
     };
 
     return (

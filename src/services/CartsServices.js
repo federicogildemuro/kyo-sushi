@@ -1,38 +1,47 @@
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const getCart = () => {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    return [...cart];
+};
 
-const saveCart = () => localStorage.setItem('cart', JSON.stringify(cart));
+const saveCart = (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+};
 
-const getCart = () => [...cart];
+const isItemInCart = (id) => {
+    const cart = getCart();
+    return cart.some((item) => item.id === id);
+};
 
-const addToCart = (item) => {
-    const index = cart.findIndex((product) => product.id === item.id);
-    if (index === -1) {
-        cart.push(item);
+const addItemToCart = (item) => {
+    let cart = getCart();
+    if (isItemInCart(item.id)) {
+        cart = cart.map((existingItem) =>
+            existingItem.id === item.id
+                ? { ...existingItem, quantity: existingItem.quantity + item.quantity }
+                : existingItem
+        );
     } else {
-        cart[index].quantity += item.quantity;
+        cart.push(item);
     }
-    saveCart();
+    saveCart(cart);
     return getCart();
 };
 
-const removeFromCart = (id) => {
+const removeItemFromCart = (id) => {
+    let cart = getCart();
     cart = cart.filter((item) => item.id !== id);
-    saveCart();
+    saveCart(cart);
     return getCart();
 };
 
-const updateQuantity = (id, quantity) => {
-    cart = cart.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-    );
-    saveCart();
+const calculateCartTotal = () => {
+    const cart = getCart();
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+};
+
+const clearCartItems = () => {
+    saveCart([]);
     return getCart();
 };
 
-const clearCart = () => {
-    cart = [];
-    saveCart();
-    return getCart();
-};
-
-export { getCart, addToCart, removeFromCart, updateQuantity, clearCart };
+export { getCart, isItemInCart, addItemToCart, removeItemFromCart, calculateCartTotal, clearCartItems };
