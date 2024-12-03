@@ -1,10 +1,11 @@
-import { createContext, useEffect, useState, useCallback } from "react";
-import { getCart, isItemInCart, addItemToCart, removeItemFromCart, calculateCartTotal, clearCartItems } from "../services/CartsServices";
+import { createContext, useEffect, useState, useCallback } from 'react'
+import { getCart, isItemInCart, addItemToCart, removeItemFromCart, calculateCartTotal, clearCartItems } from '../services/CartsServices'
 
 const CartContext = createContext();
 
 function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
+    const cartQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     const fetchCart = useCallback(() => {
         try {
@@ -22,7 +23,6 @@ function CartProvider({ children }) {
     const isInCart = useCallback((id) => {
         return isItemInCart(id);
     }, []);
-
 
     const addCartItem = useCallback((item) => {
         if (!item || !item.id || !item.quantity) {
@@ -46,6 +46,7 @@ function CartProvider({ children }) {
         }
     }, []);
 
+
     const totalPrice = () => {
         return calculateCartTotal();
     };
@@ -61,14 +62,15 @@ function CartProvider({ children }) {
 
     const obj = {
         cart,
+        cartQuantity,
         isInCart,
         addCartItem,
         removeCartItem,
-        clearCart,
-        totalPrice
+        totalPrice,
+        clearCart
     };
 
-    return <CartContext.Provider value={obj}>{children}</CartContext.Provider>;
+    return <CartContext.Provider value={obj}>{children}</CartContext.Provider>
 }
 
-export { CartProvider, CartContext };
+export { CartProvider, CartContext }

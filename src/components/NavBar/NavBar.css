@@ -3,6 +3,10 @@
     height: 20vh;
 }
 
+.navbar-collapse {
+    background-color: #f6592c;
+}
+
 .nav-link {
     color: #ffcfcf;
 }
