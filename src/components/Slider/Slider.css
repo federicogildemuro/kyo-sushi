@@ -1,25 +1,25 @@
-.carousel-item {
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+.slider-container {
+    background-color: var(--primary-color);
 }
 
-.carousel-caption {
-    bottom: 40%;
-    left: 10%;
-    right: 10%;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 1rem;
-    border-radius: 8px;
-    text-align: left;
+.slider-title-container {
+    height: 20vh;
 }
 
-.carousel-caption h2 {
-    font-size: 2rem;
-    font-weight: bold;
+.slider-title {
+    color: var(--secondary-color);
 }
 
-.carousel-caption p {
-    font-size: 1.2rem;
+.custom-carousel-item {
+    height: 80vh;
+}
+
+.custom-carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.custom-carousel-caption {
+    color: var(--primary-color);
 }
