@@ -1,17 +1,17 @@
 .custom-footer {
-    color: #fff;
-    background-color: #533786;
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
 }
 
 .footer-link {
-    color: #fff;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
 .footer-link:hover {
-    color: #a6b4fe;
+    color: var(--secondary-color);
 }
 
 .footer-link:hover svg {
-    fill: #a6b4fe;
+    fill: var(--secondary-color);
 }

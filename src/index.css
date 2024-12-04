@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap&family=Raleway:wght@600');
 
+:root {
+    --primary-color: #ffcfcf;
+    --secondary-color: #f6592c;
+    --tertiary-color: #533786;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
 }

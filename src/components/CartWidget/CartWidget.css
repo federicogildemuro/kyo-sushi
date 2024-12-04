@@ -1,12 +1,12 @@
 .nav-link svg {
     width: 2.5rem;
     height: 2.5rem;
-    fill: #ffcfcf;
+    fill: var(--primary-color);
     transition: fill .5s ease;
 }
 
 .nav-link:hover svg {
-    fill: var(--bs-nav-link-hover-color);
+    fill: var(--tertiary-color);
     transition: fill .5s ease;
 }
 
