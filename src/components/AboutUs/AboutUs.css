@@ -1,0 +1,9 @@
+.about-us-container {
+    background-color: var(--primary-color);
+    color: var(--tertiary-color);
+    min-height: 80vh;
+}
+
+p {
+    line-height: 2rem;
+}
