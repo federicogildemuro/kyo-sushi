@@ -37,31 +37,37 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/">Inicio</NavLink>
+                            <NavLink className="nav-link" to="/" activeClassName="active">Inicio</NavLink>
                         </li>
 
                         <li>
-                            <NavLink className="nav-link" to="/about-us">Sobre nosotros</NavLink>
+                            <NavLink className="nav-link" to="/about-us" activeClassName="active">Sobre nosotros</NavLink>
                         </li>
 
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
+                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menú</a>
 
                             <ul className="dropdown-menu">
                                 {categories.map((category) => (
                                     <li key={category}>
-                                        <NavLink className="dropdown-item" to={`/tienda/${category}`}>{category}</NavLink>
+                                        <NavLink className="dropdown-item" to={`/tienda/${category}`} activeClassName="active">{category}</NavLink>
                                     </li>
                                 ))}
+
+                                <li><hr className="dropdown-divider" /></li>
+
+                                <li key="all">
+                                    <NavLink className="dropdown-item" to={`/tienda`} activeClassName="active">Todos</NavLink>
+                                </li>
                             </ul>
                         </li>
 
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/contact">Contacto</NavLink>
+                            <NavLink className="nav-link" to="/contact" activeClassName="active">Contacto</NavLink>
                         </li>
                     </ul>
 
-                    <div className="ms-auto d-flex align-items-center">
+                    <div className="ms-auto d-flex justify-content-center align-items-center flex-lg-row flex-column">
                         <CartWidget />
                     </div>
                 </div>
