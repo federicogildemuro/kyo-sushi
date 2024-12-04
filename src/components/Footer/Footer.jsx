@@ -9,13 +9,25 @@ function Footer() {
         { to: '/contact', label: 'Contacto' },
     ];
 
+    const handleScrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
+
     return (
         <footer className="custom-footer py-4">
             <div className="container">
                 <div className="row text-center text-md-start">
                     <div className="col-md-4 mb-3">
                         {links.map((link, index) => (
-                            <Link key={index} to={link.to} className="footer-link d-block">
+                            <Link
+                                key={index}
+                                to={link.to}
+                                className="footer-link d-block"
+                                onClick={handleScrollToTop}
+                            >
                                 {link.label}
                             </Link>
                         ))}
@@ -27,7 +39,9 @@ function Footer() {
                             <Link
                                 to="#"
                                 className="footer-link me-md-3 mb-2 mb-md-0"
-                                aria-label="Facebook">
+                                aria-label="Facebook"
+                                onClick={handleScrollToTop}
+                            >
                                 <FacebookIcon /> Facebook
                             </Link>
                             <Link
@@ -35,7 +49,9 @@ function Footer() {
                                 className="footer-link mb-2 mb-md-0"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label="Instagram">
+                                aria-label="Instagram"
+                                onClick={handleScrollToTop}
+                            >
                                 <InstagramIcon /> Instagram
                             </Link>
                         </div>
