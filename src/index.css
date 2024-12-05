@@ -18,3 +18,14 @@ h5,
 h6 {
     font-family: 'Raleway', sans-serif;
 }
+
+.custom-btn {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.custom-btn:hover {
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    transition: color .5s ease, background-color .5s ease;
+}
