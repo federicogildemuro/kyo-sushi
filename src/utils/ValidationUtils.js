@@ -1,4 +1,4 @@
-export function validateField(name, value, formData) {
+const validateField = (name, value, formData) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const errors = {
@@ -21,14 +21,16 @@ export function validateField(name, value, formData) {
     return errors[name] || "";
 }
 
-export function validateForm(formData) {
+const validateForm = (formData) => {
     const errors = {};
+
     Object.keys(formData).forEach((field) => {
         errors[field] = validateField(field, formData[field], formData);
     });
+
     return errors;
 }
 
-export function isFormValid(errors) {
-    return Object.values(errors).every((error) => !error);
-}
+const isFormValid = (errors) => Object.values(errors).every((error) => !error);
+
+export { validateField, validateForm, isFormValid }
