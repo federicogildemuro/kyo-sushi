@@ -1,4 +1,5 @@
 import useCart from '../../hooks/useCart'
+import './CartItem.css'
 
 function CartItem({ item }) {
     const { removeCartItem } = useCart();
