@@ -5,6 +5,7 @@ const CartContext = createContext();
 
 function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
+
     const cartQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     const fetchCart = useCallback(() => {
