@@ -41,9 +41,9 @@ function Contact() {
     };
 
     return (
-        <section className="contact-container d-flex flex-column">
+        <section className="custom-container d-flex flex-column">
             <div className="container mb3">
-                <h1 className="display-6 fw-bold mb-3">Contáctanos</h1>
+                <h1 className="display-6 fw-bold mb-3 text-center">Contáctanos</h1>
                 <form ref={form} onSubmit={handleSubmit} noValidate className="mx-auto col-12 col-lg-6">
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label mb-3">

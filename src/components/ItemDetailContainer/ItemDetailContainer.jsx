@@ -10,7 +10,7 @@ function ItemDetailContainer() {
     const { data, loading } = useAsync(() => fetchProductById(id), [id]);
 
     return (
-        <section className="item-detail-container d-flex flex-column text-center">
+        <section className="custom-container d-flex flex-column text-center">
             {loading ? (
                 <Spinner />
             ) : data ? (
