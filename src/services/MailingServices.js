@@ -1,6 +1,6 @@
-import emailjs from '@emailjs/browser';
+import emailjs from '@emailjs/browser'
 
-const sendEmail = async (form) => {
+const sendContactEmail = async (form) => {
     try {
         const result = await emailjs.sendForm(
             import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -10,9 +10,8 @@ const sendEmail = async (form) => {
         );
         return { success: true, result };
     } catch (error) {
-        console.error("Error al enviar el correo:", error);
         return { success: false, error };
     }
-};
+}
 
-export default sendEmail;
+export { sendContactEmail }
