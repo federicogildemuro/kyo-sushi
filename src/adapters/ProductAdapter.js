@@ -1,4 +1,4 @@
-function createProductAdapterFromFirebase(doc) {
+export const createProductAdapterFromFirebase = (doc) => {
     const data = doc.data();
     return {
         id: doc.id,
@@ -8,7 +8,5 @@ function createProductAdapterFromFirebase(doc) {
         price: data.price,
         stock: data.stock,
         pictureUrl: data.pictureUrl
-    };
+    }
 }
-
-export default createProductAdapterFromFirebase;
