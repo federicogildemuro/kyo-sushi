@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FacebookIcon, InstagramIcon } from './SocialIcons'
+import { scrollToTop } from '../../utils/ScrollUtils'
 import './Footer.css'
 
 function Footer() {
@@ -8,13 +9,6 @@ function Footer() {
         { to: '/about-us', label: 'Sobre nosotros' },
         { to: '/contact', label: 'Contacto' },
     ];
-
-    const handleScrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
-    };
 
     return (
         <footer className="custom-footer py-4">
@@ -26,7 +20,7 @@ function Footer() {
                                 key={index}
                                 to={link.to}
                                 className="footer-link d-block"
-                                onClick={handleScrollToTop}
+                                onClick={scrollToTop}
                             >
                                 {link.label}
                             </Link>
@@ -40,7 +34,7 @@ function Footer() {
                                 to="#"
                                 className="footer-link me-md-3 mb-2 mb-md-0"
                                 aria-label="Facebook"
-                                onClick={handleScrollToTop}
+                                onClick={scrollToTop}
                             >
                                 <FacebookIcon /> Facebook
                             </Link>
@@ -50,7 +44,7 @@ function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Instagram"
-                                onClick={handleScrollToTop}
+                                onClick={scrollToTop}
                             >
                                 <InstagramIcon /> Instagram
                             </Link>
