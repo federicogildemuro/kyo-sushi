@@ -6,9 +6,8 @@ function useCount(initial = 0, min = 0, max = Infinity) {
 
     const increment = () => setCount((prevCount) => Math.min(prevCount + 1, max));
     const decrement = () => setCount((prevCount) => Math.max(prevCount - 1, min));
-    const reset = () => setCount(validInitial);
 
-    return { count, increment, decrement, reset };
+    return { count, increment, decrement };
 }
 
 export default useCount
