@@ -1,3 +1,6 @@
-li * {
-    text-align: center;
+.item-container {
+    background-color: var(--primary-color);
+    color: var(--tertiary-color);
+    border: .1rem solid var(--tertiary-color);
+    border-radius: .5rem;
 }
