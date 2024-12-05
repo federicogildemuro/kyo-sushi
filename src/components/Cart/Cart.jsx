@@ -7,7 +7,7 @@ function Cart() {
     const { cart, clearCart, totalPrice } = useCart();
 
     return (
-        <section className='cart-container d-flex flex-column text-center'>
+        <section className="cart-container d-flex flex-column text-center">
             <div className="container mb3">
                 <h1 className="display-6 fw-bold mb-3">Tu carrito</h1>
 
@@ -19,7 +19,7 @@ function Cart() {
                     </>
                     )
                     :
-                    (<div className='table-responsive'>
+                    (<div className="table-responsive">
                         <table className="table">
                             <thead>
                                 <tr>
