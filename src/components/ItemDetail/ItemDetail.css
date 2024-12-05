@@ -1,0 +1,6 @@
+.custom-card {
+    background-color: var(--primary-color);
+    color: var(--tertiary-color);
+    border: .1rem solid var(--tertiary-color);
+    border-radius: .5rem;
+}
