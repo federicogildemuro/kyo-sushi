@@ -1,6 +1,6 @@
-import { db } from "./FirebaseServices";
-import { getDocs, collection, doc, getDoc, query, where } from "firebase/firestore";
-import createProductAdapterFromFirebase from "../adapters/ProductAdapter";
+import { db } from './FirebaseServices'
+import { getDocs, collection, doc, getDoc, query, where } from 'firebase/firestore'
+import { createProductAdapterFromFirebase } from '../adapters/ProductAdapter'
 
 const fetchProducts = async (category) => {
     try {
@@ -17,7 +17,7 @@ const fetchProducts = async (category) => {
         console.error('Error fetching products:', error);
         throw error;
     }
-};
+}
 
 const fetchProductById = async (id) => {
     try {
@@ -34,6 +34,6 @@ const fetchProductById = async (id) => {
         console.error(`Error fetching product by id "${id}":`, error);
         throw error;
     }
-};
+}
 
-export { fetchProducts, fetchProductById };
+export { fetchProducts, fetchProductById }
