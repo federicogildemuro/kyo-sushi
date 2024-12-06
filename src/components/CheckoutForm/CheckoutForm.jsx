@@ -1,11 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import useCart from "../../hooks/useCart";
-import { useFormValidation } from "../../hooks/useFormValidation";
-import { createOrder } from "../../services/OrdersServices";
+import useCart from '../../hooks/useCart'
+import useNotification from '../../hooks/useNotification'
+import { useFormValidation } from '../../hooks/useFormValidation'
+import useAsync from '../../hooks/useAsync'
+import { createOrder } from '../../services/OrdersServices'
+import { sendOrderEmail } from '../../services/MailingServices'
+import Spinner from '../Spinner/Spinner'
 
 function CheckoutForm() {
-    const navigate = useNavigate();
     const { cart, clearCart, totalPrice } = useCart();
+    const { showNotification } = useNotification();
 
     const initialFormData = {
         name: "",
@@ -16,13 +19,18 @@ function CheckoutForm() {
         number: "",
         apartment: "",
     };
-
     const { formData, formErrors, handleInputChange, handleBlur, validateFormData } = useFormValidation(initialFormData);
+
+    const { data: dataOrder, loading: loadingOrder, execute: executeCreateOrder } = useAsync(createOrder);
+    const { loading: loadingEmail, execute: executeSendOrderEmail } = useAsync(sendOrderEmail);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!validateFormData()) return;
+        if (!validateFormData()) {
+            showNotification('Por favor, complete los campos correctamente', 'warning');
+            return;
+        }
 
         const order = {
             date: new Date(),
@@ -37,17 +45,41 @@ function CheckoutForm() {
             status: "pending",
         };
 
-        const orderId = await createOrder(order);
-        alert(`Compra realizada con éxito! Número de orden: ${orderId}.`);
-        clearCart();
-        navigate("/");
+        
+        try {
+            await executeCreateOrder(order);
+            await executeSendOrderEmail(dataOrder);
+            showNotification(`Compra realizada con éxito, se ha enviado un correo a ${dataOrder.buyer.email} con los detalles`, 'success');
+            clearCart();
+        } catch (error) {
+            showNotification('Error al realizar la compra', 'danger');
+        }
+    };
+
+    const labels = {
+        name: "Nombre",
+        email: "Correo electrónico",
+        confirmEmail: "Confirmar correo",
+        phone: "Teléfono",
+        street: "Calle",
+        number: "Número",
+        apartment: "Departamento",
     };
 
     return (
-        <form>
-            {["name", "email", "confirmEmail", "phone", "street", "number", "apartment"].map((field) => (
-                <div key={field} className="mb-3">
-                    <label htmlFor={field} className="form-label">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+        <form className="mx-auto col-12 col-lg-6 mt-5">
+            {(loadingOrder || loadingEmail) && <Spinner />}
+
+            {Object.keys(labels).map((field) => (
+                <div key={field} className="d-flex flex-column align-items-start mb-3">
+                    <label htmlFor={field} className="form-label d-inline-flex align-items-center">
+                        {labels[field]}
+                        {formErrors[field] &&
+                            <small className="text-danger d-inline-flex align-items-center ms-3">
+                                {formErrors[field]}
+                            </small>}
+                    </label>
+
                     <input
                         type={field.includes("email") ? "email" : field === "phone" ? "tel" : "text"}
                         className="form-control"
@@ -56,15 +88,16 @@ function CheckoutForm() {
                         value={formData[field]}
                         onChange={handleInputChange}
                         onBlur={handleBlur}
+                        disabled={loadingOrder || loadingEmail}
                     />
-                    {formErrors[field] && <small className="text-danger">{formErrors[field]}</small>}
                 </div>
             ))}
-            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+
+            <button type="submit" className="btn custom-btn mb-5" onClick={handleSubmit} disabled={loadingOrder || loadingEmail}>
                 Finalizar Compra
             </button>
         </form>
-    );
+    )
 }
 
-export default CheckoutForm;
+export default CheckoutForm
