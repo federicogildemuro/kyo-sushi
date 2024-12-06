@@ -60,6 +60,7 @@ This will start the app on [http://localhost:5173](http://localhost:5173).
 ## Features
 
 - **Routing**: The project uses `react-router-dom` for navigation between different pages such as Home, Products and Cart.
+- **Styling**: The project's styles are mostly handled using Bootstrap, implemented via its CDN for simplicity.
 - **Responsive Design**: The application is fully responsive and optimized for mobile, tablet, and desktop.
 - **Product Categories View**: The app displays products organized by categories, allowing users to easily navigate and find products in their preferred category.
 - **Shopping Cart**: Users can add and remove the quantity of items in their cart.
