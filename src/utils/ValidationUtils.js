@@ -14,7 +14,7 @@ const validateField = (name, value, formData) => {
     }
 
     return "";
-};
+}
 
 const validateForm = (formData) => {
     const errors = {};
@@ -24,7 +24,7 @@ const validateForm = (formData) => {
     });
 
     return errors;
-};
+}
 
 const isFormValid = (errors) => Object.values(errors).every((error) => !error);
 
