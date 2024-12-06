@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { validateField, validateForm, isFormValid } from "../utils/ValidationUtils";
+import { useState } from 'react'
+import { validateField, validateForm, isFormValid } from '../utils/ValidationUtils'
 
-export const useFormValidation = (initialData) => {
+function useFormValidation(initialData) {
     const [formData, setFormData] = useState(initialData);
     const [formErrors, setFormErrors] = useState({});
 
@@ -32,5 +32,7 @@ export const useFormValidation = (initialData) => {
         return isFormValid(errors);
     };
 
-    return { formData, formErrors, handleInputChange, handleBlur, validateFormData };
-};
+    return { formData, formErrors, handleInputChange, handleBlur, validateFormData }
+}
+
+export default useFormValidation
