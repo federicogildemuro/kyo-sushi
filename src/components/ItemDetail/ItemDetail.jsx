@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import useCart from '../../hooks/useCart'
 import ItemCount from '../ItemCount/ItemCount'
+import { scrollToTop } from '../../utils/ScrollUtils'
 import './ItemDetail.css'
 
 function ItemDetail({ item }) {
@@ -47,7 +48,7 @@ function ItemDetail({ item }) {
                             <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between mt-3 mb-3">
                                 <ItemCount stock={item.stock} onAddToCart={onAddToCart} />
 
-                                <Link to="/cart" className="btn custom-btn mb-3 mb-lg-0 order-lg-3">
+                                <Link to="/cart" className="btn custom-btn mb-3 mb-lg-0 order-lg-3" onClick={scrollToTop}>
                                     Ir al carrito
                                 </Link>
 

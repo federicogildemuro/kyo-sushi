@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { scrollToTop } from '../../utils/ScrollUtils'
 import sliderItems from './SliderItems'
 import './Slider.css'
 
@@ -29,7 +30,7 @@ function Slider() {
                             className={`carousel-item custom-carousel-item ${index === 0 ? 'active' : ''}`}
                             aria-current={index === 0 ? 'true' : 'false'}
                         >
-                            <Link to={`/tienda/${item.title}`}>
+                            <Link to={`/tienda/${item.title}`} onClick={scrollToTop}>
                                 <img
                                     src={item.image}
                                     alt={`Imagen de la categoría: ${item.title}`}

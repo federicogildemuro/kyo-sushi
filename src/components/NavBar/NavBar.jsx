@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { scrollToTop } from '../../utils/ScrollUtils'
 import NavBarLogo from '../NavBarLogo/NavBarLogo'
 import CartWidget from '../CartWidget/CartWidget'
 import './NavBar.css'
@@ -37,11 +38,11 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/" activeClassName="active">Inicio</NavLink>
+                            <NavLink to="/" className="nav-link" activeClassName="active" onClick={scrollToTop}>Inicio</NavLink>
                         </li>
 
                         <li>
-                            <NavLink className="nav-link" to="/about-us" activeClassName="active">Sobre nosotros</NavLink>
+                            <NavLink to="/about-us" className="nav-link" activeClassName="active" onClick={scrollToTop}>Sobre nosotros</NavLink>
                         </li>
 
                         <li className="nav-item dropdown">
@@ -50,20 +51,20 @@ function NavBar() {
                             <ul className="dropdown-menu">
                                 {categories.map((category) => (
                                     <li key={category}>
-                                        <NavLink className="dropdown-item" to={`/tienda/${category}`} activeClassName="active">{category}</NavLink>
+                                        <NavLink to={`/tienda/${category}`} className="dropdown-item" activeClassName="active" onClick={scrollToTop}>{category}</NavLink>
                                     </li>
                                 ))}
 
                                 <li><hr className="dropdown-divider" /></li>
 
                                 <li key="all">
-                                    <NavLink className="dropdown-item" to={`/tienda`} activeClassName="active">Todos</NavLink>
+                                    <NavLink to={`/tienda`} className="dropdown-item" activeClassName="active" onClick="scrollToTop">Todos</NavLink>
                                 </li>
                             </ul>
                         </li>
 
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/contact" activeClassName="active">Contacto</NavLink>
+                            <NavLink to="/contact" className="nav-link" activeClassName="active" onClick={scrollToTop}>Contacto</NavLink>
                         </li>
                     </ul>
 

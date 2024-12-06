@@ -16,8 +16,8 @@ function Item({ item }) {
                     <p className="card-text">€{item.price.toFixed(2)}</p>
                     <Link
                         to={`/item/${item.id}`}
-                        onClick={scrollToTop}
                         className="btn custom-btn w-auto"
+                        onClick={scrollToTop}
                     >
                         Ver detalle
                     </Link>

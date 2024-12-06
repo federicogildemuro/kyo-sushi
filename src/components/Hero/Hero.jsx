@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { scrollToTop } from '../../utils/ScrollUtils'
 import './Hero.css'
 
 function Hero() {
@@ -28,6 +29,7 @@ function Hero() {
                     to="/tienda"
                     className="btn btn-lg custom-btn"
                     data-aos="fade-up"
+                    onClick={scrollToTop}
                 >
                     Ir a la tienda
                 </Link>

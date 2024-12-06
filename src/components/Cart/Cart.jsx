@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import useCart from '../../hooks/useCart'
 import useNotification from '../../hooks/useNotification'
+import { scrollToTop } from '../../utils/ScrollUtils'
 import CartItem from '../CartItem/CartItem'
 import './Cart.css'
 
@@ -22,7 +23,7 @@ function Cart() {
                     ?
                     (<>
                         <p className="fs-5 fs-sm-6 fs-md-7 fs-lg-8 mb-3">No hay ítems en tu carrito.</p>
-                        <Link to="/tienda" className="btn custom-btn">Ir a la tienda</Link>
+                        <Link to="/tienda" className="btn custom-btn" onClick={scrollToTop}>Ir a la tienda</Link>
                     </>
                     )
                     :
@@ -50,7 +51,7 @@ function Cart() {
                             </h3>
 
                             <div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-end">
-                                <Link to="/tienda" className="btn custom-btn mb-2 mb-md-0 me-md-3">
+                                <Link to="/tienda" className="btn custom-btn mb-2 mb-md-0 me-md-3" onClick={scrollToTop}>
                                     Seguir comprando
                                 </Link>
 
@@ -58,7 +59,7 @@ function Cart() {
                                     Vaciar carrito
                                 </button>
 
-                                <Link to="/checkout" className="btn btn-success">
+                                <Link to="/checkout" className="btn btn-success" onClick={scrollToTop}>
                                     Finalizar compra
                                 </Link>
                             </div>

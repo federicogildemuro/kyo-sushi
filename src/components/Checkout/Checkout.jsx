@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import useCart from '../../hooks/useCart'
+import { scrollToTop } from '../../utils/ScrollUtils'
 import CheckoutForm from '../CheckoutForm/CheckoutForm'
 
 function Checkout() {
@@ -16,7 +17,7 @@ function Checkout() {
                     ?
                     <>
                         <p className="fs-5 fs-sm-6 fs-md-7 fs-lg-8 mt-3 mb-3">No hay ítems en tu carrito.</p>
-                        <Link to="/tienda" className="btn custom-btn">Ir a la tienda</Link>
+                        <Link to="/tienda" className="btn custom-btn" onClick={scrollToTop}>Ir a la tienda</Link>
                     </>
                     :
                     <CheckoutForm />
