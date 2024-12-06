@@ -4,7 +4,7 @@ import CartItem from '../CartItem/CartItem'
 import './Cart.css'
 
 function Cart() {
-    const { cart, clearCart, totalPrice } = useCart();
+    const { cart, clearCart, getTotalPrice } = useCart();
 
     return (
         <section className="custom-container d-flex flex-column text-center">
@@ -39,7 +39,7 @@ function Cart() {
 
                         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
                             <h3 className="text-center text-md-start mb-3 mb-md-0">
-                                Total: ${totalPrice().toFixed(2)}
+                                Total: ${getTotalPrice().toFixed(2)}
                             </h3>
 
                             <div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-end">
