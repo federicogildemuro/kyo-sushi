@@ -18,7 +18,8 @@ function Checkout() {
                         <p className="fs-5 fs-sm-6 fs-md-7 fs-lg-8 mt-3 mb-3">No hay ítems en tu carrito.</p>
                         <Link to="/tienda" className="btn custom-btn">Ir a la tienda</Link>
                     </>
-                    : <CheckoutForm />
+                    :
+                    <CheckoutForm />
                 }
             </div>
         </section>
