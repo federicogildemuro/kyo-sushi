@@ -3,7 +3,6 @@ import useAsync from '../../hooks/useAsync'
 import { fetchProducts } from '../../services/ProductsServices'
 import Spinner from '../Spinner/Spinner'
 import ItemList from '../ItemList/ItemList'
-import './ItemListContainer.css'
 
 function ItemListContainer() {
     const { category } = useParams();
