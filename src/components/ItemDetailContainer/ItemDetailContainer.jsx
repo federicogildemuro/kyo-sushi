@@ -3,7 +3,6 @@ import { fetchProductById } from '../../services/ProductsServices'
 import useAsync from '../../hooks/useAsync'
 import Spinner from '../Spinner/Spinner'
 import ItemDetail from '../ItemDetail/ItemDetail'
-import './ItemDetailContainer.css'
 
 function ItemDetailContainer() {
     const { id } = useParams();
