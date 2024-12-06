@@ -11,7 +11,6 @@ import AboutUs from './components/AboutUs/AboutUs'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
 import 'normalize.css'
-import './App.css'
 
 function App() {
     return (
@@ -19,6 +18,7 @@ function App() {
             <NotificationProvider>
                 <CartProvider>
                     <NavBar />
+
                     <Routes>
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/tienda/" element={<ItemListContainer />} />
@@ -30,6 +30,7 @@ function App() {
                         <Route path="/contact" element={<Contact />} />
                         <Route path="*" element={<LandingPage />} />
                     </Routes>
+
                     <Footer />
                 </CartProvider>
             </NotificationProvider>
