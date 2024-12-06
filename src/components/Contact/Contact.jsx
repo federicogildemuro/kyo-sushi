@@ -3,7 +3,6 @@ import { sendContactEmail } from '../../services/MailingServices'
 import useAsync from '../../hooks/useAsync'
 import useNotification from '../../hooks/useNotification'
 import Spinner from '../Spinner/Spinner'
-import './Contact.css'
 
 function Contact() {
     const form = useRef();
