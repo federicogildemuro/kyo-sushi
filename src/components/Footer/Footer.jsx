@@ -29,6 +29,7 @@ function Footer() {
 
                     <div className="col-md-4 mb-3 d-flex flex-column align-items-center">
                         <h5 className="text-center text-md-center">Síguenos en nuestras redes</h5>
+
                         <div className="d-flex flex-column flex-md-row align-items-center">
                             <Link
                                 to="#"
@@ -38,6 +39,7 @@ function Footer() {
                             >
                                 <FacebookIcon /> Facebook
                             </Link>
+
                             <Link
                                 to="https://www.instagram.com/kyosushipm?igsh=MXd1MGkxbDhyMW5uMw=="
                                 className="footer-link mb-2 mb-md-0"
