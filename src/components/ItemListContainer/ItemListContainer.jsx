@@ -13,7 +13,7 @@ function ItemListContainer() {
         <section className="custom-container d-flex flex-column text-center">
             {loading ? (
                 <Spinner />
-            ) : data && data.length > 0 ? (
+            ) : Array.isArray(data) && data.length > 0 ? (
                 <>
                     <h1 className="display-6 fw-bold mb-3">
                         {category
@@ -24,9 +24,7 @@ function ItemListContainer() {
                     <ItemList items={data} />
                 </>
             ) : (
-                <>
-                    <p className="fs-5 fs-sm-6 fs-md-7 fs-lg-8 mt-3 mb-3">No se encontraron productos</p>
-                </>
+                <p className="fs-5 fs-sm-6 fs-md-7 fs-lg-8 mt-3 mb-3">No se encontraron productos</p>
             )}
         </section>
     )
