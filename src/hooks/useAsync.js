@@ -22,7 +22,7 @@ function useAsync(asyncFunction, dependencies = []) {
         execute();
     }, dependencies);
 
-    return { data, loading, error, execute };
+    return { data, loading, error, execute }
 }
 
 export default useAsync
