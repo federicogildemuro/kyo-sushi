@@ -1,8 +1,15 @@
 import useCart from '../../hooks/useCart'
+import useNotification from '../../hooks/useNotification'
 import './CartItem.css'
 
 function CartItem({ item }) {
     const { removeCartItem } = useCart();
+    const { showNotification } = useNotification();
+
+    const handleRemoveCartItem = () => {
+        removeCartItem(item.id);
+        showNotification('Producto eliminado del carrito', 'success');
+    }
 
     if (!item) return null;
 
@@ -15,7 +22,7 @@ function CartItem({ item }) {
             <td className="text-end">
                 <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => removeCartItem(item.id)}
+                    onClick={handleRemoveCartItem}
                 >
                     Eliminar
                 </button>

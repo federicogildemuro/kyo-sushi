@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom'
 import useCart from '../../hooks/useCart'
+import useNotification from '../../hooks/useNotification'
 import CartItem from '../CartItem/CartItem'
 import './Cart.css'
 
 function Cart() {
     const { cart, clearCart, getTotalPrice } = useCart();
+    const { showNotification } = useNotification();
+
+    const handleClearCart = () => {
+        clearCart();
+        showNotification('Carrito vaciado', 'success');
+    }
 
     return (
         <section className="custom-container d-flex flex-column text-center">
@@ -47,7 +54,7 @@ function Cart() {
                                     Seguir comprando
                                 </Link>
 
-                                <button className="btn btn-danger mb-2 mb-md-0 me-md-3" onClick={clearCart}>
+                                <button className="btn btn-danger mb-2 mb-md-0 me-md-3" onClick={handleClearCart}>
                                     Vaciar carrito
                                 </button>
 
