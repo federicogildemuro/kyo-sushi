@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function useAsync(asyncFunction, dependencies = []) {
     const [data, setData] = useState(null);
@@ -7,6 +7,7 @@ function useAsync(asyncFunction, dependencies = []) {
 
     const execute = async (...args) => {
         setLoading(true);
+        setError(null);
         try {
             const result = await asyncFunction(...args);
             setData(result);
@@ -21,7 +22,7 @@ function useAsync(asyncFunction, dependencies = []) {
         execute();
     }, dependencies);
 
-    return { data, loading, error, execute }
+    return { data, loading, error, execute };
 }
 
 export default useAsync
