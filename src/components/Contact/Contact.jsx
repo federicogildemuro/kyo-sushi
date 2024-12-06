@@ -8,36 +8,41 @@ import './Contact.css'
 function Contact() {
     const form = useRef();
     const { showNotification } = useNotification();
+    const { loading, execute } = useAsync(sendContactEmail);
 
-    const { loading, execute } = useAsync(sendContactEmail, []);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(form.current);
+    const validateForm = (formData) => {
         const userName = formData.get("user_name").trim();
         const userEmail = formData.get("user_email").trim();
         const message = formData.get("message").trim();
 
         if (!userName || !userEmail || !message) {
-            showNotification("Debes completar todos los campos antes de enviar.", "warning");
-            return;
+            showNotification('Debes completar todos los campos antes de enviar.', 'warning');
+            return false;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(userEmail)) {
-            showNotification("El correo electrónico ingresado no es válido.", "warning");
-            return;
+            showNotification('El correo electrónico ingresado no es válido.', 'warning');
+            return false;
         }
 
-        execute(form.current)
-            .then(() => {
-                showNotification("Mensaje enviado correctamente, te responderemos a la brevedad.", "success");
-                form.current.reset();
-            })
-            .catch(() => {
-                showNotification("Error al enviar el mensaje", "danger");
-            });
+        return true;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form.current);
+
+        if (!validateForm(formData)) return;
+
+        try {
+            await execute(form.current);
+            showNotification('Mensaje enviado correctamente, te responderemos a la brevedad.', 'success');
+            form.current.reset();
+        } catch {
+            showNotification('Error al enviar el mensaje', 'danger');
+        }
     };
 
     return (
@@ -93,7 +98,6 @@ function Contact() {
             </div>
 
             {loading && <Spinner />}
-
         </section>
     )
 }
