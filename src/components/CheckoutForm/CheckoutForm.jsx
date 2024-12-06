@@ -1,6 +1,6 @@
 import useCart from '../../hooks/useCart'
 import useNotification from '../../hooks/useNotification'
-import { useFormValidation } from '../../hooks/useFormValidation'
+import useFormValidation from '../../hooks/useFormValidation'
 import useAsync from '../../hooks/useAsync'
 import { createOrder } from '../../services/OrdersServices'
 import { sendOrderEmail } from '../../services/MailingServices'
@@ -45,7 +45,7 @@ function CheckoutForm() {
             status: "pending",
         };
 
-        
+
         try {
             await executeCreateOrder(order);
             await executeSendOrderEmail(dataOrder);
