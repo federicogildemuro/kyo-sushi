@@ -49,7 +49,7 @@ function CheckoutForm() {
         try {
             await executeCreateOrder(order);
             await executeSendOrderEmail(dataOrder);
-            showNotification(`Compra realizada con éxito, se ha enviado un correo a ${dataOrder.buyer.email} con los detalles`, 'success');
+            showNotification(`Compra realizada con éxito, se te ha enviado un correo electrónico con los detalles`, 'success');
             clearCart();
         } catch {
             showNotification('Error al realizar la compra', 'danger');
