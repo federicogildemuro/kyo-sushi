@@ -7,7 +7,7 @@ import { sendOrderEmail } from '../../services/MailingServices'
 import Spinner from '../Spinner/Spinner'
 
 function CheckoutForm() {
-    const { cart, clearCart, totalPrice } = useCart();
+    const { cart, clearCart, getTotalPrice } = useCart();
     const { showNotification } = useNotification();
 
     const initialFormData = {
@@ -41,7 +41,7 @@ function CheckoutForm() {
                 price: item.price,
                 quantity: item.quantity,
             })),
-            total: totalPrice(),
+            total: getTotalPrice(),
             status: "pending",
         };
 
@@ -51,7 +51,7 @@ function CheckoutForm() {
             await executeSendOrderEmail(dataOrder);
             showNotification(`Compra realizada con éxito, se ha enviado un correo a ${dataOrder.buyer.email} con los detalles`, 'success');
             clearCart();
-        } catch (error) {
+        } catch {
             showNotification('Error al realizar la compra', 'danger');
         }
     };
