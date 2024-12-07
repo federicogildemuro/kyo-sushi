@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import logoHover from '../../assets/logo-hover.png'
 import { scrollToTop } from '../../utils/ScrollUtils'
-import './NavbarLogo.css'
+import './NavBarLogo.css'
 
 function NavBarLogo() {
     const [imageSrc, setImageSrc] = useState(logo);
