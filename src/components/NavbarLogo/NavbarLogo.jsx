@@ -5,7 +5,7 @@ import logoHover from '../../assets/logo-hover.png'
 import { scrollToTop } from '../../utils/ScrollUtils'
 import './NavbarLogo.css'
 
-function NavbarLogo() {
+function NavBarLogo() {
     const [imageSrc, setImageSrc] = useState(logo);
 
     const handleMouseEnter = () => setImageSrc(logoHover);
@@ -23,4 +23,4 @@ function NavbarLogo() {
     )
 }
 
-export default NavbarLogo
+export default NavBarLogo
