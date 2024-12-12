@@ -1,8 +1,8 @@
-import { NavLink } from 'react-router-dom'
-import { scrollToTop } from '../../utils/ScrollUtils'
-import NavBarLogo from '../NavBarLogo/NavBarLogo'
-import CartWidget from '../CartWidget/CartWidget'
-import './NavBar.css'
+import { NavLink } from 'react-router-dom';
+import { scrollToTop } from '../../utils/ScrollUtils';
+import NavBarLogo from '../NavBarLogo/NavBarLogo';
+import CartWidget from '../CartWidget/CartWidget';
+import './NavBar.css';
 
 function NavBar() {
     const categories = [
@@ -38,11 +38,23 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
                         <li className="nav-item">
-                            <NavLink to="/" className="nav-link" activeClassName="active" onClick={scrollToTop}>Inicio</NavLink>
+                            <NavLink
+                                to="/"
+                                className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                                onClick={scrollToTop}
+                            >
+                                Inicio
+                            </NavLink>
                         </li>
 
                         <li>
-                            <NavLink to="/about-us" className="nav-link" activeClassName="active" onClick={scrollToTop}>Sobre nosotros</NavLink>
+                            <NavLink
+                                to="/about-us"
+                                className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                                onClick={scrollToTop}
+                            >
+                                Sobre nosotros
+                            </NavLink>
                         </li>
 
                         <li className="nav-item dropdown">
@@ -51,20 +63,40 @@ function NavBar() {
                             <ul className="dropdown-menu">
                                 {categories.map((category) => (
                                     <li key={category}>
-                                        <NavLink to={`/tienda/${category}`} className="dropdown-item" activeClassName="active" onClick={scrollToTop}>{category}</NavLink>
+                                        <NavLink
+                                            to={`/tienda/${category}`}
+                                            className={({ isActive }) => (isActive ? 'dropdown-item active' : 'dropdown-item')}
+                                            onClick={scrollToTop}
+                                        >
+                                            {category}
+                                        </NavLink>
                                     </li>
                                 ))}
 
-                                <li><hr className="dropdown-divider" /></li>
+                                <li>
+                                    <hr className="dropdown-divider" />
+                                </li>
 
                                 <li key="all">
-                                    <NavLink to={`/tienda`} className="dropdown-item" activeClassName="active" onClick="scrollToTop">Todos</NavLink>
+                                    <NavLink
+                                        to={`/tienda`}
+                                        className={({ isActive }) => (isActive ? 'dropdown-item active' : 'dropdown-item')}
+                                        onClick={scrollToTop}
+                                    >
+                                        Todos
+                                    </NavLink>
                                 </li>
                             </ul>
                         </li>
 
                         <li className="nav-item">
-                            <NavLink to="/contact" className="nav-link" activeClassName="active" onClick={scrollToTop}>Contacto</NavLink>
+                            <NavLink
+                                to="/contact"
+                                className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                                onClick={scrollToTop}
+                            >
+                                Contacto
+                            </NavLink>
                         </li>
                     </ul>
 
@@ -74,7 +106,7 @@ function NavBar() {
                 </div>
             </div>
         </nav>
-    )
+    );
 }
 
-export default NavBar
+export default NavBar;
