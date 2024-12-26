@@ -1,6 +1,13 @@
 .item-container {
-    background-color: var(--primary-color);
+    text-decoration: none;
     color: var(--tertiary-color);
+    background-color: var(--primary-color);
     border: .1rem solid var(--tertiary-color);
     border-radius: .5rem;
+    transition: all .5s ease;
+}
+
+.item-container:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
 }
