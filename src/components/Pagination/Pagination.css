@@ -1,0 +1,25 @@
+.pagination {
+    gap: .75rem;
+}
+
+.page-link {
+    color: var(--tertiary-color);
+    background-color: var(--primary-color);
+    padding: .5rem .75rem;
+    font-weight: 600;
+    border-radius: .25rem;
+    transition: color .5s ease, background-color .5s ease, border-color .5s ease;
+}
+
+.page-link:hover,
+.page-link:focus {
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    border-color: var(--tertiary-color);
+}
+
+.page-item.active .page-link {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
