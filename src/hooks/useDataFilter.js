@@ -2,32 +2,33 @@ import { useState, useEffect, useCallback } from 'react';
 
 function useDataFilter(data, fields = [], customFilter) {
     const [filteredData, setFilteredData] = useState([]);
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState({});
 
-    const memoizedSetFilter = useCallback((value) => {
-        setFilter(value);
+    const memoizedSetFilter = useCallback((newFilter) => {
+        setFilter((prevFilter) => ({ ...prevFilter, ...newFilter }));
     }, []);
 
     useEffect(() => {
-        if (!Array.isArray(data) || data.length === 0 || filter === '') {
+        if (!Array.isArray(data) || data.length === 0) {
             setFilteredData(data);
             return;
         }
 
         const applyFilter = () => {
-            const lowerCaseFilter = filter.trim().toLowerCase();
+            if (customFilter) {
+                return data.filter((item) => customFilter(item, filter));
+            }
 
-            return customFilter
-                ? data.filter((item) => customFilter(item, filter))
-                : data.filter((item) =>
-                    fields.some((field) => {
-                        const fieldValue = item[field];
-                        return (
-                            typeof fieldValue === 'string' &&
-                            fieldValue.toLowerCase().includes(lowerCaseFilter)
-                        );
-                    })
-                );
+            const lowerCaseFilter = filter.search?.trim().toLowerCase() || '';
+            return data.filter((item) =>
+                fields.some((field) => {
+                    const fieldValue = item[field];
+                    return (
+                        typeof fieldValue === 'string' &&
+                        fieldValue.toLowerCase().includes(lowerCaseFilter)
+                    );
+                })
+            );
         };
 
         const newFilteredData = applyFilter();
@@ -35,7 +36,6 @@ function useDataFilter(data, fields = [], customFilter) {
         if (JSON.stringify(newFilteredData) !== JSON.stringify(filteredData)) {
             setFilteredData(newFilteredData);
         }
-
     }, [data, filter, fields, customFilter]);
 
     return { filteredData, setFilter: memoizedSetFilter };

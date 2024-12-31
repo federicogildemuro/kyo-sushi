@@ -1,14 +1,22 @@
+import { useState } from 'react';
+
 function SearchBar({ onSearch, placeholder = 'Buscar...' }) {
-    const handleSearch = (event) => onSearch(event.target.value);
+    const [searchValue, setSearchValue] = useState('');
+    const handleChange = (event) => {
+        const value = event.target.value;
+        setSearchValue(value);
+        onSearch(value);
+    };
 
     return (
-        <div className="container d-flex justify-content-center mt-3">
+        <div className="container d-flex justify-content-center my-5">
             <div className="w-75">
                 <input
                     type="text"
+                    value={searchValue}
                     className="form-control"
                     placeholder={placeholder}
-                    onChange={handleSearch}
+                    onChange={handleChange}
                 />
             </div>
         </div>

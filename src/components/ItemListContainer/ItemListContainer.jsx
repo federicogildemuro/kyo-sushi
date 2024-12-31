@@ -11,18 +11,31 @@ import Pagination from '../Pagination/Pagination';
 function ItemListContainer() {
     const { category } = useParams();
     const { data, loading } = useAsync(() => fetchProducts(category), [category]);
-    const { filteredData, setFilter } = useDataFilter(data, ['title', 'category']);
+
+    /* Search filter */
+    const { filteredData, setFilter } = useDataFilter(
+        data,
+        ['title'],
+        (item, filter) => {
+            const matchesSearch = filter.search
+                ? item.title?.toLowerCase().includes(filter.search.toLowerCase())
+                : true;
+            return matchesSearch;
+        }
+    );
+
+    /* Pagination */
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(3);
+    const [itemsPerPage, setItemsPerPage] = useState(4);
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 576) {
-                setItemsPerPage(3);
+                setItemsPerPage(4);
             } else if (window.innerWidth < 992) {
-                setItemsPerPage(6);
+                setItemsPerPage(12);
             } else {
-                setItemsPerPage(8);
+                setItemsPerPage(16);
             }
         };
 
@@ -37,28 +50,21 @@ function ItemListContainer() {
         ? filteredData.slice(indexOfFirstItem, indexOfLastItem)
         : [];
 
-    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
-
     const totalPages = Math.ceil((filteredData?.length || 0) / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <section className="custom-container d-flex flex-column text-center">
-            <h1 className="display-6 fw-bold mb-3">
-                {category
-                    ? `${category}`
-                    : 'Nuestros productos'
-                }
-            </h1>
-
             <SearchBar
-                onSearch={setFilter}
-                placeholder="Buscar productos por título o categoría..."
+                onSearch={(value) => setFilter({ search: value })}
+                placeholder="Buscar productos por nombre..."
             />
 
             {loading && <Spinner />}
 
-            {!loading && (
-                Array.isArray(currentItems) && currentItems.length > 0 ? (
+            {!loading &&
+                (Array.isArray(currentItems) && currentItems.length > 0 ? (
                     <>
                         <ItemList items={currentItems} />
 
@@ -69,9 +75,8 @@ function ItemListContainer() {
                         />
                     </>
                 ) : (
-                    <p className="fs-5 fs-sm-6 fs-md-7 fs-lg-8 mt-3 mb-3">No se encontraron productos</p>
-                )
-            )}
+                    <p className="fs-5 mt-3 mb-3">No se encontraron productos</p>
+                ))}
         </section>
     );
 }
