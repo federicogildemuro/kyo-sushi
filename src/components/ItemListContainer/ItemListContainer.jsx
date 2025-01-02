@@ -1,18 +1,22 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
-import useDataFilter from '../../hooks/useDataFilter';
 import { fetchProducts } from '../../services/ProductsServices';
-import Spinner from '../Spinner/Spinner';
+import useDataFilter from '../../hooks/useDataFilter';
+import usePagination from '../../hooks/usePagination';
 import SearchBar from '../SearchBar/SearchBar';
+import Spinner from '../Spinner/Spinner';
 import ItemList from '../ItemList/ItemList';
 import Pagination from '../Pagination/Pagination';
 
 function ItemListContainer() {
+    /* Category param */
     const { category } = useParams();
-    const { data, loading } = useAsync(() => fetchProducts(category), [category]);
 
-    /* Search filter */
+    /* Products fetch */
+    const { data, loading, error } = useAsync(() => fetchProducts(category), [category]);
+
+    /* Products filter */
     const { filteredData, setFilter } = useDataFilter(
         data,
         ['title'],
@@ -24,10 +28,13 @@ function ItemListContainer() {
         }
     );
 
-    /* Pagination */
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(4);
+    /* Search bar */
+    const handleSearch = useCallback((value) => {
+        setFilter({ search: value });
+    }, [setFilter]);
 
+    /* Responsive items per page */
+    const [itemsPerPage, setItemsPerPage] = useState(4);
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 576) {
@@ -44,39 +51,45 @@ function ItemListContainer() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = Array.isArray(filteredData)
-        ? filteredData.slice(indexOfFirstItem, indexOfLastItem)
-        : [];
-
-    const totalPages = Math.ceil((filteredData?.length || 0) / itemsPerPage);
-
-    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+    /* Pagination */
+    const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(
+        filteredData,
+        itemsPerPage
+    );
 
     return (
         <section className="custom-container d-flex flex-column text-center">
             <SearchBar
-                onSearch={(value) => setFilter({ search: value })}
+                onSearch={handleSearch}
                 placeholder="Buscar productos por nombre..."
             />
 
             {loading && <Spinner />}
 
-            {!loading &&
-                (Array.isArray(currentItems) && currentItems.length > 0 ? (
+            {!loading && error && (
+                <p className="fs-5">
+                    <i className="bi bi-exclamation-triangle me-2"></i>
+                    {error.message || 'Ocurrió un error al cargar los productos.'}
+                </p>
+            )}
+
+            {!loading && !error && (
+                currentItems.length > 0 ? (
                     <>
                         <ItemList items={currentItems} />
-
                         <Pagination
                             totalPages={totalPages}
                             currentPage={currentPage}
-                            onPageChange={handlePageChange}
+                            onPageChange={setCurrentPage}
                         />
                     </>
                 ) : (
-                    <p className="fs-5 mt-3 mb-3">No se encontraron productos</p>
-                ))}
+                    <p className="fs-5">
+                        <i className="bi bi-emoji-frown me-2"></i>
+                        No se encontraron productos
+                    </p>
+                )
+            )}
         </section>
     );
 }
