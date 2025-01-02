@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 
 function usePagination(data, itemsPerPage) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentItems, setCurrentItems] = useState([]);
-    const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
 
-    useEffect(() => {
-        const indexOfLastItem = currentPage * itemsPerPage;
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-        setCurrentItems(data?.slice(indexOfFirstItem, indexOfLastItem) || []);
+    const totalPages = useMemo(() => Math.ceil(data.length / itemsPerPage), [data, itemsPerPage]);
+
+    const currentItems = useMemo(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        return data.slice(startIndex, startIndex + itemsPerPage);
     }, [data, currentPage, itemsPerPage]);
 
-    return { currentItems, currentPage, totalPages, setCurrentPage };
+    return {
+        currentItems,
+        currentPage,
+        totalPages,
+        setCurrentPage
+    };
 }
 
 export default usePagination;
