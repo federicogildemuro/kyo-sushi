@@ -1,17 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 function useDataFilter(data, fields = [], customFilter) {
-    const [filteredData, setFilteredData] = useState([]);
     const [filter, setFilter] = useState({});
 
     const memoizedSetFilter = useCallback((newFilter) => {
         setFilter((prevFilter) => ({ ...prevFilter, ...newFilter }));
     }, []);
 
-    useEffect(() => {
+    const filteredData = useMemo(() => {
         if (!Array.isArray(data) || data.length === 0) {
-            setFilteredData(data);
-            return;
+            return data;
         }
 
         const applyFilter = () => {
@@ -31,11 +29,7 @@ function useDataFilter(data, fields = [], customFilter) {
             );
         };
 
-        const newFilteredData = applyFilter();
-
-        if (JSON.stringify(newFilteredData) !== JSON.stringify(filteredData)) {
-            setFilteredData(newFilteredData);
-        }
+        return applyFilter();
     }, [data, filter, fields, customFilter]);
 
     return { filteredData, setFilter: memoizedSetFilter };
