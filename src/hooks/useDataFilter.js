@@ -1,36 +1,46 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-function useDataFilter(data, fields = [], customFilter) {
+function useDataFilter(data, fields = [], customFilterFunction) {
+    const [filteredData, setFilteredData] = useState([]);
     const [filter, setFilter] = useState({});
 
     const memoizedSetFilter = useCallback((newFilter) => {
         setFilter((prevFilter) => ({ ...prevFilter, ...newFilter }));
     }, []);
 
-    const filteredData = useMemo(() => {
+    useEffect(() => {
         if (!Array.isArray(data) || data.length === 0) {
-            return data;
+            setFilteredData(data);
+            return;
         }
 
         const applyFilter = () => {
-            if (customFilter) {
-                return data.filter((item) => customFilter(item, filter));
-            }
-
-            const lowerCaseFilter = filter.search?.trim().toLowerCase() || '';
-            return data.filter((item) =>
+            const lowerCaseSearch = filter.search?.trim().toLowerCase() || '';
+            const searchFilteredData = data.filter((item) =>
                 fields.some((field) => {
                     const fieldValue = item[field];
                     return (
                         typeof fieldValue === 'string' &&
-                        fieldValue.toLowerCase().includes(lowerCaseFilter)
+                        fieldValue.toLowerCase().includes(lowerCaseSearch)
                     );
                 })
             );
+
+            if (customFilterFunction) {
+                return searchFilteredData.filter((item) =>
+                    customFilterFunction(item, filter)
+                );
+            }
+
+            return searchFilteredData;
         };
 
-        return applyFilter();
-    }, [data, filter, fields, customFilter]);
+        const newFilteredData = applyFilter();
+
+        if (JSON.stringify(newFilteredData) !== JSON.stringify(filteredData)) {
+            setFilteredData(newFilteredData);
+        }
+    }, [data, filter, fields, customFilterFunction]);
 
     return { filteredData, setFilter: memoizedSetFilter };
 }
