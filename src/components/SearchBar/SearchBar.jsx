@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-function SearchBar({ onSearch, placeholder = 'Buscar...' }) {
-    const [searchValue, setSearchValue] = useState('');
+function SearchBar({ searchValue, onChange }) {
     const [debouncedValue, setDebouncedValue] = useState(searchValue);
 
     useEffect(() => {
@@ -13,27 +12,31 @@ function SearchBar({ onSearch, placeholder = 'Buscar...' }) {
     }, [searchValue]);
 
     useEffect(() => {
-        onSearch(debouncedValue);
-    }, [debouncedValue, onSearch]);
+        onChange(debouncedValue);
+    }, [debouncedValue, onChange]);
 
     const handleChange = (event) => {
-        setSearchValue(event.target.value);
+        onChange(event.target.value);
     };
 
     return (
-        <div className="container d-flex justify-content-center my-5">
-            <div className="w-75">
-                <label htmlFor="search-bar" className="visually-hidden">Buscar</label>
-                <input
-                    id="search-bar"
-                    type="text"
-                    value={searchValue}
-                    className="form-control"
-                    placeholder={placeholder}
-                    onChange={handleChange}
-                />
-            </div>
+        <div className="d-flex flex-column align-items-center gap-3">
+            <label
+                htmlFor="search-bar"
+                className="fw-semibold"
+            >
+                Fiiltrar por nombre
+            </label>
+
+            <input
+                type="text"
+                id="search-bar"
+                className="form-control"
+                value={searchValue}
+                onChange={handleChange}
+            />
         </div>
+
     );
 }
 
