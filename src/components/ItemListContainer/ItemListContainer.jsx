@@ -1,37 +1,41 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useCallback, useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
 import { fetchProducts } from '../../services/ProductsServices';
-import useDataFilter from '../../hooks/useDataFilter';
 import usePagination from '../../hooks/usePagination';
-import SearchBar from '../SearchBar/SearchBar';
+import FiltersMenu from '../FiltersMenu/FiltersMenu';
+import SortButtons from '../SortButtons/SortButtons';
 import Spinner from '../Spinner/Spinner';
 import ItemList from '../ItemList/ItemList';
 import Pagination from '../Pagination/Pagination';
 
 function ItemListContainer() {
-    /* Category param */
+    /* Category from URL params */
     const { category } = useParams();
 
-    /* Products fetch */
+    /* Fetch products */
     const { data, loading, error } = useAsync(() => fetchProducts(category), [category]);
-
-    /* Products filter */
-    const { filteredData, setFilter } = useDataFilter(
-        data,
-        ['title'],
-        (item, filter) => {
-            const matchesSearch = filter.search
-                ? item.title?.toLowerCase().includes(filter.search.toLowerCase())
-                : true;
-            return matchesSearch;
+    const items = useMemo(() => Array.isArray(data) ? data : [], [data]);
+    useEffect(() => {
+        if (items.length > 0) {
+            setFilteredItems(items);
+            setSortedItems(items);
         }
-    );
+    }, [items]);
 
-    /* Search bar */
-    const handleSearch = useCallback((value) => {
-        setFilter({ search: value });
-    }, [setFilter]);
+    /* Filtering */
+    const [filteredItems, setFilteredItems] = useState([]);
+    const handleFilterChange = (filtered) => {
+        setFilteredItems(filtered);
+    };
+    const [isFiltersMenuVisible, setFiltersMenuVisible] = useState(false);
+    const toggleFiltersMenu = () => setFiltersMenuVisible(!isFiltersMenuVisible);
+
+    /* Sorting */
+    const [sortedItems, setSortedItems] = useState([]);
+    const handleSortChange = (sorted) => {
+        setSortedItems(sorted);
+    };
 
     /* Responsive items per page */
     const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -52,24 +56,43 @@ function ItemListContainer() {
     }, []);
 
     /* Pagination */
-    const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(
-        filteredData,
-        itemsPerPage
-    );
+    const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(sortedItems, itemsPerPage);
 
     return (
         <section className="custom-container d-flex flex-column text-center">
-            <SearchBar
-                onSearch={handleSearch}
-                placeholder="Buscar productos por nombre..."
-            />
+            <div className="d-flex flex-column m-5">
+                <div className="d-flex justify-content-center justify-content-md-between gap-3 gap-md-0">
+                    <button
+                        className="btn custom-btn"
+                        onClick={toggleFiltersMenu}
+                    >
+                        <i className="bi bi-filter"></i>
+                    </button>
+
+                    <SortButtons
+                        items={filteredItems}
+                        onChange={handleSortChange}
+                        fields={[
+                            { name: 'Nombre', key: 'title' },
+                            { name: 'Precio', key: 'price' },
+                        ]}
+                    />
+                </div>
+
+                {isFiltersMenuVisible && (
+                    <FiltersMenu
+                        items={items}
+                        onFilterChange={handleFilterChange}
+                    />
+                )}
+            </div>
 
             {loading && <Spinner />}
 
             {!loading && error && (
                 <p className="fs-5">
                     <i className="bi bi-exclamation-triangle me-2"></i>
-                    {error.message || 'Ocurrió un error al cargar los productos.'}
+                    Ocurrió un error al cargar los productos
                 </p>
             )}
 
@@ -77,6 +100,7 @@ function ItemListContainer() {
                 currentItems.length > 0 ? (
                     <>
                         <ItemList items={currentItems} />
+
                         <Pagination
                             totalPages={totalPages}
                             currentPage={currentPage}
