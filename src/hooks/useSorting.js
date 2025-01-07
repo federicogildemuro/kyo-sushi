@@ -10,18 +10,22 @@ function useSorting() {
         }));
     };
 
-    const sortData = (data) => {
+    const sortData = (data, field, direction) => {
         return [...data].sort((a, b) => {
-            if (!sortOrder.field) return 0;
-            const aField = a[sortOrder.field];
-            const bField = b[sortOrder.field];
-            if (aField < bField) return sortOrder.direction === 'asc' ? -1 : 1;
-            if (aField > bField) return sortOrder.direction === 'asc' ? 1 : -1;
+            const aField = a[field];
+            const bField = b[field];
+            if (aField < bField) return direction === 'asc' ? -1 : 1;
+            if (aField > bField) return direction === 'asc' ? 1 : -1;
             return 0;
         });
     };
 
-    return { sortOrder, handleSort, sortData };
+    const applySorting = (data) => {
+        if (!sortOrder.field) return data;
+        return sortData(data, sortOrder.field, sortOrder.direction);
+    };
+
+    return { sortOrder, handleSort, applySorting };
 }
 
 export default useSorting;
