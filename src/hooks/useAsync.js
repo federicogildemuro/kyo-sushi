@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 function useAsync(asyncFunction, dependencies = [], autoExecute = true) {
     const [data, setData] = useState(null);
@@ -12,10 +12,7 @@ function useAsync(asyncFunction, dependencies = [], autoExecute = true) {
             const result = await asyncFunction(...args);
             setData(result);
         } catch (error) {
-            setError({
-                message: error.response?.data?.message || error.message || 'Error desconocido',
-                code: error.response?.status || 500,
-            });
+            setError(error);
         } finally {
             setLoading(false);
         }
@@ -23,7 +20,7 @@ function useAsync(asyncFunction, dependencies = [], autoExecute = true) {
 
     useEffect(() => {
         if (autoExecute) execute();
-    }, dependencies);
+    }, [...dependencies]);
 
     return { data, loading, error, execute };
 }
