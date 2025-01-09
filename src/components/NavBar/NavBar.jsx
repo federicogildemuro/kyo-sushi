@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { scrollToTop } from '../../utils/ScrollUtils';
 import NavBarLogo from '../NavBarLogo/NavBarLogo';
 import CartWidget from '../CartWidget/CartWidget';
+import WishlistWidget from '../WishlistWidget/WishlistWidget';
 import './NavBar.css';
 
 function NavBar() {
@@ -101,6 +102,8 @@ function NavBar() {
                     </ul>
 
                     <div className="ms-auto d-flex justify-content-center align-items-center flex-lg-row flex-column">
+                        <WishlistWidget />
+
                         <CartWidget />
                     </div>
                 </div>

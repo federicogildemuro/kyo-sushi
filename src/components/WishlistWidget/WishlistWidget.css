@@ -1,0 +1,9 @@
+.wishlist-widget-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: color .5s ease;
+}
+
+.wishlist-widget-icon:hover {
+    color: var(--tertiary-color);
+}
