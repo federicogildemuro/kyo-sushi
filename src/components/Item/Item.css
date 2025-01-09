@@ -5,9 +5,26 @@
     border: .1rem solid var(--tertiary-color);
     border-radius: .5rem;
     transition: all .5s ease;
+    position: relative;
 }
 
 .item-container:hover {
-    background-color: var(--secondary-color);
     color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.wishlist-icon-container {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.wishlist-icon {
+    color: var(--primary-color);
+}
+
+.wishlist-icon.bi-heart-fill {
+    color: var(--secondary-color);
 }

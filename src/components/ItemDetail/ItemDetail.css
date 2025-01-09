@@ -1,6 +1,23 @@
 .custom-card {
-    background-color: var(--primary-color);
     color: var(--tertiary-color);
+    background-color: var(--primary-color);
     border: .1rem solid var(--tertiary-color);
     border-radius: .5rem;
+}
+
+.wishlist-icon-container {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.wishlist-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.wishlist-icon.bi-heart-fill {
+    color: var(--secondary-color);
 }

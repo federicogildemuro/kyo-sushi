@@ -1,15 +1,26 @@
-import { Link } from 'react-router-dom'
-import useCart from '../../hooks/useCart'
-import ItemCount from '../ItemCount/ItemCount'
-import { scrollToTop } from '../../utils/ScrollUtils'
-import './ItemDetail.css'
+import { Link } from 'react-router-dom';
+import useCart from '../../hooks/useCart';
+import useWishlist from '../../hooks/useWishlist';
+import ItemCount from '../ItemCount/ItemCount';
+import { scrollToTop } from '../../utils/ScrollUtils';
+import './ItemDetail.css';
 
 function ItemDetail({ item }) {
     const { isInCart, addCartItem } = useCart();
+    const { isInWishlist, addWishlistItem, removeWishlistItem } = useWishlist();
 
     const onAddToCart = (quantity) => {
         addCartItem({ ...item, quantity });
     }
+
+    const handleWishlistToggle = (event) => {
+        event.preventDefault();
+        if (isInWishlist(item.id)) {
+            removeWishlistItem(item.id);
+        } else {
+            addWishlistItem(item);
+        }
+    };
 
     if (!item) return null;
 
@@ -18,6 +29,13 @@ function ItemDetail({ item }) {
             <div className="card custom-card">
                 <div className="row g-0 h-100">
                     <div className="col-md-4 position-relative">
+                        <div className="wishlist-icon-container">
+                            <i
+                                className={`wishlist-icon p-2 bi ${isInWishlist(item.id) ? 'bi-heart-fill' : 'bi-heart'}`}
+                                onClick={handleWishlistToggle}
+                            />
+                        </div>
+
                         <img
                             src={item.pictureUrl}
                             alt={item.title}
@@ -48,7 +66,11 @@ function ItemDetail({ item }) {
                             <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between mt-3 mb-3">
                                 <ItemCount stock={item.stock} onAddToCart={onAddToCart} />
 
-                                <Link to="/cart" className="btn custom-btn mb-3 mb-lg-0 order-lg-3" onClick={scrollToTop}>
+                                <Link
+                                    to="/cart"
+                                    className="btn custom-btn mb-3 mb-lg-0 order-lg-3"
+                                    onClick={scrollToTop}
+                                >
                                     Ir al carrito
                                 </Link>
 
@@ -64,7 +86,7 @@ function ItemDetail({ item }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default ItemDetail
+export default ItemDetail;
