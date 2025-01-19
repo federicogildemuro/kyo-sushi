@@ -1,0 +1,7 @@
+.terms-link {
+    color: var(--tertiary-color);
+}
+
+.terms-link:hover {
+    color: var(--secondary-color);
+}
