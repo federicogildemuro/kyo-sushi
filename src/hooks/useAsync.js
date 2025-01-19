@@ -6,6 +6,7 @@ function useAsync(asyncFunction, dependencies = [], autoExecute = true) {
     const [error, setError] = useState(null);
 
     const execute = useCallback(async (...args) => {
+        setData(null);
         setLoading(true);
         setError(null);
         try {
