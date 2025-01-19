@@ -1,12 +1,13 @@
-import { useState } from 'react'
-import { validateField, validateForm, isFormValid } from '../utils/ValidationUtils'
+import { useState } from 'react';
+import { validateField, validateForm, isFormValid } from '../utils/ValidationUtils';
 
 function useFormValidation(initialData) {
     const [formData, setFormData] = useState(initialData);
     const [formErrors, setFormErrors] = useState({});
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+
         setFormData((prev) => ({
             ...prev,
             [name]: value,
@@ -18,11 +19,26 @@ function useFormValidation(initialData) {
         }));
     };
 
-    const handleBlur = (e) => {
-        const { name, value } = e.target;
+    const handleBlur = (event) => {
+        const { name, value } = event.target;
+
         setFormErrors((prev) => ({
             ...prev,
             [name]: validateField(name, value, formData),
+        }));
+    };
+
+    const handleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
+
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: checked,
+        }));
+
+        setFormErrors((prevFormErrors) => ({
+            ...prevFormErrors,
+            [name]: validateField(name, checked, formData),
         }));
     };
 
@@ -32,7 +48,7 @@ function useFormValidation(initialData) {
         return isFormValid(errors);
     };
 
-    return { formData, formErrors, handleInputChange, handleBlur, validateFormData }
+    return { formData, formErrors, handleInputChange, handleBlur, handleCheckboxChange, validateFormData };
 }
 
-export default useFormValidation
+export default useFormValidation;
