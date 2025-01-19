@@ -1,11 +1,34 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import useAsync from '../../hooks/useAsync';
+import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/ScrollUtils';
 import NavBarLogo from '../NavBarLogo/NavBarLogo';
 import CartWidget from '../CartWidget/CartWidget';
 import WishlistWidget from '../WishlistWidget/WishlistWidget';
+import Spinner from '../Spinner/Spinner';
 import './NavBar.css';
 
 function NavBar() {
+    const { user, logout } = useAuth();
+    const { data, loading, error, execute } = useAsync(logout, [], false);
+    const { showNotification } = useNotification();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (data) {
+            showNotification('Sesión cerrada correctamente', 'success');
+            navigate('/');
+        }
+    }, [data, showNotification, navigate]);
+
+    useEffect(() => {
+        if (error) {
+            showNotification('Ha ocurrido un error cerrando la sesión', 'danger');
+        }
+    }, [error, showNotification]);
+
     const categories = [
         'Rolls',
         'Hot Rolls',
@@ -19,8 +42,14 @@ function NavBar() {
         'Combinados'
     ];
 
+    const handleLogout = async () => {
+        await execute();
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-custom">
+            {loading && <Spinner />}
+
             <div className="container-fluid">
                 <NavBarLogo />
 
@@ -99,6 +128,37 @@ function NavBar() {
                                 Contacto
                             </NavLink>
                         </li>
+
+                        {user && (
+                            <li>
+                                <NavLink
+                                    to="/profile"
+                                    className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                                    onClick={scrollToTop}
+                                >
+                                    Perfil
+                                </NavLink>
+                            </li>
+                        )}
+
+                        <li>
+                            {user ? (
+                                <button
+                                    className="nav-link btn btn-link"
+                                    onClick={handleLogout}
+                                >
+                                    Cerrar sesión
+                                </button>
+                            ) : (
+                                <NavLink
+                                    to="/login"
+                                    className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                                    onClick={scrollToTop}
+                                >
+                                    Iniciar sesión
+                                </NavLink>
+                            )}
+                        </li>
                     </ul>
 
                     <div className="ms-auto d-flex justify-content-center align-items-center flex-lg-row flex-column">
@@ -108,7 +168,7 @@ function NavBar() {
                     </div>
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 }
 
