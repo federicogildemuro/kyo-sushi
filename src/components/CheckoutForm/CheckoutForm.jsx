@@ -36,7 +36,6 @@ function CheckoutForm() {
 
         try {
             await executeCheckStockAndUpdate(cart);
-            console.log(stockCheckResult);
             if (!stockCheckResult.success) {
                 const productsWithNoStock = stockCheckResult.productsWithNoStock.map((product) => product.title).join(', ');
                 showNotification(`No hay stock suficiente para los siguientes productos: ${productsWithNoStock}. Elimínelos del carrito para finalizar la compra`, 'danger');
