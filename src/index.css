@@ -30,8 +30,27 @@ h6 {
     background-color: var(--secondary-color);
 }
 
-.custom-btn:hover {
+.custom-btn:hover,
+.custom-btn:focus {
     color: var(--primary-color);
     background-color: var(--tertiary-color);
     transition: color .5s ease, background-color .5s ease;
+}
+
+.form-control {
+    color: var(--tertiary-color) !important;
+}
+
+.form-control:focus,
+.form-check-input:focus {
+    border-color: var(--tertiary-color);
+    box-shadow: 0 0 0 .1rem var(--tertiary-color);
+}
+
+.form-check-input:hover {
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--tertiary-color);
 }
