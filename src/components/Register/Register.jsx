@@ -4,6 +4,7 @@ import useFormValidation from '../../hooks/useFormValidation';
 import useAuth from '../../hooks/useAuth';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
+import BackButton from '../BackButton/BackButton';
 import Spinner from '../Spinner/Spinner';
 import { scrollToTop } from '../../utils/ScrollUtils';
 import './Register.css';
@@ -73,7 +74,7 @@ function Register() {
         handleInputChange,
         handleBlur,
         handleCheckboxChange,
-        validateFormData,
+        validateFormData
     } = useFormValidation(initialFormData);
 
     const handleSubmit = async (event) => {
@@ -169,6 +170,8 @@ function Register() {
                         Registrarse
                     </button>
                 </form>
+
+                <BackButton />
             </div>
         </section>
     );
