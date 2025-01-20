@@ -6,6 +6,7 @@ const LandingPage = lazy(() => import('./components/LandingPage/LandingPage'));
 const Register = lazy(() => import('./components/Register/Register'));
 const Login = lazy(() => import('./components/Login/Login'));
 const ResetPassword = lazy(() => import('./components/ResetPassword/ResetPassword'));
+const UpdatePassword = lazy(() => import('./components/UpdatePassword/UpdatePassword'));
 const ItemListContainer = lazy(() => import('./components/ItemListContainer/ItemListContainer'));
 const ItemDetailContainer = lazy(() => import('./components/ItemDetailContainer/ItemDetailContainer'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
@@ -27,6 +28,8 @@ function AppRoutes() {
                 <Route path="/login" element={<Login />} />
 
                 <Route path="/reset-password" element={<ResetPassword />} />
+
+                <Route path="/update-password" element={<UpdatePassword />} />
 
                 <Route path="/tienda" element={<ItemListContainer />} />
 
