@@ -1,5 +1,5 @@
 import { db } from './FirebaseServices';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, getDocs, collection, query, where } from 'firebase/firestore';
 
 const createUser = async (id, data) => {
     if (!id) {
@@ -29,6 +29,19 @@ const getUserById = async (id) => {
     }
 };
 
+const getUserByEmail = async (email) => {
+    try {
+        const usersRef = collection(db, 'users');
+        const querySnapshot = await getDocs(query(usersRef, where('email', '==', email)));
+        if (querySnapshot.empty) {
+            return null;
+        }
+        return querySnapshot.docs[0].data();
+    } catch (error) {
+        throw new Error(error.message || 'Error al obtener el usuario');
+    }
+};
+
 const updateUserLastLogin = async (id) => {
     try {
         const userRef = doc(db, 'users', id);
@@ -38,4 +51,4 @@ const updateUserLastLogin = async (id) => {
     }
 };
 
-export { createUser, getUserById, updateUserLastLogin };
+export { createUser, getUserById, getUserByEmail, updateUserLastLogin };
