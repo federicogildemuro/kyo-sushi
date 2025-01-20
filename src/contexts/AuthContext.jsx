@@ -1,7 +1,16 @@
 import { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import {
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    sendPasswordResetEmail,
+    confirmPasswordReset,
+    signOut
+} from 'firebase/auth';
 import { auth } from '../services/FirebaseServices';
-import { createUser, getUserById, updateUserLastLogin } from '../services/UsersServices';
+import { createUser, getUserById, getUserByEmail, updateUserLastLogin } from '../services/UsersServices';
 
 const AuthContext = createContext();
 
@@ -11,7 +20,10 @@ function AuthProvider({ children }) {
     const googleProvider = new GoogleAuthProvider();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                user = await getUserById(user.uid);
+            }
             setUser(user);
         });
 
@@ -77,6 +89,31 @@ function AuthProvider({ children }) {
         }
     };
 
+    const resetPassword = async (email) => {
+        try {
+            const userData = await getUserByEmail(email);
+            if (!userData) {
+                throw new Error('No existe un usuario registrado con el correo electrónico ingresado');
+            }
+            await sendPasswordResetEmail(auth, email);
+            return true;
+        } catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                throw new Error('No existe una cuenta asociada a este correo electrónico');
+            }
+            throw new Error(error.message || 'Error al enviar el correo de restablecimiento de contraseña');
+        }
+    };
+
+    const updatePassword = async (oobCode, newPassword) => {
+        try {
+            await confirmPasswordReset(auth, oobCode, newPassword);
+            return true;
+        } catch (error) {
+            throw new Error(error.message || 'Error al restablecer la contraseña');
+        }
+    };
+
     const logout = async () => {
         try {
             await signOut(auth);
@@ -90,6 +127,8 @@ function AuthProvider({ children }) {
         register,
         login,
         loginWithGoogle,
+        resetPassword,
+        updatePassword,
         logout,
     };
 
