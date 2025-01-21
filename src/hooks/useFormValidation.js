@@ -48,7 +48,7 @@ function useFormValidation(initialData) {
         return isFormValid(errors);
     };
 
-    return { formData, formErrors, handleInputChange, handleBlur, handleCheckboxChange, validateFormData };
+    return { formData, setFormData, formErrors, handleInputChange, handleBlur, handleCheckboxChange, validateFormData };
 }
 
 export default useFormValidation;
