@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState, useCallback } from 'react'
-import { getCart, addItemToCart, removeItemFromCart, clearCartItems } from '../services/CartsServices'
+import { createContext, useEffect, useState, useCallback } from 'react';
+import { getCart, addItemToCart, removeItemFromCart, clearCartItems } from '../services/CartsServices';
 
 const CartContext = createContext();
 
@@ -24,6 +24,11 @@ function CartProvider({ children }) {
     }, [cart]);
 
     const cartQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+    const cartItemQuantity = useCallback(
+        (id) => cart.find((item) => item.id === id)?.quantity || 0,
+        [cart]
+    );
 
     const isInCart = useCallback(
         (id) => cart.some((item) => item.id === id),
@@ -71,6 +76,7 @@ function CartProvider({ children }) {
     const obj = {
         cart,
         cartQuantity,
+        cartItemQuantity,
         isInCart,
         addCartItem,
         removeCartItem,
@@ -82,7 +88,7 @@ function CartProvider({ children }) {
         <CartContext.Provider value={obj}>
             {children}
         </CartContext.Provider>
-    )
+    );
 }
 
-export { CartProvider, CartContext }
+export { CartProvider, CartContext };
