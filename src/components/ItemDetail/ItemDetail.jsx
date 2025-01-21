@@ -6,7 +6,7 @@ import { scrollToTop } from '../../utils/ScrollUtils';
 import './ItemDetail.css';
 
 function ItemDetail({ item }) {
-    const { isInCart, addCartItem } = useCart();
+    const { isInCart, cartItemQuantity, addCartItem } = useCart();
     const { isInWishlist, addWishlistItem, removeWishlistItem } = useWishlist();
 
     const onAddToCart = (quantity) => {
@@ -58,26 +58,32 @@ function ItemDetail({ item }) {
                                     : (<small className="text-danger">Producto no disponible</small>)
                                 }
                                 {isInCart(item.id) && (
-                                    <small className="text-success ms-2">Producto en el carrito</small>
+                                    <small className="text-success ms-2">
+                                        {cartItemQuantity(item.id)}
+                                        {cartItemQuantity(item.id) === 1 ? ' unidad' : ' unidades'} en el carrito
+                                    </small>
+
                                 )
                                 }
                             </p>
 
                             <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between mt-3 mb-3">
-                                <ItemCount stock={item.stock} onAddToCart={onAddToCart} />
+                                <ItemCount item={item} onAddToCart={onAddToCart} />
 
                                 <Link
                                     to="/cart"
                                     className="btn custom-btn mb-3 mb-lg-0 order-lg-3"
                                     onClick={scrollToTop}
                                 >
-                                    Ir al carrito
+                                    <i className="bi bi-cart me-2" />
+                                    Ver carrito
                                 </Link>
 
                                 <button
                                     className="btn custom-btn mb-3 mb-lg-0 order-lg-1"
                                     onClick={() => window.history.back()}
                                 >
+                                    <i className="bi bi-arrow-left me-2" />
                                     Volver a la tienda
                                 </button>
                             </div>

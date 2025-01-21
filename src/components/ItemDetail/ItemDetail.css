@@ -6,6 +6,9 @@
 }
 
 .wishlist-icon-container {
+    background-color: var(--primary-color);
+    border: .1rem solid var(--secondary-color);
+    border-radius: 25%;
     position: absolute;
     top: .5rem;
     right: .5rem;
@@ -15,7 +18,7 @@
 
 .wishlist-icon {
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .wishlist-icon.bi-heart-fill {
