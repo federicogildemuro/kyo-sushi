@@ -2,12 +2,6 @@ import { db } from './FirebaseServices';
 import { doc, setDoc, getDoc, getDocs, collection, query, where } from 'firebase/firestore';
 
 const createUser = async (id, data) => {
-    if (!id) {
-        throw new Error('El ID del usuario es obligatorio');
-    }
-    if (!data || typeof data !== 'object') {
-        throw new Error('Los datos del usuario son inválidos o están vacíos');
-    }
     try {
         const userRef = doc(db, 'users', id);
         await setDoc(userRef, data);
@@ -23,7 +17,7 @@ const getUserById = async (id) => {
         if (!userDoc.exists()) {
             return null;
         }
-        return userDoc.data();
+        return { id: userDoc.id, ...userDoc.data() };
     } catch (error) {
         throw new Error(error.message || 'Error al obtener el usuario');
     }
@@ -42,13 +36,24 @@ const getUserByEmail = async (email) => {
     }
 };
 
+const updateUser = async (id, data) => {
+    try {
+        const userRef = doc(db, 'users', id);
+        await setDoc(userRef, data, { merge: true });
+        return { id, ...data };
+    } catch (error) {
+        throw new Error(error.message || 'Error al actualizar el usuario');
+    }
+}
+
 const updateUserLastLogin = async (id) => {
     try {
         const userRef = doc(db, 'users', id);
         await setDoc(userRef, { metadata: { lastLogin: new Date().toISOString() } }, { merge: true });
+        return true;
     } catch (error) {
         throw new Error(error.message || 'Error al actualizar la fecha de último acceso');
     }
 };
 
-export { createUser, getUserById, getUserByEmail, updateUserLastLogin };
+export { createUser, getUserById, getUserByEmail, updateUser, updateUserLastLogin };
