@@ -1,0 +1,21 @@
+.non-editable {
+    background-color: var(--primary-color);
+    border-color: var(--tertiary-color);
+}
+
+.non-editable:focus {
+    background-color: var(--primary-color);
+    box-shadow: none;
+}
+
+.input-group-text {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    border-color: var(--tertiary-color);
+    transition: all .5s ease-in;
+    cursor: pointer;
+}
+
+.input-group-text:hover {
+    background-color: var(--tertiary-color);
+}
