@@ -21,9 +21,6 @@ function AuthProvider({ children }) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                user = await getUserById(user.uid);
-            }
             setUser(user);
         });
 
@@ -117,6 +114,7 @@ function AuthProvider({ children }) {
     const logout = async () => {
         try {
             await signOut(auth);
+            return true;
         } catch (error) {
             throw new Error(error.message || 'Error cerrando sesión');
         }
