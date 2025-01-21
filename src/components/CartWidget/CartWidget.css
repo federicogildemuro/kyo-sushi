@@ -1,13 +1,11 @@
-.nav-link svg {
-    width: 2.5rem;
-    height: 2.5rem;
-    fill: var(--primary-color);
-    transition: fill .5s ease;
+.cart-widget-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    transition: color .5s ease;
 }
 
-.nav-link:hover svg {
-    fill: var(--tertiary-color);
-    transition: fill .5s ease;
+.cart-widget-icon:hover {
+    color: var(--tertiary-color);
 }
 
 .cart-widget-quantity {
