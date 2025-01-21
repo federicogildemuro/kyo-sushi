@@ -1,17 +1,24 @@
-import useCount from '../../hooks/useCount'
-import useNotification from '../../hooks/useNotification'
-import './ItemCount.css'
+import useCart from '../../hooks/useCart';
+import useCount from '../../hooks/useCount';
+import useNotification from '../../hooks/useNotification';
+import './ItemCount.css';
 
-function ItemCount({ stock, onAddToCart }) {
-    const { count, increment, decrement } = useCount(stock ? 1 : 0, 1, stock);
+function ItemCount({ item, onAddToCart }) {
+    const { isInCart, cartItemQuantity } = useCart();
+    const stock = item.stock;
+    const initial = isInCart(item.id) ? cartItemQuantity(item.id) : 0;
+
+    const { count, increment, decrement } = useCount(initial, 1, stock);
+
     const { showNotification } = useNotification();
 
     const handleAdd = () => {
         onAddToCart(count);
-        count === 1
-            ? showNotification('Se agregó 1 unidad al carrito.', 'success')
-            : showNotification(`Se agregaron ${count} unidades al carrito.`, 'success');
-    }
+        showNotification(
+            `Se agregó${count === 1 ? '' : 'ron'} ${count} unidad${count === 1 ? '' : 'es'} al carrito.`,
+            'success'
+        );
+    };
 
     return (
         <div className="d-flex align-items-center mb-3 mb-lg-0 order-lg-2">
@@ -43,10 +50,11 @@ function ItemCount({ stock, onAddToCart }) {
                 onClick={handleAdd}
                 disabled={stock === 0}
             >
+                <i className="bi bi-cart-plus me-2" />
                 Agregar
             </button>
         </div>
     );
 }
 
-export default ItemCount
+export default ItemCount;
