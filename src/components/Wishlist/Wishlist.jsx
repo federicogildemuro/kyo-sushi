@@ -60,8 +60,7 @@ function Wishlist() {
                         >
                             Ir a la tienda
                         </Link>
-                    </>
-                    )
+                    </>)
                 }
             </div>
         </section>
