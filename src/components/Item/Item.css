@@ -1,11 +1,11 @@
 .item-container {
+    position: relative;
     text-decoration: none;
     color: var(--tertiary-color);
     background-color: var(--primary-color);
     border: .1rem solid var(--tertiary-color);
     border-radius: .5rem;
     transition: all .5s ease;
-    position: relative;
 }
 
 .item-container:hover {
@@ -13,18 +13,21 @@
     background-color: var(--secondary-color);
 }
 
-.wishlist-icon-container {
+.favorite-icon-container {
     position: absolute;
     top: .5rem;
     right: .5rem;
     z-index: 10;
+    background-color: var(--primary-color);
+    border: .1rem solid var(--tertiary-color);
+    border-radius: .5rem;
     cursor: pointer;
 }
 
-.wishlist-icon {
-    color: var(--primary-color);
+.favorite-icon {
+    color: var(--secondary-color);
 }
 
-.wishlist-icon.bi-heart-fill {
+.favorite-icon.bi-heart-fill {
     color: var(--secondary-color);
 }

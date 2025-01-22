@@ -1,27 +1,36 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useCart from '../../hooks/useCart';
-import useWishlist from '../../hooks/useWishlist';
+import useFavorites from '../../hooks/useFavorites';
 import useNotification from '../../hooks/useNotification';
-import ItemCount from '../ItemCount/ItemCount';
 import { scrollToTop } from '../../utils/ScrollUtils';
+import ItemCount from '../ItemCount/ItemCount';
 import './ItemDetail.css';
 
 function ItemDetail({ item }) {
     const { user } = useAuth();
     const { isInCart, cartItemQuantity, addCartItem } = useCart();
-    const { isInWishlist, addWishlistItem, removeWishlistItem } = useWishlist();
+    const { toggleFavorite, checkFavorite } = useFavorites();
     const { showNotification } = useNotification();
 
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const checkIfFavorite = async () => {
+            if (user) {
+                const favoriteStatus = await checkFavorite(item.id);
+                setIsFavorite(favoriteStatus);
+            }
+        };
+        checkIfFavorite();
+    }, [user, item.id, checkFavorite]);
+
     const onAddToCart = (quantity) => {
-        if (!user) {
-            showNotification('Debes iniciar sesión para añadir productos al carrito', 'warning');
-            return;
-        }
         addCartItem({ ...item, quantity });
     }
 
-    const handleWishlistToggle = (event) => {
+    const handleFavoriteToggle = async (event) => {
         event.preventDefault();
 
         if (!user) {
@@ -29,11 +38,8 @@ function ItemDetail({ item }) {
             return;
         }
 
-        if (isInWishlist(item.id)) {
-            removeWishlistItem(item.id);
-        } else {
-            addWishlistItem(item);
-        }
+        const updatedFavoriteStatus = await toggleFavorite(item);
+        setIsFavorite(updatedFavoriteStatus);
     };
 
     if (!item) return null;
@@ -43,10 +49,10 @@ function ItemDetail({ item }) {
             <div className="card custom-card">
                 <div className="row g-0 h-100">
                     <div className="col-md-4 position-relative">
-                        <div className="wishlist-icon-container">
+                        <div className="favorite-icon-container">
                             <i
-                                className={`wishlist-icon p-2 bi ${isInWishlist(item.id) ? 'bi-heart-fill' : 'bi-heart'}`}
-                                onClick={handleWishlistToggle}
+                                className={`favorite-icon fs-4 p-2 bi bi-heart${isFavorite ? '-fill' : ''}`}
+                                onClick={handleFavoriteToggle}
                             />
                         </div>
 

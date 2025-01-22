@@ -5,22 +5,21 @@
     border-radius: .5rem;
 }
 
-.wishlist-icon-container {
-    background-color: var(--primary-color);
-    border: .1rem solid var(--secondary-color);
-    border-radius: 25%;
+.favorite-icon-container {
     position: absolute;
     top: .5rem;
     right: .5rem;
     z-index: 10;
+    background-color: var(--primary-color);
+    border: .1rem solid var(--tertiary-color);
+    border-radius: .5rem;
     cursor: pointer;
 }
 
-.wishlist-icon {
-    font-size: 1.5rem;
+.favorite-icon {
     color: var(--secondary-color);
 }
 
-.wishlist-icon.bi-heart-fill {
+.favorite-icon.bi-heart-fill {
     color: var(--secondary-color);
 }

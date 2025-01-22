@@ -1,15 +1,28 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import useWishlist from '../../hooks/useWishlist';
+import useFavorites from '../../hooks/useFavorites';
 import useNotification from '../../hooks/useNotification';
 import './Item.css';
 
 function Item({ item }) {
     const { user } = useAuth();
-    const { isInWishlist, addWishlistItem, removeWishlistItem } = useWishlist();
+    const { toggleFavorite, checkFavorite } = useFavorites();
     const { showNotification } = useNotification();
 
-    const handleWishlistToggle = (event) => {
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const checkIfFavorite = async () => {
+            if (user) {
+                const favoriteStatus = await checkFavorite(item.id);
+                setIsFavorite(favoriteStatus);
+            }
+        };
+        checkIfFavorite();
+    }, [user, item.id, checkFavorite]);
+
+    const handleFavoriteToggle = async (event) => {
         event.preventDefault();
 
         if (!user) {
@@ -17,21 +30,18 @@ function Item({ item }) {
             return;
         }
 
-        if (isInWishlist(item.id)) {
-            removeWishlistItem(item.id);
-        } else {
-            addWishlistItem(item);
-        }
-    };
+        const updatedFavoriteStatus = await toggleFavorite(item);
+        setIsFavorite(updatedFavoriteStatus);
+    }
 
     if (!item) return null;
 
     return (
         <Link to={`/item/${item.id}`} className="item-container card h-100">
-            <div className="wishlist-icon-container">
+            <div className="favorite-icon-container">
                 <i
-                    className={`wishlist-icon p-2 bi ${isInWishlist(item.id) ? 'bi-heart-fill' : 'bi-heart'}`}
-                    onClick={handleWishlistToggle}
+                    className={`favorite-icon fs-5 p-1 bi bi-heart${isFavorite ? '-fill' : ''}`}
+                    onClick={handleFavoriteToggle}
                 />
             </div>
 
