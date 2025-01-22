@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useAsync from '../../hooks/useAsync';
-import { fetchProducts } from '../../services/ProductsServices';
+import { getProducts } from '../../services/ProductsServices';
 import usePagination from '../../hooks/usePagination';
 import FiltersMenu from '../FiltersMenu/FiltersMenu';
 import SortButtons from '../SortButtons/SortButtons';
@@ -14,7 +14,7 @@ function ItemListContainer() {
     const { category } = useParams();
 
     /* Fetch products */
-    const { data, loading, error } = useAsync(() => fetchProducts(category), [category]);
+    const { data, loading, error } = useAsync(() => getProducts(category), [category]);
     const items = useMemo(() => Array.isArray(data) ? data : [], [data]);
     useEffect(() => {
         if (items.length > 0) {

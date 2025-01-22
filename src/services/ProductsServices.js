@@ -2,7 +2,7 @@ import { db } from './FirebaseServices';
 import { getDocs, collection, doc, getDoc, query, where, updateDoc } from 'firebase/firestore';
 import { createProductAdapterFromFirebase } from '../adapters/ProductAdapter';
 
-const fetchProducts = async (category) => {
+const getProducts = async (category) => {
     try {
         if (category) {
             const q = query(collection(db, 'products'), where('category', '==', category));
@@ -18,7 +18,7 @@ const fetchProducts = async (category) => {
     }
 }
 
-const fetchProductById = async (id) => {
+const getProductById = async (id) => {
     try {
         const docRef = doc(db, 'products', id);
         const docSnap = await getDoc(docRef);
@@ -70,4 +70,4 @@ const checkStockAndUpdate = async (cart) => {
     }
 };
 
-export { fetchProducts, fetchProductById, checkStockAndUpdate };
+export { getProducts, getProductById, checkStockAndUpdate };

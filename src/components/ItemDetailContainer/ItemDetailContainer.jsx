@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { fetchProductById } from '../../services/ProductsServices'
+import { getProductById } from '../../services/ProductsServices'
 import useAsync from '../../hooks/useAsync'
 import { scrollToTop } from '../../utils/ScrollUtils'
 import Spinner from '../Spinner/Spinner'
@@ -7,7 +7,7 @@ import ItemDetail from '../ItemDetail/ItemDetail'
 
 function ItemDetailContainer() {
     const { id } = useParams();
-    const { data, loading } = useAsync(() => fetchProductById(id), [id]);
+    const { data, loading } = useAsync(() => getProductById(id), [id]);
 
     return (
         <section className="custom-container d-flex flex-column text-center">
