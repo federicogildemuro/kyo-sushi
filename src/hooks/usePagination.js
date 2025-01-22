@@ -3,11 +3,16 @@ import { useState, useMemo } from 'react';
 function usePagination(data, itemsPerPage) {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const totalPages = useMemo(() => Math.ceil(data.length / itemsPerPage), [data, itemsPerPage]);
+    const totalPages = useMemo(() => {
+        return Array.isArray(data) ? Math.ceil(data.length / itemsPerPage) : 0;
+    }, [data, itemsPerPage]);
 
     const currentItems = useMemo(() => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        return data.slice(startIndex, startIndex + itemsPerPage);
+        if (Array.isArray(data)) {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            return data.slice(startIndex, startIndex + itemsPerPage);
+        }
+        return [];
     }, [data, currentPage, itemsPerPage]);
 
     return {
