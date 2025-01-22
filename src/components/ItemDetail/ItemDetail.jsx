@@ -10,25 +10,32 @@ import './ItemDetail.css';
 
 function ItemDetail({ item }) {
     const { user } = useAuth();
-    const { isInCart, cartItemQuantity, addCartItem } = useCart();
+    const { checkItemInCart, cartItemQuantity, addCartItem } = useCart();
     const { toggleFavorite, checkFavorite } = useFavorites();
     const { showNotification } = useNotification();
 
     const [isFavorite, setIsFavorite] = useState(false);
+    const [isInCart, setIsInCart] = useState(false);
+    const [cartQuantity, setCartQuantity] = useState(0);
 
     useEffect(() => {
         const checkIfFavorite = async () => {
-            if (user) {
-                const favoriteStatus = await checkFavorite(item.id);
-                setIsFavorite(favoriteStatus);
-            }
-        };
-        checkIfFavorite();
-    }, [user, item.id, checkFavorite]);
+            const favoriteStatus = await checkFavorite(item.id);
+            setIsFavorite(favoriteStatus);
+        }
 
-    const onAddToCart = (quantity) => {
-        addCartItem({ ...item, quantity });
-    }
+        checkIfFavorite();
+    }, [item.id, checkFavorite]);
+
+    useEffect(() => {
+        const checkIfInCart = () => {
+            const inCart = checkItemInCart(item.id);
+            setIsInCart(inCart);
+            setCartQuantity(inCart ? cartItemQuantity(item.id) : 0);
+        }
+
+        checkIfInCart();
+    }, [item.id, checkItemInCart, cartItemQuantity]);
 
     const handleFavoriteToggle = async (event) => {
         event.preventDefault();
@@ -40,6 +47,17 @@ function ItemDetail({ item }) {
 
         const updatedFavoriteStatus = await toggleFavorite(item);
         setIsFavorite(updatedFavoriteStatus);
+    };
+
+    const handleAddToCart = (quantity) => {
+        if (!user) {
+            showNotification('Debes iniciar sesión para añadir productos al carrito', 'warning');
+            return;
+        }
+
+        addCartItem({ ...item, quantity });
+        setIsInCart(true);
+        setCartQuantity(quantity);
     };
 
     if (!item) return null;
@@ -77,18 +95,16 @@ function ItemDetail({ item }) {
                                     ? (<small className="text-muted">{item.stock} unidades en stock</small>)
                                     : (<small className="text-danger">Producto no disponible</small>)
                                 }
-                                {isInCart(item.id) && (
+                                {(isInCart && cartQuantity > 0) && (
                                     <small className="text-success ms-2">
-                                        {cartItemQuantity(item.id)}
-                                        {cartItemQuantity(item.id) === 1 ? ' unidad' : ' unidades'} en el carrito
+                                        {cartQuantity}
+                                        {cartQuantity === 1 ? ' unidad' : ' unidades'} en el carrito
                                     </small>
-
-                                )
-                                }
+                                )}
                             </p>
 
                             <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between mt-3 mb-3">
-                                <ItemCount item={item} onAddToCart={onAddToCart} />
+                                <ItemCount item={item} onAddToCart={handleAddToCart} />
 
                                 <Link
                                     to="/cart"
