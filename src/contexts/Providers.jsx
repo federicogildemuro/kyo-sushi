@@ -1,16 +1,16 @@
 import { NotificationProvider } from './NotificationContext';
 import { AuthProvider } from './AuthContext';
 import { CartProvider } from './CartContext';
-import { WishlistProvider } from './WishlistContext';
+import { FavoritesProvider } from './FavoritesContext';
 
 function Providers({ children }) {
     return (
         <NotificationProvider>
             <AuthProvider>
                 <CartProvider>
-                    <WishlistProvider>
+                    <FavoritesProvider>
                         {children}
-                    </WishlistProvider>
+                    </FavoritesProvider>
                 </CartProvider>
             </AuthProvider>
         </NotificationProvider>
