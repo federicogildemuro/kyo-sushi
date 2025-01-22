@@ -10,7 +10,7 @@ const BackButton = () => {
     };
 
     return (
-        <div className="d-flex justify-content-center justify-content-md-start mb-3">
+        <div className="d-flex justify-content-center justify-content-md-start my-5">
             <button
                 className="btn custom-btn"
                 onClick={handleBack}
