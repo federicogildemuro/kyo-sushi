@@ -1,24 +1,13 @@
 import useCart from '../../hooks/useCart';
 import useCount from '../../hooks/useCount';
-import useNotification from '../../hooks/useNotification';
 import './ItemCount.css';
 
 function ItemCount({ item, onAddToCart }) {
-    const { isInCart, cartItemQuantity } = useCart();
+    const { checkItemInCart, cartItemQuantity } = useCart();
     const stock = item.stock;
-    const initial = isInCart(item.id) ? cartItemQuantity(item.id) : 0;
+    const initial = checkItemInCart(item.id) ? cartItemQuantity(item.id) : 0;
 
     const { count, increment, decrement } = useCount(initial, 1, stock);
-
-    const { showNotification } = useNotification();
-
-    const handleAdd = () => {
-        onAddToCart(count);
-        showNotification(
-            `Se agregó${count === 1 ? '' : 'ron'} ${count} unidad${count === 1 ? '' : 'es'} al carrito.`,
-            'success'
-        );
-    };
 
     return (
         <div className="d-flex align-items-center mb-3 mb-lg-0 order-lg-2">
@@ -47,7 +36,7 @@ function ItemCount({ item, onAddToCart }) {
 
             <button
                 className="btn custom-btn ms-2"
-                onClick={handleAdd}
+                onClick={() => onAddToCart(count)}
                 disabled={stock === 0}
             >
                 <i className="bi bi-cart-plus me-2" />
