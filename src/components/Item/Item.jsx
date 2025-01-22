@@ -1,12 +1,22 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import useWishlist from '../../hooks/useWishlist';
+import useNotification from '../../hooks/useNotification';
 import './Item.css';
 
 function Item({ item }) {
+    const { user } = useAuth();
     const { isInWishlist, addWishlistItem, removeWishlistItem } = useWishlist();
+    const { showNotification } = useNotification();
 
     const handleWishlistToggle = (event) => {
         event.preventDefault();
+
+        if (!user) {
+            showNotification('Debes iniciar sesión para añadir productos a tus favoritos', 'warning');
+            return;
+        }
+
         if (isInWishlist(item.id)) {
             removeWishlistItem(item.id);
         } else {

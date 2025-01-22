@@ -1,20 +1,34 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import useCart from '../../hooks/useCart';
 import useWishlist from '../../hooks/useWishlist';
+import useNotification from '../../hooks/useNotification';
 import ItemCount from '../ItemCount/ItemCount';
 import { scrollToTop } from '../../utils/ScrollUtils';
 import './ItemDetail.css';
 
 function ItemDetail({ item }) {
+    const { user } = useAuth();
     const { isInCart, cartItemQuantity, addCartItem } = useCart();
     const { isInWishlist, addWishlistItem, removeWishlistItem } = useWishlist();
+    const { showNotification } = useNotification();
 
     const onAddToCart = (quantity) => {
+        if (!user) {
+            showNotification('Debes iniciar sesión para añadir productos al carrito', 'warning');
+            return;
+        }
         addCartItem({ ...item, quantity });
     }
 
     const handleWishlistToggle = (event) => {
         event.preventDefault();
+
+        if (!user) {
+            showNotification('Debes iniciar sesión para añadir productos a tus favoritos', 'warning');
+            return;
+        }
+
         if (isInWishlist(item.id)) {
             removeWishlistItem(item.id);
         } else {
