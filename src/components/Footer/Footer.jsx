@@ -1,13 +1,12 @@
-import { Link } from 'react-router-dom'
-import { FacebookIcon, InstagramIcon } from './SocialIcons'
-import { scrollToTop } from '../../utils/ScrollUtils'
-import './Footer.css'
+import { Link } from 'react-router-dom';
+import { scrollToTop } from '../../utils/ScrollUtils';
+import './Footer.css';
 
 function Footer() {
     const links = [
-        { to: '/tienda', label: 'Tienda' },
         { to: '/about-us', label: 'Sobre nosotros' },
         { to: '/contact', label: 'Contacto' },
+        { to: '/terms', label: 'Términos y condiciones' }
     ];
 
     return (
@@ -37,7 +36,8 @@ function Footer() {
                                 aria-label="Facebook"
                                 onClick={scrollToTop}
                             >
-                                <FacebookIcon /> Facebook
+                                <i className="bi bi-facebook me-2" />
+                                Facebook
                             </Link>
 
                             <Link
@@ -48,19 +48,21 @@ function Footer() {
                                 aria-label="Instagram"
                                 onClick={scrollToTop}
                             >
-                                <InstagramIcon /> Instagram
+                                <i className="bi bi-instagram me-2" />
+                                Instagram
                             </Link>
                         </div>
                     </div>
 
                     <div className="col-md-4 mb-3 text-md-end">
-                        <h6>&copy; {new Date().getFullYear()} Kyo Sushi</h6>
+                        <h5>&copy; {new Date().getFullYear()} Kyo Sushi</h5>
+
                         <p>Diseñado y desarrollado por Federico Gil de Muro para el curso de React JS de Coderhouse</p>
                     </div>
                 </div>
             </div>
         </footer>
-    )
+    );
 }
 
-export default Footer
+export default Footer;
