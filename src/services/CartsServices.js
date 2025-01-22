@@ -1,45 +1,71 @@
-const getCart = () => {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    return [...cart];
-};
+import { db } from './FirebaseServices';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-const saveCart = (cart) => localStorage.setItem('cart', JSON.stringify(cart));
+const fetchUserCart = async (userId) => {
+    try {
+        const docRef = doc(db, 'carts', userId);
+        const docSnap = await getDoc(docRef);
 
-const isItemInCart = (id) => {
-    const cart = getCart();
-    return cart.some((item) => item.id === id);
-};
+        if (docSnap.exists()) {
+            return docSnap.data().items || [];
+        }
 
-const addItemToCart = (item) => {
-    let cart = getCart();
-    if (isItemInCart(item.id)) {
-        cart = cart.map((existingItem) =>
-            existingItem.id === item.id
-                ? { ...existingItem, quantity: item.quantity }
-                : existingItem
-        );
-    } else {
-        cart.push(item);
+        return [];
+    } catch (error) {
+        console.error('Error fetching user cart:', error.message);
+        return [];
     }
-    saveCart(cart);
-    return getCart();
-};
+}
 
-const removeItemFromCart = (id) => {
-    let cart = getCart();
-    cart = cart.filter((item) => item.id !== id);
-    saveCart(cart);
-    return getCart();
-};
+const updateUserCart = async (userId, cart) => {
+    try {
+        const docRef = doc(db, 'carts', userId);
+        await setDoc(docRef, { items: cart }, { merge: true });
+    } catch (error) {
+        console.error('Error updating user cart:', error.message);
+    }
+}
 
-const calculateCartTotal = () => {
-    const cart = getCart();
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-};
+const addItemToCart = async (userId, item) => {
+    try {
+        const cart = await fetchUserCart(userId);
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
 
-const clearCartItems = () => {
-    saveCart([]);
-    return getCart();
-};
+        if (existingItemIndex !== -1) {
+            cart[existingItemIndex].quantity = item.quantity;
+        } else {
+            cart.push(item);
+        }
 
-export { getCart, isItemInCart, addItemToCart, removeItemFromCart, calculateCartTotal, clearCartItems };
+        await updateUserCart(userId, cart);
+        return cart;
+    } catch (error) {
+        console.error('Error adding item to cart:', error.message);
+        return [];
+    }
+}
+
+const removeItemFromCart = async (userId, itemId) => {
+    try {
+        const cart = await fetchUserCart(userId);
+        const updatedCart = cart.filter(item => item.id !== itemId);
+
+        await updateUserCart(userId, updatedCart);
+        return updatedCart;
+    } catch (error) {
+        console.error('Error removing item from cart:', error.message);
+        return [];
+    }
+}
+
+const checkIfItemInCart = async (userId, itemId) => {
+    try {
+        const cart = await fetchUserCart(userId);
+        return cart.some(item => item.id === itemId);
+    } catch (error) {
+        console.error('Error checking if item is in cart:', error.message);
+        return false;
+    }
+}
+
+export { fetchUserCart, updateUserCart, addItemToCart, removeItemFromCart, checkIfItemInCart };
