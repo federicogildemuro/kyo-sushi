@@ -6,7 +6,7 @@ import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/ScrollUtils';
 import NavBarLogo from '../NavBarLogo/NavBarLogo';
 import CartWidget from '../CartWidget/CartWidget';
-import WishlistWidget from '../WishlistWidget/WishlistWidget';
+import FavoritesWidget from '../FavoritesWidget/FavoritesWidget';
 import Spinner from '../Spinner/Spinner';
 import './NavBar.css';
 
@@ -162,7 +162,7 @@ function NavBar() {
                     </ul>
 
                     <div className="ms-auto d-flex justify-content-center align-items-center flex-lg-row flex-column">
-                        <WishlistWidget />
+                        <FavoritesWidget />
 
                         <CartWidget />
                     </div>
