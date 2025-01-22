@@ -1,62 +1,80 @@
-import { createContext, useEffect, useState, useCallback } from 'react';
-import { getCart, addItemToCart, removeItemFromCart, clearCartItems } from '../services/CartsServices';
+import { createContext, useCallback, useEffect, useState } from 'react';
+import { fetchUserCart, updateUserCart, addItemToCart, removeItemFromCart, checkIfItemInCart } from '../services/CartsServices';
+import useAuth from '../hooks/useAuth';
 
 const CartContext = createContext();
 
 function CartProvider({ children }) {
+    const { user } = useAuth();
     const [cart, setCart] = useState([]);
+    const userId = user?.uid;
 
-    const loadCartFromStorage = useCallback(() => {
+    const loadCartFromFirebase = useCallback(async () => {
+        if (!userId) return;
+
         try {
-            const cart = getCart();
-            setCart(cart || []);
+            const userCart = await fetchUserCart(userId);
+            setCart(userCart);
         } catch (error) {
-            console.error('Error loading cart:', error);
+            console.error('Error loading cart from Firebase:', error.message);
         }
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
-        loadCartFromStorage();
-    }, [loadCartFromStorage]);
-
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
-
-    const cartQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
-
-    const cartItemQuantity = useCallback(
-        (id) => cart.find((item) => item.id === id)?.quantity || 0,
-        [cart]
-    );
-
-    const isInCart = useCallback(
-        (id) => cart.some((item) => item.id === id),
-        [cart]
-    );
+        loadCartFromFirebase();
+    }, [loadCartFromFirebase]);
 
     const addCartItem = useCallback(
-        (item) => {
+        async (item) => {
+            if (!userId) return;
+
             try {
-                const newCart = addItemToCart(item);
-                setCart(newCart);
+                const updatedCart = await addItemToCart(userId, item);
+                setCart(updatedCart);
             } catch (error) {
-                console.error('Error adding item to cart:', error);
+                console.error('Error adding item to cart:', error.message);
             }
         },
-        []
+        [userId]
     );
 
     const removeCartItem = useCallback(
-        (id) => {
+        async (itemId) => {
+            if (!userId) return;
+
             try {
-                const newCart = removeItemFromCart(id);
-                setCart(newCart);
+                const updatedCart = await removeItemFromCart(userId, itemId);
+                setCart(updatedCart);
             } catch (error) {
-                console.error('Error removing item from cart:', error);
+                console.error('Error removing item from cart:', error.message);
             }
         },
-        []
+        [userId]
+    );
+
+    const clearCart = useCallback(async () => {
+        if (!userId) return;
+
+        try {
+            await updateUserCart(userId, []);
+            setCart([]);
+        } catch (error) {
+            console.error('Error clearing cart:', error.message);
+        }
+    }, [userId]);
+
+    const checkItemInCart = useCallback(
+        async (itemId) => {
+            if (!userId) return false;
+
+            try {
+                return await checkIfItemInCart(userId, itemId);
+            } catch (error) {
+                console.error('Error checking if item is in cart:', error.message);
+                return false;
+            }
+        },
+        [userId]
     );
 
     const getTotalPrice = useCallback(
@@ -64,31 +82,29 @@ function CartProvider({ children }) {
         [cart]
     );
 
-    const clearCart = useCallback(() => {
-        try {
-            const newCart = clearCartItems();
-            setCart(newCart);
-        } catch (error) {
-            console.error('Error clearing cart:', error);
-        }
-    }, []);
+    const cartQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-    const obj = {
-        cart,
-        cartQuantity,
-        cartItemQuantity,
-        isInCart,
-        addCartItem,
-        removeCartItem,
-        getTotalPrice,
-        clearCart,
+    const cartItemQuantity = (itemId) => {
+        const item = cart.find((item) => item.id === itemId);
+        return item ? item.quantity : 0;
     }
 
+    const value = {
+        cart,
+        addCartItem,
+        removeCartItem,
+        clearCart,
+        checkItemInCart,
+        getTotalPrice,
+        cartQuantity,
+        cartItemQuantity
+    };
+
     return (
-        <CartContext.Provider value={obj}>
+        <CartContext.Provider value={value}>
             {children}
         </CartContext.Provider>
     );
 }
 
-export { CartProvider, CartContext };
+export { CartContext, CartProvider };
