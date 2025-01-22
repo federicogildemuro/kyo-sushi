@@ -13,8 +13,12 @@
 }
 
 .spinner-custom {
-    color: var(--secondary-color);
+    color: var(--tertiary-color);
     width: 3rem;
     height: 3rem;
     border-width: .3rem;
+}
+
+.spinner-message {
+    color: var(--tertiary-color);
 }
