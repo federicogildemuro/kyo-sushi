@@ -19,7 +19,7 @@ const AboutUs = lazy(() => import('../components/AboutUs/AboutUs'));
 const Contact = lazy(() => import('../components/Contact/Contact'));
 const Terms = lazy(() => import('../components/Terms/Terms'));
 
-function AppRoutes() {
+function UserRoutes() {
     return (
         <Suspense fallback={<Spinner />}>
             <Routes>
@@ -101,4 +101,4 @@ function AppRoutes() {
     );
 }
 
-export default AppRoutes;
+export default UserRoutes;
