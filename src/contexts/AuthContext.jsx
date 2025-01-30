@@ -1,16 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
-import {
-    GoogleAuthProvider,
-    onAuthStateChanged,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    sendPasswordResetEmail,
-    confirmPasswordReset,
-    signOut
-} from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { auth } from '../services/FirebaseServices';
-import { createUser, getUserById, getUserByEmail, updateUserLastLogin } from '../services/UsersServices';
+import { createGoogleUser, getUserById, updateUserLastLogin } from '../services/UsersServices';
 
 const AuthContext = createContext();
 
@@ -20,26 +11,17 @@ function AuthProvider({ children }) {
     const googleProvider = new GoogleAuthProvider();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            setUser(user);
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                const userData = await getUserById(firebaseUser.uid);
+                setUser({ ...firebaseUser, userData });
+            } else {
+                setUser(null);
+            }
         });
 
         return () => unsubscribe();
     }, []);
-
-    const register = async (email, password, userData) => {
-        try {
-            const firebaseUser = await createUserWithEmailAndPassword(auth, email, password);
-            const userId = firebaseUser.user.uid;
-            await createUser(userId, userData);
-            return firebaseUser;
-        } catch (error) {
-            if (error.code === 'auth/email-already-in-use') {
-                throw new Error('Ya existe un usuario registrado con ese correo electrónico');
-            }
-            throw new Error(error.message || 'Error registrando usuario');
-        }
-    };
 
     const login = async (email, password) => {
         try {
@@ -61,7 +43,7 @@ function AuthProvider({ children }) {
             const userId = firebaseUser.user.uid;
             const userData = await getUserById(userId);
             if (!userData) {
-                await createUser(userId, {
+                await createGoogleUser(userId, {
                     firstName: firebaseUser.user.displayName,
                     lastName: '',
                     email: firebaseUser.user.email,
@@ -72,10 +54,8 @@ function AuthProvider({ children }) {
                     city: '',
                     state: '',
                     country: '',
-                    metadata: {
-                        createdAt: new Date().toISOString(),
-                        lastLogin: new Date().toISOString(),
-                    },
+                    role: 'user',
+                    lastLogin: new Date().toISOString()
                 });
             } else {
                 await updateUserLastLogin(userId);
@@ -83,31 +63,6 @@ function AuthProvider({ children }) {
             return firebaseUser;
         } catch (error) {
             throw new Error(error.message || 'Error iniciando sesión con Google');
-        }
-    };
-
-    const resetPassword = async (email) => {
-        try {
-            const userData = await getUserByEmail(email);
-            if (!userData) {
-                throw new Error('No existe un usuario registrado con el correo electrónico ingresado');
-            }
-            await sendPasswordResetEmail(auth, email);
-            return true;
-        } catch (error) {
-            if (error.code === 'auth/user-not-found') {
-                throw new Error('No existe una cuenta asociada a este correo electrónico');
-            }
-            throw new Error(error.message || 'Error al enviar el correo de restablecimiento de contraseña');
-        }
-    };
-
-    const updatePassword = async (oobCode, newPassword) => {
-        try {
-            await confirmPasswordReset(auth, oobCode, newPassword);
-            return true;
-        } catch (error) {
-            throw new Error(error.message || 'Error al restablecer la contraseña');
         }
     };
 
@@ -122,11 +77,8 @@ function AuthProvider({ children }) {
 
     const obj = {
         user,
-        register,
         login,
         loginWithGoogle,
-        resetPassword,
-        updatePassword,
         logout,
     };
 

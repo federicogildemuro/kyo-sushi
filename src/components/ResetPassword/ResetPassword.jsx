@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAsync from '../../hooks/useAsync';
-import useAuth from '../../hooks/useAuth';
+import { resetPassword } from '../../services/UsersServices';
 import useNotification from '../../hooks/useNotification';
 import BackButton from '../BackButton/BackButton';
 import Spinner from '../Spinner/Spinner';
 import { scrollToTop } from '../../utils/ScrollUtils';
 
 function ResetPassword() {
-    const { resetPassword } = useAuth();
     const { data, loading, error, execute } = useAsync(resetPassword, [], false);
     const { showNotification } = useNotification();
     const navigate = useNavigate();

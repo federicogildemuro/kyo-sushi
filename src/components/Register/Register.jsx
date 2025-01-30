@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
-import useAuth from '../../hooks/useAuth';
+import { createUser } from '../../services/UsersServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import BackButton from '../BackButton/BackButton';
@@ -10,8 +10,7 @@ import { scrollToTop } from '../../utils/ScrollUtils';
 import './Register.css';
 
 function Register() {
-    const { register } = useAuth();
-    const { data, loading, error, execute } = useAsync(register, [], false);
+    const { data, loading, error, execute } = useAsync(createUser, [], false);
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
@@ -96,10 +95,8 @@ function Register() {
             city: formData.city,
             state: formData.state,
             country: formData.country,
-            metadata: {
-                createdAt: new Date().toISOString(),
-                lastLogin: null,
-            },
+            role: 'user',
+            lastLogin: null
         });
     };
 

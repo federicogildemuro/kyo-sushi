@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
 import useAsync from '../../hooks/useAsync';
-import useAuth from '../../hooks/useAuth';
+import { updatePassword } from '../../services/UsersServices';
 import useNotification from '../../hooks/useNotification';
 import Spinner from '../Spinner/Spinner';
 import BackButton from '../BackButton/BackButton';
@@ -13,7 +13,6 @@ function UpdatePassword() {
     const queryParams = new URLSearchParams(search);
     const oobCode = queryParams.get('oobCode');
 
-    const { updatePassword } = useAuth();
     const { data, loading, error, execute } = useAsync(updatePassword, [], false);
     const { showNotification } = useNotification();
     const navigate = useNavigate();
