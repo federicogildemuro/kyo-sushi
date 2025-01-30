@@ -7,6 +7,7 @@ const AuthContext = createContext();
 
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const googleProvider = new GoogleAuthProvider();
 
@@ -15,8 +16,12 @@ function AuthProvider({ children }) {
             if (firebaseUser) {
                 const userData = await getUserById(firebaseUser.uid);
                 setUser({ ...firebaseUser, userData });
+                if (userData.role === 'admin') {
+                    setIsAdmin(true);
+                }
             } else {
                 setUser(null);
+                setIsAdmin(false);
             }
         });
 
@@ -77,6 +82,7 @@ function AuthProvider({ children }) {
 
     const obj = {
         user,
+        isAdmin,
         login,
         loginWithGoogle,
         logout,
