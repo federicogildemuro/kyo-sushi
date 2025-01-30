@@ -4,7 +4,7 @@ import useAuth from '../hooks/useAuth';
 function GuestRoute({ children }) {
     const { user } = useAuth();
 
-    return user ? <Navigate to="/profile" /> : children;
+    return user ? <Navigate to="/tienda" /> : children;
 }
 
 export default GuestRoute;
