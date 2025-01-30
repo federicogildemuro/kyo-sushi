@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import BackButton from '../BackButton/BackButton';
 import Spinner from '../Spinner/Spinner';
-import { scrollToTop } from '../../utils/ScrollUtils';
 
 function Login() {
-    const { login, loginWithGoogle } = useAuth();
-    const { data: dataLogin, loading: loadingLogin, error: errorLogin, execute: executeLogin } = useAsync(login, [], false);
-    const { data: dataGoogle, loading: loadingGoogle, error: errorGoogle, execute: executeGoogle } = useAsync(loginWithGoogle, [], false);
+    const { user, isAdmin, login, loginWithGoogle, loading, error } = useAuth();
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
@@ -18,18 +14,18 @@ function Login() {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if (dataLogin || dataGoogle) {
-            showNotification('Sesión iniciada correctamente', 'success');
-            scrollToTop();
-            navigate('/');
+        if (error) {
+            showNotification(error?.message || 'Error al iniciar sesión', 'danger');
         }
-    }, [dataLogin, dataGoogle, showNotification, navigate]);
+    }, [error, showNotification]);
 
     useEffect(() => {
-        if (errorLogin || errorGoogle) {
-            showNotification(errorLogin?.message || errorGoogle?.message || 'Error al iniciar sesión', 'danger');
+        if (user && isAdmin) {
+            navigate('/admin');
+        } else if (user) {
+            navigate('/');
         }
-    }, [errorLogin, errorGoogle, showNotification]);
+    }, [user, isAdmin, navigate]);
 
 
     const handleSubmit = async (event) => {
@@ -40,16 +36,16 @@ function Login() {
             return;
         }
 
-        await executeLogin(email, password);
-    };
+        await login(email, password);
+    }
 
     const handleGoogleLogin = async () => {
-        await executeGoogle();
-    };
+        await loginWithGoogle();
+    }
 
     return (
         <section className="custom-container d-flex flex-column text-center">
-            {(loadingLogin || loadingGoogle) && <Spinner />}
+            {loading && <Spinner />}
 
             <div className="container mb-3">
                 <h1 className="display-6 fw-bold mb-3">Iniciar sesión</h1>
@@ -86,7 +82,7 @@ function Login() {
                     <button
                         type="submit"
                         className="btn custom-btn my-3"
-                        disabled={loadingLogin || loadingGoogle}
+                        disabled={loading}
                     >
                         Iniciar sesión
                     </button>
@@ -97,7 +93,7 @@ function Login() {
                         className="btn custom-btn d-flex align-items-center justify-content-center gap-2"
                         onClick={handleGoogleLogin}
                         aria-label="Iniciar sesión con Google"
-                        disabled={loadingLogin || loadingGoogle}
+                        disabled={loading}
                     >
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24" aria-hidden="true">
                             <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
