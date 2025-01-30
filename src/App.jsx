@@ -1,12 +1,16 @@
 import { BrowserRouter } from 'react-router-dom';
 import Providers from './contexts/Providers';
-import AppContent from './AppContent';
+import Header from './components/Header/Header';
+import AppRoutes from './routes/AppRoutes';
+import Footer from './components/Footer/Footer';
 
 function App() {
     return (
         <BrowserRouter>
             <Providers>
-                <AppContent />
+                <Header />
+                <AppRoutes />
+                <Footer />
             </Providers>
         </BrowserRouter>
     );
