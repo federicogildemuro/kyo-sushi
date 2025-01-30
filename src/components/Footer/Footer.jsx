@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import { scrollToTop } from '../../utils/ScrollUtils';
 import './Footer.css';
 
 function Footer() {
+    const { user, isAdmin } = useAuth();
+
     const links = [
         { to: '/about-us', label: 'Sobre nosotros' },
         { to: '/contact', label: 'Contacto' },
         { to: '/terms', label: 'Términos y condiciones' }
     ];
+
+    if (user && isAdmin) return null;
 
     return (
         <footer className="custom-footer py-4">
