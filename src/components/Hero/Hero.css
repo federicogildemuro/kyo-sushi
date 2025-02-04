@@ -1,9 +1,0 @@
-.hero {
-    position: relative;
-    z-index: 1;
-    color: var(--primary-color);
-    background-image: url('../../assets/hero.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 80vh;
-}

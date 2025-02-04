@@ -1,5 +1,6 @@
-import Hero from '../Hero/Hero'
-import Slider from '../Slider/Slider'
+import Hero from './Hero';
+import Slider from './Slider';
+import './LandingPage.css';
 
 function LandingPage() {
     return (
@@ -7,7 +8,7 @@ function LandingPage() {
             <Hero />
             <Slider />
         </>
-    )
+    );
 }
 
-export default LandingPage
+export default LandingPage;
