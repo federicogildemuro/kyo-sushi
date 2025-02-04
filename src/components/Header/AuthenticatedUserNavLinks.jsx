@@ -1,16 +1,17 @@
 import { NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import useCart from '../../hooks/useCart';
 import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/ScrollUtils';
 
 function AuthenticatedUserNavLinks({ isMenuOpen }) {
     const { user, isAdmin, logout } = useAuth();
+    const { cartQuantity } = useCart();
     const { showNotification } = useNotification();
 
     const links = [
         { to: '/profile', icon: 'bi-person', title: 'Perfil' },
         { to: '/favorites', icon: 'bi-heart', title: 'Favoritos' },
-        { to: '/cart', icon: 'bi-cart', title: 'Carrito' }
     ];
 
     const handleLogout = () => {
@@ -33,6 +34,25 @@ function AuthenticatedUserNavLinks({ isMenuOpen }) {
                     </NavLink>
                 </li>
             ))}
+
+            {(user && !isAdmin) && (
+                <li className="position-relative">
+                    <NavLink
+                        to="/cart"
+                        title="Carrito"
+                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                        onClick={scrollToTop}
+                    >
+                        <i className={`nav-bar-icon bi bi-cart ${window.location.pathname === "/cart" ? 'active-icon' : ''}`} />
+
+                        {cartQuantity > 0 && (
+                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {cartQuantity}
+                            </span>
+                        )}
+                    </NavLink>
+                </li>
+            )}
 
             <li>
                 <NavLink
