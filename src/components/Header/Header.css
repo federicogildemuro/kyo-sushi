@@ -1,6 +1,0 @@
-.navbar-custom {
-    position: relative;
-    z-index: 1000;
-    background-color: var(--secondary-color);
-    height: 20vh;
-}
