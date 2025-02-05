@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../services/FirebaseServices';
-import { createGoogleUser, getUserById, updateUserLastLogin } from '../services/UsersServices';
+import { getUserById, updateUserLastLogin } from '../services/UsersServices';
 
 const AuthContext = createContext();
 
@@ -10,8 +10,6 @@ function AuthProvider({ children }) {
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const googleProvider = new GoogleAuthProvider();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -36,53 +34,29 @@ function AuthProvider({ children }) {
 
     const login = async (email, password) => {
         try {
-            setLoading(true);
             const firebaseUser = await signInWithEmailAndPassword(auth, email, password);
             const userId = firebaseUser.user.uid;
             await updateUserLastLogin(userId);
             return true;
         } catch (error) {
+            console.error(error);
             if (error.code === 'auth/invalid-credential') {
-                setError('Correo electrónico y/o contraseña incorrectos');
-            }
-            setError(error.message || 'Error iniciando sesión');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const loginWithGoogle = async () => {
-        try {
-            setLoading(true);
-            const firebaseUser = await signInWithPopup(auth, googleProvider);
-            const userId = firebaseUser.user.uid;
-            const userData = await getUserById(userId);
-            if (!userData) {
-                await createGoogleUser(userId, {
-                    firstName: firebaseUser.user.displayName,
-                    role: 'user',
-                    lastLogin: new Date().toISOString()
-                });
+                setError('Correo electrónico y/o contraseña incorrectos.');
+            } else if (error.code === 'auth/too-many-requests') {
+                setError('Demasiados intentos fallidos, espere unos minutos y vuelva a intentarlo');
             } else {
-                await updateUserLastLogin(userId);
+                setError('Error iniciando sesión');
             }
-            return true;
-        } catch (error) {
-            setError(error.message || 'Error iniciando sesión con Google');
-        } finally {
-            setLoading(false);
         }
     };
 
     const logout = async () => {
         try {
-            setLoading(true);
             await signOut(auth);
             return true;
         } catch (error) {
-            setError(error.message || 'Error cerrando sesión');
-        } finally {
-            setLoading(false);
+            console.error(error);
+            setError('Error cerrando sesión');
         }
     };
 
@@ -92,7 +66,6 @@ function AuthProvider({ children }) {
         loading,
         error,
         login,
-        loginWithGoogle,
         logout,
     };
 
