@@ -1,5 +1,6 @@
 import HeaderLogo from './HeaderLogo';
 import HeaderNavBar from './HeaderNavBar';
+import './Header.css';
 
 function Header() {
     return (

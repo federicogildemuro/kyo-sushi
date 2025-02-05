@@ -2,6 +2,7 @@ import useAuth from '../../hooks/useAuth';
 import FooterLinks from './FooterLinks';
 import FooterSocialLinks from './FooterSocialLinks';
 import Copyright from './Copyright';
+import './Footer.css';
 
 function Footer() {
     const { isAdmin } = useAuth();

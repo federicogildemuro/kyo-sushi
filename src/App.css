@@ -1,0 +1,81 @@
+@import url('normalize.css');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap&family=Raleway:wght@600');
+
+:root {
+    --primary-color: #ffcfcf;
+    --secondary-color: #f6592c;
+    --tertiary-color: #533786;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Raleway', sans-serif;
+}
+
+li {
+    list-style-type: none;
+}
+
+.main-container {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--tertiary-color);
+    padding-top: 20vh;
+}
+
+.nav-link {
+    color: var(--primary-color);
+}
+
+.nav-link:hover {
+    color: var(--tertiary-color);
+    transition: color .5s ease;
+}
+
+.nav-link.active {
+    color: var(--tertiary-color);
+}
+
+.nav-link:focus {
+    color: var(--tertiary-color);
+}
+
+.custom-btn {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.custom-btn:hover,
+.custom-btn:focus {
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    transition: color .5s ease, background-color .5s ease;
+}
+
+.form-control {
+    color: var(--tertiary-color) !important;
+}
+
+.form-control:focus,
+.form-check-input:focus {
+    border-color: var(--tertiary-color);
+    box-shadow: 0 0 0 .1rem var(--tertiary-color);
+}
+
+.form-check-input:hover {
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--tertiary-color);
+}

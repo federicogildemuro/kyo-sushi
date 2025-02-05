@@ -1,0 +1,52 @@
+.header-container {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 20vh;
+    background-color: var(--secondary-color);
+}
+
+.header-logo {
+    width: 7.5rem;
+    height: 90%;
+}
+
+.nav-bar-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: color .5s ease;
+}
+
+.nav-bar-icon:hover {
+    color: var(--tertiary-color);
+}
+
+.active-icon {
+    color: var(--tertiary-color);
+}
+
+.custom-offcanvas {
+    background-color: var(--secondary-color);
+}
+
+.dropdown-menu {
+    background-color: var(--primary-color);
+    transform: translateX(-50%);
+    left: 50%;
+}
+
+.dropdown-item {
+    color: var(--secondary-color);
+    transition: all .5s ease;
+}
+
+.dropdown-item:hover {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.dropdown-item.active {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
