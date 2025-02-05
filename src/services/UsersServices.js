@@ -1,6 +1,6 @@
 import { auth, db } from './FirebaseServices';
-import { doc, setDoc, getDoc, getDocs, collection, query, where } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset, } from 'firebase/auth';
+import { doc, setDoc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth';
 
 const createUser = async (email, password, userData) => {
     try {
@@ -10,22 +10,13 @@ const createUser = async (email, password, userData) => {
         await setDoc(userRef, userData);
         return true;
     } catch (error) {
+        console.error(error);
         if (error.code === 'auth/email-already-in-use') {
             throw new Error('Ya existe un usuario registrado con ese correo electrónico');
         }
-        throw new Error(error.message || 'Error registrando usuario');
+        throw new Error(error.message || 'Error al crear el usuario');
     }
-}
-
-const createGoogleUser = async (userId, userData) => {
-    try {
-        const userRef = doc(db, 'users', userId);
-        await setDoc(userRef, userData);
-        return true;
-    } catch (error) {
-        throw new Error(error.message || 'Error registrando usuario');
-    }
-}
+};
 
 const getUserById = async (id) => {
     try {
@@ -35,6 +26,7 @@ const getUserById = async (id) => {
         }
         return { id: userDoc.id, ...userDoc.data() };
     } catch (error) {
+        console.error(error);
         throw new Error(error.message || 'Error al obtener el usuario');
     }
 };
@@ -46,11 +38,13 @@ const getUserByEmail = async (email) => {
         if (querySnapshot.empty) {
             return null;
         }
-        return querySnapshot.docs[0].data();
+        const userDoc = querySnapshot.docs[0];
+        return { id: userDoc.id, ...userDoc.data() };
     } catch (error) {
+        console.error(error);
         throw new Error(error.message || 'Error al obtener el usuario');
     }
-}
+};
 
 const updateUser = async (id, data) => {
     try {
@@ -58,6 +52,7 @@ const updateUser = async (id, data) => {
         await setDoc(userRef, data, { merge: true });
         return true;
     } catch (error) {
+        console.error(error);
         throw new Error(error.message || 'Error al actualizar el usuario');
     }
 }
@@ -71,18 +66,20 @@ const resetPassword = async (email) => {
         await sendPasswordResetEmail(auth, email);
         return true;
     } catch (error) {
+        console.error(error);
         throw new Error(error.message || 'Error al enviar el correo de restablecimiento de contraseña');
     }
-}
+};
 
 const updatePassword = async (oobCode, newPassword) => {
     try {
         await confirmPasswordReset(auth, oobCode, newPassword);
         return true;
     } catch (error) {
-        throw new Error(error.message || 'Error al restablecer la contraseña');
+        console.error(error);
+        throw new Error(error.message || 'Error al actualizar la contraseña');
     }
-}
+};
 
 const updateUserLastLogin = async (id) => {
     try {
@@ -90,8 +87,9 @@ const updateUserLastLogin = async (id) => {
         await setDoc(userRef, { lastLogin: new Date().toISOString() }, { merge: true });
         return true;
     } catch (error) {
+        console.error(error);
         throw new Error(error.message || 'Error al actualizar la fecha de último acceso');
     }
-}
+};
 
-export { createUser, createGoogleUser, getUserById, getUserByEmail, updateUser, resetPassword, updatePassword, updateUserLastLogin };
+export { createUser, getUserById, getUserByEmail, updateUser, resetPassword, updatePassword, updateUserLastLogin };
