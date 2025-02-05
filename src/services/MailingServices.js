@@ -1,4 +1,4 @@
-import emailjs from '@emailjs/browser'
+import emailjs from '@emailjs/browser';
 
 const sendOrderEmail = async (order) => {
     try {
@@ -14,24 +14,30 @@ const sendOrderEmail = async (order) => {
             },
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         );
-        return { success: true, result };
+        return result;
     } catch (error) {
-        return { success: false, error };
+        console.error(error);
+        throw new Error('Error enviando el email de confirmación de compra');
     }
-}
+};
 
 const sendContactEmail = async (form) => {
     try {
-        const result = await emailjs.sendForm(
+        const result = await emailjs.send(
             import.meta.env.VITE_EMAILJS_SERVICE_ID,
             import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID,
-            form,
+            {
+                name: form.name,
+                email: form.email,
+                message: form.message
+            },
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         );
-        return { success: true, result };
+        return result;
     } catch (error) {
-        return { success: false, error };
+        console.error(error);
+        throw new Error('Error enviando el mensaje de contacto');
     }
-}
+};
 
-export { sendOrderEmail, sendContactEmail }
+export { sendOrderEmail, sendContactEmail };

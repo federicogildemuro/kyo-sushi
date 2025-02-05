@@ -1,8 +1,8 @@
 import { db } from './FirebaseServices';
-import { getDocs, collection, doc, getDoc, query, where, updateDoc } from 'firebase/firestore';
+import { getDocs, collection, doc, getDoc, query, where, updateDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
 import { createProductAdapterFromFirebase } from '../adapters/ProductAdapter';
 
-const getProducts = async (category) => {
+const fetchProducts = async (category) => {
     try {
         if (category) {
             const q = query(collection(db, 'products'), where('category', '==', category));
@@ -18,7 +18,17 @@ const getProducts = async (category) => {
     }
 }
 
-const getProductById = async (id) => {
+const fetchCategories = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, 'products'));
+        const categories = new Set(querySnapshot.docs.map(doc => doc.data().category));
+        return Array.from(categories);
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}
+
+const fetchProductById = async (id) => {
     try {
         const docRef = doc(db, 'products', id);
         const docSnap = await getDoc(docRef);
@@ -34,7 +44,34 @@ const getProductById = async (id) => {
     }
 }
 
-const checkStockAndUpdate = async (cart) => {
+const createProduct = async (product) => {
+    try {
+        const docRef = await addDoc(collection(db, 'products'), product);
+        return docRef.id;
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}
+
+const updateProduct = async (id, product) => {
+    try {
+        const docRef = doc(db, 'products', id);
+        await setDoc(docRef, product);
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}
+
+const deleteProduct = async (id) => {
+    try {
+        const docRef = doc(db, 'products', id);
+        await deleteDoc(docRef);
+    } catch (error) {
+        throw new Error(error.message || error);
+    }
+}
+
+const checkProductStockAndUpdate = async (cart) => {
     try {
         /* Check stock */
         const productsWithNoStock = [];
@@ -68,6 +105,6 @@ const checkStockAndUpdate = async (cart) => {
     } catch (error) {
         throw new Error(error.message || error);
     }
-};
+}
 
-export { getProducts, getProductById, checkStockAndUpdate };
+export { fetchProducts, fetchCategories, fetchProductById, createProduct, updateProduct, checkProductStockAndUpdate, deleteProduct };
