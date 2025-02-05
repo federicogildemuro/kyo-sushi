@@ -8,7 +8,7 @@ const AuthContext = createContext();
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const googleProvider = new GoogleAuthProvider();
@@ -16,7 +16,6 @@ function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             try {
-                setLoading(true);
                 if (firebaseUser) {
                     const userData = await getUserById(firebaseUser.uid);
                     setUser({ ...firebaseUser, userData });
