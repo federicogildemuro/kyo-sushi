@@ -50,6 +50,15 @@ li {
     color: var(--tertiary-color);
 }
 
+.auth-link {
+    color: var(--tertiary-color);
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    color: var(--secondary-color);
+}
+
 .custom-btn {
     color: var(--primary-color);
     background-color: var(--secondary-color);
