@@ -28,7 +28,7 @@ const validateField = (name, value, formData) => {
             if (!value) return 'Campo obligatorio';
             return '';
     }
-}
+};
 
 const validateForm = (formData) => {
     const errors = {};
@@ -38,10 +38,10 @@ const validateForm = (formData) => {
     });
 
     return errors;
-}
+};
 
 const isFormValid = (errors) => {
     return Object.values(errors).every((error) => !error);
-}
+};
 
 export { validateField, validateForm, isFormValid };
