@@ -28,27 +28,13 @@ function useFormValidation(initialData) {
         }));
     };
 
-    const handleCheckboxChange = (event) => {
-        const { name, checked } = event.target;
-
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: checked,
-        }));
-
-        setFormErrors((prevFormErrors) => ({
-            ...prevFormErrors,
-            [name]: validateField(name, checked, formData),
-        }));
-    };
-
     const validateFormData = () => {
         const errors = validateForm(formData);
         setFormErrors(errors);
         return isFormValid(errors);
     };
 
-    return { formData, setFormData, formErrors, handleInputChange, handleBlur, handleCheckboxChange, validateFormData };
+    return { formData, setFormData, formErrors, handleInputChange, handleBlur, validateFormData };
 }
 
 export default useFormValidation;
