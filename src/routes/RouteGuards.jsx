@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { scrollToTop } from '../utils/ScrollUtils';
 import Spinner from '../components/Spinner';
 
 const UserRoute = ({ children }) => {
@@ -7,7 +8,10 @@ const UserRoute = ({ children }) => {
 
     if (loading) return <Spinner />;
 
-    if (isAdmin) return <Navigate to="/admin" />;
+    if (isAdmin) {
+        scrollToTop();
+        return <Navigate to="/admin" />;
+    }
 
     return children;
 };
@@ -17,7 +21,10 @@ const PublicRoute = ({ children }) => {
 
     if (loading) return <Spinner />;
 
-    if (user) return <Navigate to="/" />
+    if (user) {
+        scrollToTop();
+        return <Navigate to="/" />;
+    }
 
     return children;
 };
@@ -27,9 +34,15 @@ const AuthenticatedRoute = ({ children }) => {
 
     if (loading) return <Spinner />;
 
-    if (!user) return <Navigate to="/" />;
+    if (!user) {
+        scrollToTop();
+        return <Navigate to="/" />;
+    }
 
-    if (isAdmin) return <Navigate to="/admin" />;
+    if (isAdmin) {
+        scrollToTop();
+        return <Navigate to="/admin" />;
+    }
 
     return children;
 };
@@ -39,7 +52,10 @@ const AdminRoute = ({ children }) => {
 
     if (loading) return <Spinner />;
 
-    if (!user || !isAdmin) return <Navigate to="/" />;
+    if (!user || !isAdmin) {
+        scrollToTop();
+        return <Navigate to="/" />;
+    }
 
     return children;
 };
