@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import useFormValidation from '../../hooks/useFormValidation';
-import useAsync from '../../hooks/useAsync';
 import { updatePassword } from '../../services/UsersServices';
+import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
+import useFormValidation from '../../hooks/useFormValidation';
+import { scrollToTop } from '../../utils/ScrollUtils';
 import Spinner from '../../components/Spinner';
 import BackButton from '../../components/BackButton';
-import { scrollToTop } from '../../utils/ScrollUtils';
 
 function UpdatePassword() {
     const { search } = useLocation();
@@ -19,7 +19,7 @@ function UpdatePassword() {
 
     useEffect(() => {
         if (data) {
-            showNotification('Contraseña actualizada con éxito', 'success');
+            showNotification('Contraseña restablecida exitosamente', 'success');
             scrollToTop();
             navigate('/login');
         }
@@ -27,7 +27,7 @@ function UpdatePassword() {
 
     useEffect(() => {
         if (error) {
-            showNotification(error.message || 'Error al actualizar la contraseña', 'danger');
+            showNotification(error.message, 'danger');
         }
     }, [error, showNotification]);
 
@@ -55,16 +55,28 @@ function UpdatePassword() {
         await execute(oobCode, formData.password);
     };
 
+    if (!oobCode) {
+        showNotification('El enlace de restablecimiento de contraseña no es válido', 'danger');
+        scrollToTop();
+        navigate('/');
+    }
+
     return (
-        <section className="custom-container d-flex flex-column text-center">
+        <section className="d-flex flex-column text-center">
             {loading && <Spinner />}
 
-            <div className="container mb-3">
-                <h1 className="display-6 fw-bold mb-3">Establecer nueva contraseña</h1>
+            <div className="container">
+                <h1 className="display-6 fw-bold mb-5">Establecer nueva contraseña</h1>
 
-                <form className="mx-auto col-12 col-lg-6 mb-3 col" onSubmit={handleSubmit}>
+                <form
+                    className="mx-auto col-12 col-lg-6 mb-5"
+                    onSubmit={handleSubmit}
+                >
                     <div className="d-flex flex-column align-items-start mb-3">
-                        <label htmlFor="newPassword" className="form-label">
+                        <label
+                            htmlFor="newPassword"
+                            className="form-label"
+                        >
                             Nueva Contraseña
                         </label>
 
@@ -86,7 +98,10 @@ function UpdatePassword() {
                     </div>
 
                     <div className="d-flex flex-column align-items-start mb-3">
-                        <label htmlFor="passwordConfirm" className="form-label">
+                        <label
+                            htmlFor="passwordConfirm"
+                            className="form-label"
+                        >
                             Confirmar Contraseña
                         </label>
 
@@ -112,7 +127,7 @@ function UpdatePassword() {
                         className="btn custom-btn my-3"
                         disabled={loading}
                     >
-                        Establecer nueva contraseña
+                        Enviar
                     </button>
                 </form>
 

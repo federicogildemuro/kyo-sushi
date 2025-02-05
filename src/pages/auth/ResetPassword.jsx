@@ -1,30 +1,30 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAsync from '../../hooks/useAsync';
 import { resetPassword } from '../../services/UsersServices';
+import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
+import { scrollToTop } from '../../utils/ScrollUtils';
 import BackButton from '../../components/BackButton';
 import Spinner from '../../components/Spinner';
-import { scrollToTop } from '../../utils/ScrollUtils';
 
 function ResetPassword() {
+    const [email, setEmail] = useState('');
+
     const { data, loading, error, execute } = useAsync(resetPassword, [], false);
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-
     useEffect(() => {
         if (data) {
-            showNotification('Se ha enviado un correo electrónico para reestablecer su contraseña', 'success');
+            showNotification('Se le ha enviado un correo electrónico para reestablecer su contraseña', 'success');
             scrollToTop();
-            navigate('/restore-password');
+            navigate('/');
         }
     }, [data, showNotification, navigate]);
 
     useEffect(() => {
         if (error) {
-            showNotification(error.message || 'Error al reestablecer contraseña', 'danger');
+            showNotification(error.message, 'danger');
         }
     }, [error, showNotification]);
 
@@ -32,7 +32,7 @@ function ResetPassword() {
         event.preventDefault();
 
         if (!email) {
-            showNotification('Por favor, ingrese su correo electrónico', 'danger');
+            showNotification('Por favor, ingrese su correo electrónico', 'warning');
             return;
         }
 
@@ -40,15 +40,21 @@ function ResetPassword() {
     };
 
     return (
-        <section className="custom-container d-flex flex-column text-center">
+        <section className=" d-flex flex-column text-center">
             {loading && <Spinner />}
 
-            <div className="container mb-3">
-                <h1 className="display-6 fw-bold mb-3">Reestablecer contraseña</h1>
+            <div className="container">
+                <h1 className="display-6 fw-bold mb-5">Reestablecer contraseña</h1>
 
-                <form className="mx-auto col-12 col-lg-6 mb-3" onSubmit={handleSubmit}>
+                <form
+                    className="mx-auto col-12 col-lg-6 mb-5"
+                    onSubmit={handleSubmit}
+                >
                     <div className="d-flex flex-column align-items-start mb-3">
-                        <label htmlFor="email" className="form-label">
+                        <label
+                            htmlFor="email"
+                            className="form-label"
+                        >
                             Correo Electrónico
                         </label>
 
@@ -56,6 +62,7 @@ function ResetPassword() {
                             type="email"
                             id="email"
                             className="form-control"
+                            name="email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
                         />
@@ -66,7 +73,7 @@ function ResetPassword() {
                         className="btn custom-btn my-3"
                         disabled={loading}
                     >
-                        Reestablecer contraseña
+                        Enviar
                     </button>
                 </form>
 
