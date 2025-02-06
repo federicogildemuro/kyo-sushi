@@ -4,7 +4,6 @@ import { createUser } from '../../services/userServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import useFormValidation from '../../hooks/useFormValidation';
-import createUserAdapter from '../../adapters/createUserAdapter';
 import Spinner from '../../components/Spinner';
 import BackButton from '../../components/BackButton';
 
@@ -64,8 +63,7 @@ function Register() {
             return;
         }
 
-        const adaptedUser = createUserAdapter(formData);
-        const result = await execute(formData.email, formData.password, adaptedUser);
+        const result = await execute(formData.email, formData.password, formData);
 
         if (result) {
             showNotification('Usuario registrado exitosamente', 'success');
