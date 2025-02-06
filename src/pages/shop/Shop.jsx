@@ -1,21 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useAsync from '../../hooks/useAsync';
 import { fetchProducts } from '../../services/productsServices';
+import useAsync from '../../hooks/useAsync';
 import usePagination from '../../hooks/usePagination';
 import FiltersMenu from '../../components/FiltersMenu';
 import SortButtons from '../../components/SortButtons';
-import Spinner from '../../components/Spinner';
 import ItemList from '../../components/item-list/ItemList';
 import Pagination from '../../components/Pagination';
+import Spinner from '../../components/Spinner';
 
-function ItemListContainer() {
-    /* Category from URL params */
+function Shop() {
     const { category } = useParams();
 
-    /* Fetch products */
-    const { data, loading, error } = useAsync(() => fetchProducts(category), [category]);
+    const { data, loading } = useAsync(() => fetchProducts(category), [category]);
+
     const items = useMemo(() => Array.isArray(data) ? data : [], [data]);
+
     useEffect(() => {
         if (items.length > 0) {
             setFilteredItems(items);
@@ -23,21 +23,22 @@ function ItemListContainer() {
         }
     }, [items]);
 
-    /* Filtering */
     const [filteredItems, setFilteredItems] = useState([]);
+
     const handleFilterChange = (filtered) => {
         setFilteredItems(filtered);
     };
+
     const [isFiltersMenuVisible, setFiltersMenuVisible] = useState(false);
+
     const toggleFiltersMenu = () => setFiltersMenuVisible(!isFiltersMenuVisible);
 
-    /* Sorting */
     const [sortedItems, setSortedItems] = useState([]);
+
     const handleSortChange = (sorted) => {
         setSortedItems(sorted);
     };
 
-    /* Responsive items per page */
     const [itemsPerPage, setItemsPerPage] = useState(4);
     useEffect(() => {
         const handleResize = () => {
@@ -55,18 +56,19 @@ function ItemListContainer() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    /* Pagination */
     const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(sortedItems, itemsPerPage);
 
     return (
-        <section className="custom-container d-flex flex-column text-center">
+        <section className="d-flex flex-column text-center">
+        {loading && <Spinner />}
+
             <div className="d-flex flex-column m-5">
                 <div className="d-flex justify-content-center justify-content-md-between gap-3 gap-md-0">
                     <button
                         className="btn custom-btn"
                         onClick={toggleFiltersMenu}
                     >
-                        <i className="bi bi-filter"></i>
+                        <i className="bi bi-filter" />
                     </button>
 
                     <SortButtons
@@ -87,17 +89,7 @@ function ItemListContainer() {
                 )}
             </div>
 
-            {loading && <Spinner />}
-
-            {!loading && error && (
-                <p className="fs-5">
-                    <i className="bi bi-exclamation-triangle me-2"></i>
-                    Ocurrió un error al cargar los productos
-                </p>
-            )}
-
-            {!loading && !error && (
-                currentItems.length > 0 ? (
+            {currentItems.length > 0 ? (
                     <>
                         <ItemList items={currentItems} />
 
@@ -109,13 +101,13 @@ function ItemListContainer() {
                     </>
                 ) : (
                     <p className="fs-5">
-                        <i className="bi bi-emoji-frown me-2"></i>
-                        No se encontraron productos
+                        <i className="bi bi-emoji-frown me-2" />
+                        No hay productos para mostrar
                     </p>
                 )
-            )}
+            }
         </section>
     );
 }
 
-export default ItemListContainer;
+export default Shop;
