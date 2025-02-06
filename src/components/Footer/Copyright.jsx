@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function Copyright() {
     return (
         <div className="d-flex flex-column text-center text-md-end gap-2">
@@ -6,7 +8,16 @@ function Copyright() {
                 2025 Kyo Sushi
             </h5>
 
-            <p>Diseñado y desarrollado por Federico Gil de Muro para el curso de React JS de Coderhouse</p>
+            <Link
+                to="https://www.linkedin.com/in/federicogildemuro/"
+                title="Ir a perfil de LinkedIn"
+                className="footer-link"
+                target="_blank"
+            >
+                <i className="bi bi-code-slash me-2" />
+                Federico Gil de Muro
+            </Link>
+
         </div>
     );
 }

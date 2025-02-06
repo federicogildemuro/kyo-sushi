@@ -1,6 +1,6 @@
 import useAuth from '../../hooks/useAuth';
-import FooterLinks from './FooterLinks';
-import FooterSocialLinks from './FooterSocialLinks';
+import WebsiteLinks from './WebsiteLinks';
+import SocialLinks from './SocialLinks';
 import Copyright from './Copyright';
 import './Footer.css';
 
@@ -10,13 +10,13 @@ function Footer() {
     if (isAdmin) return null;
 
     return (
-        <footer className="footer-container row p-5 m-0">
+        <footer className="footer-container row w-100 p-5 m-0">
             <div className="col-md-4 mb-5 mb-md-0">
-                <FooterLinks />
+                <WebsiteLinks />
             </div>
 
             <div className="col-md-4 mb-5 mb-md-0">
-                <FooterSocialLinks />
+                <SocialLinks />
             </div>
 
             <div className="col-md-4">

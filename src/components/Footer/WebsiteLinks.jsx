@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom';
+import { websiteLinks as links } from './links';
 import { scrollToTop } from '../../utils/ScrollUtils';
 
-function FooterLinks() {
-    const links = [
-        { to: '/about-us', label: 'Sobre nosotros' },
-        { to: '/contact', label: 'Contacto' },
-        { to: '/terms', label: 'Términos y condiciones' }
-    ];
+function WebsiteLinks() {
 
     return (
         <div className="d-flex flex-column text-center text-md-start gap-2">
@@ -29,4 +25,4 @@ function FooterLinks() {
     );
 }
 
-export default FooterLinks;
+export default WebsiteLinks;

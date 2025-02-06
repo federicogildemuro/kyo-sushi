@@ -1,14 +1,7 @@
 import { Link } from 'react-router-dom';
+import { socialLinks as links } from './links';
 
-function FooterSocialLinks() {
-    const links = [
-        { to: 'https://www.facebook.com', title: 'Facebook', icon: 'bi-facebook' },
-        { to: 'https://www.instagram.com', title: 'Instagram', icon: 'bi-instagram' },
-        { to: 'https://www.x.com', title: 'X', icon: 'bi-twitter-x' },
-        { to: 'https://www.tiktok.com', title: 'TikTok', icon: 'bi-tiktok' },
-        { to: 'https://youtube.com', title: 'YouTube', icon: 'bi-youtube' }
-    ];
-
+function SocialLinks() {
     return (
         <div className="d-flex flex-column align-items-center text-center gap-2">
             <h5>Síguenos en nuestras redes</h5>
@@ -31,4 +24,4 @@ function FooterSocialLinks() {
     );
 }
 
-export default FooterSocialLinks;
+export default SocialLinks;

@@ -1,12 +1,12 @@
 .footer-container {
-    width: 100%;
     color: var(--primary-color);
     background-color: var(--tertiary-color);
 }
 
 .footer-link {
-    color: var(--primary-color);
     text-decoration: none;
+    color: var(--primary-color);
+    transition: color .5s ease;
 }
 
 .footer-link:hover {
