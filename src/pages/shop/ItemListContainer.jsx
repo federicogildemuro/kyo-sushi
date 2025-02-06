@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useAsync from '../../hooks/useAsync';
-import { fetchProducts } from '../../services/ProductsServices';
+import { fetchProducts } from '../../services/productsServices';
 import usePagination from '../../hooks/usePagination';
 import FiltersMenu from '../../components/FiltersMenu';
 import SortButtons from '../../components/SortButtons';

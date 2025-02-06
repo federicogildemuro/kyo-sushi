@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import useCart from '../../../hooks/useCart';
 import useAsync from '../../../hooks/useAsync';
-import { scrollToTop } from '../../../utils/ScrollUtils';
+import { scrollToTop } from '../../../utils/scrollUtils';
 import Spinner from '../../../components/Spinner';
 import CartItem from './CartItem';
 import BackButton from '../../../components/BackButton';

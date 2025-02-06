@@ -1,4 +1,4 @@
-import { db } from './FirebaseServices';
+import { db } from './firebaseServices';
 import { getDocs, collection, doc, getDoc, query, where, updateDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
 import { createProductAdapterFromFirebase } from '../adapters/ProductAdapter';
 

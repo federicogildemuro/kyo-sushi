@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import sliderItems from './sliderItems';
-import { scrollToTop } from '../../utils/ScrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
 function Slider() {
     useEffect(() => {

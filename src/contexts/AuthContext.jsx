@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../services/FirebaseServices';
-import { getUserById, updateUserLastLogin } from '../services/UsersServices';
+import { auth } from '../services/firebaseServices';
+import { getUserById, updateUserLastLogin } from '../services/userServices';
 
 const AuthContext = createContext();
 

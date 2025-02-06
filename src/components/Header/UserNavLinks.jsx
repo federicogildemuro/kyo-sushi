@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { userLinks as links } from './links';
-import { scrollToTop } from '../../utils/ScrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 import CategoriesDropdownMenu from './CategoriesDropdownMenu';
 
 function UserNavLinks({ isMenuOpen }) {

@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import { scrollToTop } from '../utils/ScrollUtils';
+import { scrollToTop } from '../utils/scrollUtils';
 import Spinner from '../components/Spinner';
 
 const UserRoute = ({ children }) => {

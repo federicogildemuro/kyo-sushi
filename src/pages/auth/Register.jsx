@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { createUser } from '../../services/UsersServices';
+import { createUser } from '../../services/userServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import useFormValidation from '../../hooks/useFormValidation';

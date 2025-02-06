@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { adminLinks as links } from './links';
-import { scrollToTop } from '../../utils/ScrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
 function AdminNavLinks({ isMenuOpen }) {
     return (

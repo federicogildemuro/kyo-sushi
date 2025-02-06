@@ -4,7 +4,7 @@ import useAuth from '../../../hooks/useAuth';
 import useCart from '../../../hooks/useCart';
 import useFavorites from '../../../hooks/useFavorites';
 import useNotification from '../../../hooks/useNotification';
-import { scrollToTop } from '../../../utils/ScrollUtils';
+import { scrollToTop } from '../../../utils/scrollUtils';
 import ItemCount from './ItemCount';
 import './ItemDetail.css';
 

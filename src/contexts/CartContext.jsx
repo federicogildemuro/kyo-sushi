@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { fetchUserCart, updateUserCart, addItemToCart, removeItemFromCart, checkIfItemInCart } from '../services/CartsServices';
+import { fetchUserCart, updateUserCart, addItemToCart, removeItemFromCart, checkIfItemInCart } from '../services/cartServices';
 import useAuth from '../hooks/useAuth';
 
 const CartContext = createContext();

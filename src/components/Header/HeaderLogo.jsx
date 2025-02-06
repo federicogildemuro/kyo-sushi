@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
-import { scrollToTop } from '../../utils/ScrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
 function HeaderLogo() {
     return (

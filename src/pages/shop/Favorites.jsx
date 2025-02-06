@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useFavorites from '../../hooks/useFavorites';
 import usePagination from '../../hooks/usePagination';
-import { scrollToTop } from '../../utils/ScrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 import ItemList from '../../components/item-list/ItemList';
 import Pagination from '../../components/Pagination';
 import BackButton from '../../components/BackButton';

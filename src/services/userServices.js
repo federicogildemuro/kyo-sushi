@@ -1,4 +1,4 @@
-import { auth, db } from './FirebaseServices';
+import { auth, db } from './firebaseServices';
 import { doc, setDoc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth';
 

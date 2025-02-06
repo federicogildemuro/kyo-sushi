@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
-import { fetchProductById } from '../../../services/ProductsServices'
+import { fetchProductById } from '../../../services/productsServices'
 import useAsync from '../../../hooks/useAsync'
-import { scrollToTop } from '../../../utils/ScrollUtils'
+import { scrollToTop } from '../../../utils/scrollUtils'
 import Spinner from '../../../components/Spinner'
 import ItemDetail from './ItemDetail'
 

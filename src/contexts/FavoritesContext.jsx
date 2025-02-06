@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { fetchUserFavorites, toggleFavoriteItem, checkIfFavorite } from '../services/FavoritesServices';
+import { fetchUserFavorites, toggleFavoriteItem, checkIfFavorite } from '../services/favoritesServices';
 import useAuth from '../hooks/useAuth';
 
 const FavoritesContext = createContext();

@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { sendContactEmail } from '../../services/MailingServices';
+import { sendContactEmail } from '../../services/mailingServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import useFormValidation from '../../hooks/useFormValidation';

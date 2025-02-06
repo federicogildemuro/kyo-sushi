@@ -1,4 +1,4 @@
-import { db } from './FirebaseServices'
+import { db } from './firebaseServices'
 import { addDoc, collection, getDoc } from 'firebase/firestore'
 
 const createOrder = async (order) => {

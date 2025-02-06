@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { websiteLinks as links } from './links';
-import { scrollToTop } from '../../utils/ScrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
 function WebsiteLinks() {
 

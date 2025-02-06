@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import useAsync from '../../hooks/useAsync';
-import { fetchCategories } from '../../services/ProductsServices';
-import { scrollToTop } from "../../utils/ScrollUtils";
+import { fetchCategories } from '../../services/productsServices';
+import { scrollToTop } from "../../utils/scrollUtils";
 
 function CategoriesDropdownMenu() {
     const { data: categories, loading } = useAsync(fetchCategories);

@@ -1,4 +1,4 @@
-import { db } from './FirebaseServices';
+import { db } from './firebaseServices';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const fetchUserFavorites = async (userId) => {

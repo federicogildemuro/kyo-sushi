@@ -3,7 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import useCart from '../../hooks/useCart';
 import useNotification from '../../hooks/useNotification';
 import { authenticatedLinks as links } from './links';
-import { scrollToTop } from '../../utils/ScrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
 function AuthenticatedUserNavLinks({ isMenuOpen }) {
     const { user, isAdmin, logout } = useAuth();
