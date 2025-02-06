@@ -1,9 +1,9 @@
-import BackButton from '../components/BackButton';
+import BackButton from '../../components/BackButton';
 
 function AboutUs() {
     return (
         <section className="d-flex flex-column text-center">
-            <h1 className="display-6 fw-bold mb-3">Sobre Nosotros</h1>
+            <h1 className="display-6 fw-bold mb-5">Sobre Nosotros</h1>
 
             <div className="container">
                 <p className="fs-5 mb-3">

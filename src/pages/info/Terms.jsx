@@ -1,9 +1,9 @@
-import BackButton from '../components/BackButton';
+import BackButton from '../../components/BackButton';
 
 function Terms() {
     return (
         <section className="d-flex flex-column text-center">
-            <h1 className="display-6 fw-bold mb-3">Términos y Condiciones</h1>
+            <h1 className="display-6 fw-bold mb-5">Términos y Condiciones</h1>
 
             <div className="container">
                 <p className="fs-5 mb-3">

@@ -1,20 +1,14 @@
 import { useEffect, useMemo } from 'react';
-import { sendContactEmail } from '../services/MailingServices';
-import useAsync from '../hooks/useAsync';
-import useNotification from '../hooks/useNotification';
-import useFormValidation from '../hooks/useFormValidation';
-import Spinner from '../components/Spinner';
-import BackButton from '../components/BackButton';
+import { sendContactEmail } from '../../services/MailingServices';
+import useAsync from '../../hooks/useAsync';
+import useNotification from '../../hooks/useNotification';
+import useFormValidation from '../../hooks/useFormValidation';
+import Spinner from '../../components/Spinner';
+import BackButton from '../../components/BackButton';
 
 function Contact() {
     const { data, loading, error, execute } = useAsync(sendContactEmail, [], false);
     const { showNotification } = useNotification();
-
-    const initialFormData = useMemo(() => ({
-        name: '',
-        email: '',
-        message: '',
-    }), []);
 
     const labels = {
         name: 'Nombre',
@@ -22,7 +16,20 @@ function Contact() {
         message: 'Mensaje',
     };
 
-    const { formData, setFormData, formErrors, handleInputChange, handleBlur, validateFormData } = useFormValidation(initialFormData);
+    const initialFormData = useMemo(() => ({
+        name: '',
+        email: '',
+        message: '',
+    }), []);
+
+    const {
+        formData,
+        setFormData,
+        formErrors,
+        handleInputChange,
+        handleBlur,
+        validateFormData
+    } = useFormValidation(initialFormData);
 
     useEffect(() => {
         if (data) {
@@ -33,7 +40,7 @@ function Contact() {
 
     useEffect(() => {
         if (error) {
-            showNotification(error.message, 'danger');
+            showNotification(error, 'danger');
         }
     }, [error, showNotification]);
 
@@ -52,15 +59,24 @@ function Contact() {
         <section className="d-flex flex-column text-center">
             {loading && <Spinner />}
 
-            <div className="container mb-3">
-                <h1 className="display-6 fw-bold mb-3">Contacto</h1>
+            <div className="container">
+                <h1 className="display-6 fw-bold mb-5">Contacto</h1>
 
-                <form className="mx-auto col-12 col-lg-6 mb-5" onSubmit={handleSubmit}>
+                <form
+                    className="mx-auto col-12 col-lg-6 mb-5"
+                    onSubmit={handleSubmit}
+                >
                     {Object.keys(labels).map((field) => (
-                        <div key={field} className="d-flex flex-column align-items-start mb-3">
+                        <div
+                            key={field}
+                            className="d-flex flex-column align-items-start mb-3"
+                        >
                             {field === 'message' ? (
                                 <>
-                                    <label htmlFor={field} className="form-label">
+                                    <label
+                                        htmlFor={field}
+                                        className="form-label"
+                                    >
                                         {labels[field]}
                                     </label>
 
@@ -76,7 +92,10 @@ function Contact() {
                                 </>
                             ) : (
                                 <>
-                                    <label htmlFor={field} className="form-label">
+                                    <label
+                                        htmlFor={field}
+                                        className="form-label"
+                                    >
                                         {labels[field]}
                                     </label>
 
@@ -102,10 +121,10 @@ function Contact() {
 
                     <button
                         type="submit"
-                        className="btn custom-btn"
+                        className="btn custom-btn my-3"
                         disabled={loading}
                     >
-                        Enviar mensaje
+                        Enviar
                     </button>
                 </form>
 
