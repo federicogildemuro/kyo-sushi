@@ -7,7 +7,6 @@ const userLinks = [
 const adminLinks = [
     { to: '/admin/products', label: 'Productos' },
     { to: '/admin/orders', label: 'Órdenes' },
-    { to: '/admin/users', label: 'Usuarios' },
 ];
 
 export { userLinks, adminLinks };

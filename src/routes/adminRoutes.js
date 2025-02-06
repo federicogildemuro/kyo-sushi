@@ -5,8 +5,6 @@ const AdminProducts = lazy(() => import('../pages/admin/AdminProducts'));
 const ProductForm = lazy(() => import('../pages/admin/ProductForm'));
 const AdminOrders = lazy(() => import('../pages/admin/AdminOrders'));
 const OrderForm = lazy(() => import('../pages/admin/OrderForm'));
-const AdminUsers = lazy(() => import('../pages/admin/AdminUsers'));
-const UserForm = lazy(() => import('../pages/admin/UserForm'));
 
 const adminRoutes = [
     { path: '/admin', component: AdminDashboard },
@@ -15,8 +13,6 @@ const adminRoutes = [
     { path: '/admin/products/:id', component: ProductForm },
     { path: '/admin/orders', component: AdminOrders },
     { path: '/admin/orders/:id', component: OrderForm },
-    { path: '/admin/users', component: AdminUsers },
-    { path: '/admin/users/:id', component: UserForm },
 ];
 
 export default adminRoutes;
