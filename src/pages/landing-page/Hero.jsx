@@ -13,13 +13,13 @@ function Hero() {
     }, []);
 
     return (
-        <section className="hero d-flex justify-content-center align-items-center text-center">
+        <section className="hero d-flex align-items-center justify-content-center text-center">
             <div
-                className="bg-dark bg-opacity-50 p-4 rounded shadow-lg"
+                className="bg-dark bg-opacity-50 rounded p-4"
                 data-aos="zoom-in"
             >
                 <h1
-                    className="display-4 mb-5"
+                    className="display-6 fw-bold mb-5"
                     data-aos="fade-down"
                 >
                     ¡Bienvenido a Kyo Sushi!
@@ -38,7 +38,7 @@ function Hero() {
                     onClick={scrollToTop}
                 >
                     Ir a la tienda
-                    <i className="bi bi-shop ms-2" />
+                    <i className="bi bi-arrow-right ms-2" />
                 </Link>
             </div>
         </section>

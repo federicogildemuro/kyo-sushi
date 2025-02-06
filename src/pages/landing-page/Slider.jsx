@@ -2,22 +2,10 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import sliderItems from './sliderItems';
 import { scrollToTop } from '../../utils/ScrollUtils';
-import sliderImage1 from '../../assets/slider-1.jpg';
-import sliderImage2 from '../../assets/slider-2.jpg';
-import sliderImage3 from '../../assets/slider-3.jpg';
-import sliderImage4 from '../../assets/slider-4.jpg';
-import sliderImage5 from '../../assets/slider-5.jpg';
 
 function Slider() {
-    const sliderItems = [
-        { title: 'Combinados', description: 'Combinados ideales para compartir.', image: sliderImage1 },
-        { title: 'Rolls', description: 'Rolls clásicos y especiales.', image: sliderImage2 },
-        { title: 'Hot Rolls', description: 'Rolls calientes para cualquier ocasión.', image: sliderImage3 },
-        { title: 'Sin alga y sin arroz', description: 'Opciones sin alga y sin arroz.', image: sliderImage4 },
-        { title: 'Veggies', description: 'Rolls para amantes de los vegetales.', image: sliderImage5 },
-    ];
-
     useEffect(() => {
         AOS.init({
             duration: 2000,
@@ -28,7 +16,7 @@ function Slider() {
     return (
         <section>
             <h1
-                className="text-center"
+                className="display-6 fw-bold m-5 text-center"
                 data-aos="zoom-in"
             >
                 Explora las distintas categorías de nuestro variado menú
@@ -51,12 +39,13 @@ function Slider() {
                             >
                                 <img
                                     src={item.image}
+                                    className="carousel-img"
                                     alt={`Imagen de la categoría ${item.title}`}
                                 />
 
-                                <div className="carousel-caption d-flex justify-content-center align-items-center text-center w-100 h-100 p-5">
-                                    <div className="bg-dark bg-opacity-50 rounded p-3">
-                                        <h2>{item.title}</h2>
+                                <div className="carousel-caption d-flex align-items-center justify-content-center text-center w-100 h-100 p-5">
+                                    <div className="bg-dark bg-opacity-50 rounded p-4">
+                                        <h1 className="display-6 fw-bold">{item.title}</h1>
                                         <p className="lead">{item.description}</p>
                                     </div>
                                 </div>
