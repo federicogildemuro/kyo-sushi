@@ -17,7 +17,7 @@ const sendOrderEmail = async (order) => {
         return result;
     } catch (error) {
         console.error(error);
-        throw new Error('Error enviando el email de confirmación de compra');
+        throw new Error(error.message || 'Error al enviar correo de confirmación de compra');
     }
 };
 
@@ -36,7 +36,7 @@ const sendContactEmail = async (form) => {
         return result;
     } catch (error) {
         console.error(error);
-        throw new Error('Error enviando el mensaje de contacto');
+        throw new Error(error.message || 'Error al enviar correo de contacto');
     }
 };
 
