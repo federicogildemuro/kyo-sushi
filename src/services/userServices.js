@@ -1,13 +1,15 @@
-import { auth, db } from './firebaseServices';
 import { doc, setDoc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth';
+import { auth, db } from './firebaseServices';
+import { createUserAdapter } from '../adapters/userAdapters';
 
 const createUser = async (email, password, userData) => {
     try {
         const firebaseUser = await createUserWithEmailAndPassword(auth, email, password);
         const userId = firebaseUser.user.uid;
         const userRef = doc(db, 'users', userId);
-        await setDoc(userRef, userData);
+        const adaptedUserData = createUserAdapter({ ...userData });
+        await setDoc(userRef, adaptedUserData);
         return true;
     } catch (error) {
         console.error(error);
@@ -46,17 +48,6 @@ const getUserByEmail = async (email) => {
     }
 };
 
-const updateUser = async (id, data) => {
-    try {
-        const userRef = doc(db, 'users', id);
-        await setDoc(userRef, data, { merge: true });
-        return true;
-    } catch (error) {
-        console.error(error);
-        throw new Error(error.message || 'Error al actualizar el usuario');
-    }
-}
-
 const resetPassword = async (email) => {
     try {
         const userData = await getUserByEmail(email);
@@ -92,4 +83,4 @@ const updateUserLastLogin = async (id) => {
     }
 };
 
-export { createUser, getUserById, getUserByEmail, updateUser, resetPassword, updatePassword, updateUserLastLogin };
+export { createUser, getUserById, getUserByEmail, resetPassword, updatePassword, updateUserLastLogin };
