@@ -1,16 +1,11 @@
-import { createContext, useState, useCallback, useEffect } from 'react'
-import './Notification.css'
+import { createContext, useCallback, useEffect, useState } from 'react';
+import './NotificationContext.css';
 
 const NotificationContext = createContext();
 
 function NotificationProvider({ children }) {
     const [notification, setNotification] = useState(null);
     const [isFadingOut, setIsFadingOut] = useState(false);
-
-    const showNotification = useCallback((message, type) => {
-        setNotification({ message, type });
-        setIsFadingOut(false);
-    }, []);
 
     useEffect(() => {
         if (notification) {
@@ -29,9 +24,15 @@ function NotificationProvider({ children }) {
         }
     }, [notification]);
 
+    const showNotification = useCallback((message, type) => {
+        setNotification({ message, type });
+        setIsFadingOut(false);
+    }, []);
+
     return (
         <NotificationContext.Provider value={{ showNotification }}>
             {children}
+
             {notification && (
                 <div
                     className={`toast show position-fixed top-0 start-50 mt-5 translate-middle-x bg-${notification.type} ${isFadingOut ? 'fade-out' : 'fade-in'}`}
@@ -48,7 +49,7 @@ function NotificationProvider({ children }) {
                 </div>
             )}
         </NotificationContext.Provider>
-    )
+    );
 }
 
-export { NotificationProvider, NotificationContext }
+export { NotificationProvider, NotificationContext };
