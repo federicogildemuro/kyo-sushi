@@ -1,8 +1,7 @@
 .header-container {
     position: fixed;
     top: 0;
-    z-index: 1000;
-    width: 100%;
+    z-index: 999;
     height: 20vh;
     background-color: var(--secondary-color);
 }
@@ -10,20 +9,11 @@
 .header-logo {
     width: 7.5rem;
     height: 90%;
+    transition: transform .5s ease;
 }
 
-.nav-bar-icon {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    transition: color .5s ease;
-}
-
-.nav-bar-icon:hover {
-    color: var(--tertiary-color);
-}
-
-.active-icon {
-    color: var(--tertiary-color);
+.header-logo:hover {
+    transform: scale(1.1);
 }
 
 .custom-offcanvas {
@@ -31,14 +21,14 @@
 }
 
 .dropdown-menu {
-    background-color: var(--primary-color);
-    transform: translateX(-50%);
     left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
 }
 
 .dropdown-item {
     color: var(--secondary-color);
-    transition: all .5s ease;
+    transition: color .5s ease;
 }
 
 .dropdown-item:hover {
@@ -49,4 +39,14 @@
 .dropdown-item.active {
     color: var(--primary-color);
     background-color: var(--secondary-color);
+}
+
+.nav-bar-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: color .5s ease;
+}
+
+.nav-bar-icon:hover {
+    color: var(--tertiary-color);
 }

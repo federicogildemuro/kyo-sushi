@@ -46,7 +46,7 @@ function CategoriesDropdownMenu() {
         return categories.map((category) => (
             <li
                 key={category}
-                className="w-100 text-center"
+                className="text-center w-100"
             >
                 <NavLink
                     to={`/tienda/${category}`}
@@ -68,12 +68,13 @@ function CategoriesDropdownMenu() {
             ref={dropdownRef}
         >
             <button
-                className="nav-link dropdown-toggle"
+                className="nav-link"
                 type="button"
                 onClick={toggleDropdown}
                 aria-expanded={isDropdownOpen}
             >
                 Menú
+                <i className={`bi ${isDropdownOpen ? 'bi-caret-up-fill' : 'bi-caret-down-fill'} ms-2`} />
             </button>
 
             {isDropdownOpen && (
