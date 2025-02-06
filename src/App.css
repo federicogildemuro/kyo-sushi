@@ -33,32 +33,6 @@ li {
     padding-top: 20vh;
 }
 
-.nav-link {
-    color: var(--primary-color);
-}
-
-.nav-link:hover {
-    color: var(--tertiary-color);
-    transition: color .5s ease;
-}
-
-.nav-link.active {
-    color: var(--tertiary-color);
-}
-
-.nav-link:focus {
-    color: var(--tertiary-color);
-}
-
-.auth-link {
-    color: var(--tertiary-color);
-    text-decoration: none;
-}
-
-.auth-link:hover {
-    color: var(--secondary-color);
-}
-
 .custom-btn {
     color: var(--primary-color);
     background-color: var(--secondary-color);
@@ -75,16 +49,16 @@ li {
     color: var(--tertiary-color) !important;
 }
 
-.form-control:focus,
-.form-check-input:focus {
+.form-control:focus {
     border-color: var(--tertiary-color);
     box-shadow: 0 0 0 .1rem var(--tertiary-color);
 }
 
-.form-check-input:hover {
-    cursor: pointer;
+.auth-link {
+    color: var(--tertiary-color);
+    text-decoration: none;
 }
 
-.form-check-input:checked {
-    background-color: var(--tertiary-color);
+.auth-link:hover {
+    color: var(--secondary-color);
 }
