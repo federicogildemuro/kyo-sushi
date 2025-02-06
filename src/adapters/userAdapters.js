@@ -15,4 +15,4 @@ const createUserAdapter = (formData) => ({
     lastLogin: new Date().toISOString()
 });
 
-export default createUserAdapter;
+export { createUserAdapter };
