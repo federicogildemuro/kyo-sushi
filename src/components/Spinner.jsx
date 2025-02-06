@@ -1,13 +1,9 @@
 import './Spinner.css';
 
-function Spinner({ message }) {
+function Spinner() {
     return (
-        <div className="spinner-overlay">
-            <div className="d-flex flex-column justify-content-center align-items-center gap-3">
-                <div className="spinner-border spinner-custom" />
-
-                {message && <p className="spinner-message">{message}</p>}
-            </div>
+        <div className="spinner-overlay d-flex align-items-center justify-content-center w-100 h-100">
+            <div className="spinner-border spinner-custom" />
         </div>
     );
 }
