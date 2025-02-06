@@ -13,6 +13,7 @@ function AuthProvider({ children }) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            setError(null);
             try {
                 if (firebaseUser) {
                     const userData = await getUserById(firebaseUser.uid);
@@ -33,6 +34,8 @@ function AuthProvider({ children }) {
     }, []);
 
     const login = async (email, password) => {
+        setLoading(true);
+        setError(null);
         try {
             const firebaseUser = await signInWithEmailAndPassword(auth, email, password);
             const userId = firebaseUser.user.uid;
@@ -47,16 +50,22 @@ function AuthProvider({ children }) {
             } else {
                 setError('Error iniciando sesión');
             }
+        } finally {
+            setLoading(false);
         }
     };
 
     const logout = async () => {
+        setLoading(true);
+        setError(null);
         try {
             await signOut(auth);
             return true;
         } catch (error) {
             console.error(error);
             setError('Error cerrando sesión');
+        } finally {
+            setLoading(false);
         }
     };
 
