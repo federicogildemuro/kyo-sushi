@@ -19,7 +19,12 @@ const UserRoute = ({ children }) => {
 const PublicRoute = ({ children }) => {
     const { user, loading } = useAuth();
 
-    if (loading) return <Spinner />;
+    if (loading) return (
+        <>
+            <Spinner />
+            {children}
+        </>
+    );
 
     if (user) {
         scrollToTop();

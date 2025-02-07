@@ -12,7 +12,7 @@ const adminRoutes = [
     { path: '/admin/products/new', component: ProductForm },
     { path: '/admin/products/:id', component: ProductForm },
     { path: '/admin/orders', component: AdminOrders },
-    { path: '/admin/orders/:id', component: OrderForm },
+    { path: '/admin/orders/:id', component: OrderForm }
 ];
 
 export default adminRoutes;
