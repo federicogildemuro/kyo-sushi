@@ -1,34 +1,32 @@
-import { db } from './firebaseServices';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from './firebaseServices';
 
-const fetchUserFavorites = async (userId) => {
+const fetchFavorites = async (userId) => {
     try {
         const docRef = doc(db, 'favorites', userId);
         const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            return docSnap.data().items || [];
-        }
+        if (!docSnap.exists()) return [];
 
-        return [];
+        return docSnap.data().items;
     } catch (error) {
-        console.error('Error fetching user favorites:', error.message);
+        console.error('Error fetching favorites:', error);
         return [];
     }
 };
 
-const updateUserFavorites = async (userId, favorites) => {
+const updateFavorites = async (userId, favorites) => {
     try {
         const docRef = doc(db, 'favorites', userId);
         await setDoc(docRef, { items: favorites }, { merge: true });
     } catch (error) {
-        console.error('Error updating user favorites:', error.message);
+        console.error('Error updating favorites:', error);
     }
 };
 
 const toggleFavoriteItem = async (userId, item) => {
     try {
-        const favorites = await fetchUserFavorites(userId);
+        const favorites = await fetchFavorites(userId);
         const itemIndex = favorites.findIndex(favItem => favItem.id === item.id);
         let isFavorite = false;
 
@@ -39,22 +37,23 @@ const toggleFavoriteItem = async (userId, item) => {
             favorites.splice(itemIndex, 1);
         }
 
-        await updateUserFavorites(userId, favorites);
+        await updateFavorites(userId, favorites);
+
         return isFavorite;
     } catch (error) {
-        console.error('Error toggling favorite item:', error.message);
+        console.error('Error toggling favorite item:', error);
         return false;
     }
 };
 
 const checkIfFavorite = async (userId, itemId) => {
     try {
-        const favorites = await fetchUserFavorites(userId);
+        const favorites = await fetchFavorites(userId);
         return favorites.some(favItem => favItem.id === itemId);
     } catch (error) {
-        console.error('Error checking if item is favorite:', error.message);
+        console.error('Error checking if item is favorite:', error);
         return false;
     }
 };
 
-export { fetchUserFavorites, toggleFavoriteItem, checkIfFavorite };
+export { fetchFavorites, toggleFavoriteItem, checkIfFavorite };

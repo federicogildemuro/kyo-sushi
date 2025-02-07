@@ -1,22 +1,26 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { fetchUserFavorites, toggleFavoriteItem, checkIfFavorite } from '../services/favoritesServices';
+import { fetchFavorites, toggleFavoriteItem, checkIfFavorite } from '../services/favoritesServices';
 import useAuth from '../hooks/useAuth';
 
 const FavoritesContext = createContext();
 
 function FavoritesProvider({ children }) {
     const { user } = useAuth();
-    const [favorites, setFavorites] = useState([]);
     const userId = user?.uid;
+    const [favorites, setFavorites] = useState(undefined);
+    const [loading, setLoading] = useState(true);
 
     const loadFavoritesFromFirebase = useCallback(async () => {
         if (!userId) return;
 
         try {
-            const userFavorites = await fetchUserFavorites(userId);
-            setFavorites(userFavorites);
+            const favorites = await fetchFavorites(userId);
+            setFavorites(favorites);
         } catch (error) {
             console.error('Error loading favorites from Firebase:', error.message);
+            setFavorites([]);
+        } finally {
+            setLoading(false);
         }
     }, [userId]);
 
@@ -26,23 +30,27 @@ function FavoritesProvider({ children }) {
 
     const toggleFavorite = useCallback(
         async (item) => {
-            if (!userId) return false;
+            if (!userId) return;
 
             try {
                 const isFavorite = await toggleFavoriteItem(userId, item);
-                await loadFavoritesFromFirebase();
+
+                setFavorites(prevFavorites =>
+                    isFavorite ? [...prevFavorites, item] : prevFavorites.filter(i => i.id !== item.id)
+                );
+
                 return isFavorite;
             } catch (error) {
                 console.error('Error toggling favorite item:', error.message);
                 return false;
             }
         },
-        [userId, loadFavoritesFromFirebase]
+        [userId]
     );
 
     const checkFavorite = useCallback(
         async (id) => {
-            if (!userId) return false;
+            if (!userId) return;
 
             try {
                 return await checkIfFavorite(userId, id);
@@ -56,6 +64,7 @@ function FavoritesProvider({ children }) {
 
     const value = {
         favorites,
+        loading,
         checkFavorite,
         toggleFavorite,
     };

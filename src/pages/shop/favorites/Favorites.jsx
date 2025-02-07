@@ -1,14 +1,17 @@
-import useFavorites from "../../../hooks/useFavorites";
-import useItemsPerPage from "../../../hooks/useItemsPerPage";
-import usePagination from "../../../hooks/usePagination";
-import FavoritesList from "./FavoritesList";
-import EmptyFavorites from "./EmptyFavorites";
-import BackButton from "../../../components/BackButton";
+import useFavorites from '../../../hooks/useFavorites';
+import useItemsPerPage from '../../../hooks/useItemsPerPage';
+import usePagination from '../../../hooks/usePagination';
+import FavoritesList from './FavoritesList';
+import EmptyFavorites from './EmptyFavorites';
+import BackButton from '../../../components/BackButton';
+import Spinner from '../../../components/Spinner';
 
 function Favorites() {
-    const { favorites } = useFavorites();
+    const { favorites, loading } = useFavorites();
     const { itemsPerPage } = useItemsPerPage();
     const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(favorites, itemsPerPage);
+
+    if (loading) return <Spinner />;
 
     return (
         <section className="d-flex flex-column text-center">
