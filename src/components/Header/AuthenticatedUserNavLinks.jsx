@@ -6,13 +6,16 @@ import { scrollToTop } from '../../utils/scrollUtils';
 
 function AuthenticatedUserNavLinks({ isMenuOpen }) {
     const { user, isAdmin, logout } = useAuth();
-    const { cartQuantity } = useCart();
+    const { cartTotalQuantity } = useCart();
     const { showNotification } = useNotification();
 
-    const handleLogout = () => {
-        logout();
-        showNotification("Sesión cerrada correctamente", "success");
-        scrollToTop();
+    const handleLogout = async () => {
+        const result = await logout();
+
+        if (result) {
+            showNotification('Sesión cerrada exitosamente', 'success');
+            scrollToTop();
+        }
     };
 
     return (
@@ -39,9 +42,9 @@ function AuthenticatedUserNavLinks({ isMenuOpen }) {
                         >
                             <i className="nav-bar-icon bi bi-cart" />
 
-                            {cartQuantity > 0 && (
+                            {cartTotalQuantity > 0 && (
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {cartQuantity}
+                                    {cartTotalQuantity}
                                 </span>
                             )}
                         </Link>
