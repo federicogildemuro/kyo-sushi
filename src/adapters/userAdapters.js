@@ -11,8 +11,7 @@ const createUserAdapter = (formData) => ({
         state: formData.state,
         country: formData.country
     },
-    role: 'user',
-    lastLogin: new Date().toISOString()
+    role: 'user'
 });
 
 export { createUserAdapter };
