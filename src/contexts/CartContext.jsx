@@ -12,6 +12,7 @@ function CartProvider({ children }) {
 
     const loadCartFromFirebase = useCallback(async () => {
         if (!userId) return;
+
         try {
             const cartData = await fetchCart(userId);
             setCart(cartData);
