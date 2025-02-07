@@ -12,7 +12,7 @@ const createUser = async (email, password, userData) => {
         await setDoc(userRef, adaptedUserData);
         return true;
     } catch (error) {
-        console.error(error);
+        console.error('Error creating user:', error);
         if (error.code === 'auth/email-already-in-use') {
             throw new Error('Ya existe un usuario registrado con ese correo electrónico');
         }
@@ -22,13 +22,14 @@ const createUser = async (email, password, userData) => {
 
 const getUserById = async (id) => {
     try {
-        const userDoc = await getDoc(doc(db, 'users', id));
+        const userRef = doc(db, 'users', id);
+        const userDoc = await getDoc(userRef);
         if (!userDoc.exists()) {
             return null;
         }
         return { id: userDoc.id, ...userDoc.data() };
     } catch (error) {
-        console.error(error);
+        console.error('Error getting user by id:', error);
         throw new Error(error.message || 'Error al obtener el usuario');
     }
 };
@@ -37,13 +38,14 @@ const getUserByEmail = async (email) => {
     try {
         const usersRef = collection(db, 'users');
         const querySnapshot = await getDocs(query(usersRef, where('email', '==', email)));
-        if (querySnapshot.empty) {
-            return null;
-        }
+
+        if (querySnapshot.empty) return null;
+
         const userDoc = querySnapshot.docs[0];
+
         return { id: userDoc.id, ...userDoc.data() };
     } catch (error) {
-        console.error(error);
+        console.error('Error getting user by email:', error);
         throw new Error(error.message || 'Error al obtener el usuario');
     }
 };
@@ -57,7 +59,7 @@ const resetPassword = async (email) => {
         await sendPasswordResetEmail(auth, email);
         return true;
     } catch (error) {
-        console.error(error);
+        console.error('Error sending password reset email:', error);
         throw new Error(error.message || 'Error al enviar el correo de restablecimiento de contraseña');
     }
 };
@@ -67,20 +69,9 @@ const updatePassword = async (oobCode, newPassword) => {
         await confirmPasswordReset(auth, oobCode, newPassword);
         return true;
     } catch (error) {
-        console.error(error);
+        console.error('Error updating password:', error);
         throw new Error(error.message || 'Error al actualizar la contraseña');
     }
 };
 
-const updateUserLastLogin = async (id) => {
-    try {
-        const userRef = doc(db, 'users', id);
-        await setDoc(userRef, { lastLogin: new Date().toISOString() }, { merge: true });
-        return true;
-    } catch (error) {
-        console.error(error);
-        throw new Error(error.message || 'Error al actualizar la fecha de último acceso');
-    }
-};
-
-export { createUser, getUserById, getUserByEmail, resetPassword, updatePassword, updateUserLastLogin };
+export { createUser, getUserById, getUserByEmail, resetPassword, updatePassword };
