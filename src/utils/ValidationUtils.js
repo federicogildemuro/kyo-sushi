@@ -2,9 +2,7 @@ const validateField = (name, value, formData) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/;
 
-    if (typeof value === 'string') {
-        value = value.trim();
-    }
+    if (typeof value === 'string') value = value.trim();
 
     switch (name) {
         case 'email':
