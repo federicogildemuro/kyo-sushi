@@ -1,9 +1,9 @@
-.table {
+.cart-table {
     --bs-table-bg: var(--primary-color);
     --bs-table-color: var(--tertiary-color);
 }
 
-.table th,
+.cart-table th,
 .table td {
     border: none;
 }

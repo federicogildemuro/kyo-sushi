@@ -1,22 +1,25 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
-import { fetchUserCart, updateUserCart, addItemToCart, removeItemFromCart, checkIfItemInCart } from '../services/cartServices';
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { fetchCart, updateCart } from '../services/cartServices';
 import useAuth from '../hooks/useAuth';
 
 const CartContext = createContext();
 
 function CartProvider({ children }) {
     const { user } = useAuth();
-    const [cart, setCart] = useState([]);
     const userId = user?.uid;
+    const [cart, setCart] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const loadCartFromFirebase = useCallback(async () => {
         if (!userId) return;
-
         try {
-            const userCart = await fetchUserCart(userId);
-            setCart(userCart);
+            const cartData = await fetchCart(userId);
+            setCart(cartData);
         } catch (error) {
-            console.error('Error loading cart from Firebase:', error.message);
+            console.error('Error loading cart from Firebase:', error);
+            setCart([]);
+        } finally {
+            setLoading(false);
         }
     }, [userId]);
 
@@ -24,80 +27,70 @@ function CartProvider({ children }) {
         loadCartFromFirebase();
     }, [loadCartFromFirebase]);
 
-    const addCartItem = useCallback(
-        async (item) => {
-            if (!userId) return;
+    const addCartItem = useCallback(async (item) => {
+        if (!userId) return false;
 
-            try {
-                const updatedCart = await addItemToCart(userId, item);
-                setCart(updatedCart);
-            } catch (error) {
-                console.error('Error adding item to cart:', error.message);
+        setCart((prevCart) => {
+            const newCart = [...prevCart];
+            const itemIndex = newCart.findIndex(cartItem => cartItem.id === item.id);
+            if (itemIndex === -1) {
+                newCart.push(item);
+            } else {
+                newCart[itemIndex].quantity = item.quantity;
             }
-        },
-        [userId]
-    );
+            updateCart(userId, newCart);
+            return newCart;
+        });
 
-    const removeCartItem = useCallback(
-        async (itemId) => {
-            if (!userId) return;
-
-            try {
-                const updatedCart = await removeItemFromCart(userId, itemId);
-                setCart(updatedCart);
-            } catch (error) {
-                console.error('Error removing item from cart:', error.message);
-            }
-        },
-        [userId]
-    );
-
-    const clearCart = useCallback(async () => {
-        if (!userId) return;
-
-        try {
-            await updateUserCart(userId, []);
-            setCart([]);
-        } catch (error) {
-            console.error('Error clearing cart:', error.message);
-        }
+        return true;
     }, [userId]);
 
-    const checkItemInCart = useCallback(
-        async (itemId) => {
-            if (!userId) return false;
+    const removeCartItem = useCallback(async (itemId) => {
+        if (!userId) return false;
 
-            try {
-                return await checkIfItemInCart(userId, itemId);
-            } catch (error) {
-                console.error('Error checking if item is in cart:', error.message);
-                return false;
-            }
-        },
-        [userId]
-    );
+        setCart((prevCart) => {
+            const updatedCart = prevCart.filter(item => item.id !== itemId);
+            updateCart(userId, updatedCart);
+            return updatedCart;
+        });
 
-    const getTotalPrice = useCallback(
-        () => cart.reduce((total, item) => total + item.price * item.quantity, 0),
-        [cart]
-    );
+        return true;
+    }, [userId]);
 
-    const cartQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
+    const clearCartItems = useCallback(async () => {
+        if (!userId) return false;
 
-    const cartItemQuantity = (itemId) => {
+        setCart([]);
+        return updateCart(userId, [])
+    }, [userId]);
+
+    const isItemInCart = useCallback((itemId) => {
+        return cart.some(cartItem => cartItem.id === itemId);
+    }, [cart]);
+
+    const cartItemQuantity = useCallback((itemId) => {
         const item = cart.find((item) => item.id === itemId);
         return item ? item.quantity : 0;
-    }
+    }, [cart]);
+
+    const cartTotalQuantity = useMemo(() => (
+        user ? cart?.reduce((quantity, item) => quantity + item.quantity, 0) : 0
+    ), [user, cart]);
+
+    const cartTotalAmount = useMemo(() => (
+        cart?.reduce((total, item) => total + (item.price * item.quantity), 0)
+    ), [cart]);
 
     const value = {
         cart,
+        loading,
         addCartItem,
         removeCartItem,
-        clearCart,
-        checkItemInCart,
-        getTotalPrice,
-        cartQuantity,
-        cartItemQuantity
+        clearCartItems,
+        isItemInCart,
+        cartItemQuantity,
+        cartTotalQuantity,
+        cartTotalAmount,
     };
 
     return (
