@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../services/firebaseServices';
-import { getUserById, updateUserLastLogin } from '../services/userServices';
+import { getUserById } from '../services/userServices';
 
 const AuthContext = createContext();
 
@@ -37,9 +37,7 @@ function AuthProvider({ children }) {
         setLoading(true);
         setError(null);
         try {
-            const firebaseUser = await signInWithEmailAndPassword(auth, email, password);
-            const userId = firebaseUser.user.uid;
-            await updateUserLastLogin(userId);
+            await signInWithEmailAndPassword(auth, email, password);
             return true;
         } catch (error) {
             console.error(error);
@@ -48,7 +46,7 @@ function AuthProvider({ children }) {
             } else if (error.code === 'auth/too-many-requests') {
                 setError('Demasiados intentos fallidos, espere unos minutos y vuelva a intentarlo');
             } else {
-                setError('Error iniciando sesión');
+                setError(error.message || 'Error iniciando sesión');
             }
         } finally {
             setLoading(false);
@@ -63,7 +61,7 @@ function AuthProvider({ children }) {
             return true;
         } catch (error) {
             console.error(error);
-            setError('Error cerrando sesión');
+            setError(error.message || 'Error cerrando sesión');
         } finally {
             setLoading(false);
         }
