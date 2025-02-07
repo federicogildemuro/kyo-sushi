@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { fetchFavorites, toggleFavoriteItem, checkIfFavorite } from '../services/favoritesServices';
+import { fetchFavorites, updateFavorites } from '../services/favoritesServices';
 import useAuth from '../hooks/useAuth';
 
 const FavoritesContext = createContext();
@@ -7,67 +7,56 @@ const FavoritesContext = createContext();
 function FavoritesProvider({ children }) {
     const { user } = useAuth();
     const userId = user?.uid;
-    const [favorites, setFavorites] = useState(undefined);
+    const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const loadFavoritesFromFirebase = useCallback(
-        async () => {
-            if (!userId) return;
+    const loadFavoritesFromFirebase = useCallback(async () => {
+        if (!userId) return;
 
-            try {
-                const favorites = await fetchFavorites(userId);
-                setFavorites(favorites);
-            } catch (error) {
-                console.error('Error loading favorites from Firebase:', error);
-                setFavorites([]);
-            } finally {
-                setLoading(false);
-            }
-        }, [userId]);
+        try {
+            const favoritesData = await fetchFavorites(userId);
+            setFavorites(favoritesData);
+        } catch (error) {
+            console.error('Error loading favorites from Firebase:', error);
+            setFavorites([]);
+        } finally {
+            setLoading(false);
+        }
+    }, [userId]);
 
     useEffect(() => {
         loadFavoritesFromFirebase();
     }, [loadFavoritesFromFirebase]);
 
-    const toggleFavorite = useCallback(
-        async (item) => {
-            if (!userId) return false;
+    const toggleFavorite = useCallback(async (item) => {
+        if (!userId) return false;
 
-            try {
-                const isFavorite = await toggleFavoriteItem(userId, item);
+        setFavorites((prevFavorites) => {
+            const newFavorites = [...prevFavorites];
+            const itemIndex = newFavorites.findIndex(favItem => favItem.id === item.id);
 
-                setFavorites(prevFavorites =>
-                    isFavorite ? [...prevFavorites, item] : prevFavorites.filter(favItem => favItem.id !== item.id)
-                );
-
-                return isFavorite;
-            } catch (error) {
-                console.error('Error toggling favorite item:', error);
-                return false;
+            if (itemIndex === -1) {
+                newFavorites.push(item);
+            } else {
+                newFavorites.splice(itemIndex, 1);
             }
-        },
-        [userId]
-    );
 
-    const checkFavorite = useCallback(
-        async (id) => {
-            if (!userId) return false;
+            updateFavorites(userId, newFavorites);
+            return newFavorites;
+        });
 
-            try {
-                return await checkIfFavorite(userId, id);
-            } catch (error) {
-                console.error('Error checking if item is favorite:', error);
-                return false;
-            }
-        },
-        [userId]
-    );
+        return true;
+    }, [userId]);
+
+    const isItemFavorite = useCallback((itemId) => {
+        return favorites.some(favItem => favItem.id === itemId);
+    }, [favorites]);
 
     const value = {
         favorites,
         loading,
-        checkFavorite,
         toggleFavorite,
+        isItemFavorite,
     };
 
     return (

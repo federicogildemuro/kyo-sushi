@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 function usePagination(data, itemsPerPage) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -15,12 +15,7 @@ function usePagination(data, itemsPerPage) {
         return [];
     }, [data, currentPage, itemsPerPage]);
 
-    return {
-        currentItems,
-        currentPage,
-        totalPages,
-        setCurrentPage
-    };
+    return { currentItems, currentPage, totalPages, setCurrentPage };
 }
 
 export default usePagination;

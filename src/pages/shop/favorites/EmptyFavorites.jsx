@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { scrollToTop } from '../../../utils/scrollUtils';
 
-const EmptyFavorites = () => {
+function EmptyFavorites() {
     return (
         <div>
             <p className="fs-5 mb-5">

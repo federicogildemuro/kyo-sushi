@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 function useItemsPerPage() {
     const [itemsPerPage, setItemsPerPage] = useState(4);
