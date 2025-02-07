@@ -13,17 +13,17 @@ function UpdatePassword() {
     const queryParams = new URLSearchParams(search);
     const oobCode = queryParams.get('oobCode');
 
-    const { data, loading, error, execute } = useAsync(updatePassword, [], false);
+    const { data: response, loading, error, execute: update } = useAsync(updatePassword, [], false);
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (data) {
+        if (response) {
             showNotification('Contraseña restablecida exitosamente', 'success');
             scrollToTop();
             navigate('/login');
         }
-    }, [data, showNotification, navigate]);
+    }, [response, showNotification, navigate]);
 
     useEffect(() => {
         if (error) {
@@ -52,7 +52,7 @@ function UpdatePassword() {
             return;
         }
 
-        await execute(oobCode, formData.password);
+        await update(oobCode, formData.password);
     };
 
     if (!oobCode) {

@@ -7,11 +7,11 @@ import BackButton from '../../components/BackButton';
 import Spinner from '../../components/Spinner';
 
 function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
     const { login, loading, error } = useAuth();
     const { showNotification } = useNotification();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         if (error) {

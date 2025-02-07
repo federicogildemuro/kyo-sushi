@@ -8,7 +8,7 @@ import Spinner from '../../components/Spinner';
 import BackButton from '../../components/BackButton';
 
 function Register() {
-    const { loading, error, execute } = useAsync(createUser, [], false);
+    const { loading, error, execute: register } = useAsync(createUser, [], false);
     const { showNotification } = useNotification();
 
     useEffect(() => {
@@ -63,7 +63,7 @@ function Register() {
             return;
         }
 
-        const result = await execute(formData.email, formData.password, formData);
+        const result = await register(formData.email, formData.password, formData);
 
         if (result) {
             showNotification('Usuario registrado exitosamente', 'success');

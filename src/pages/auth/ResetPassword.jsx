@@ -10,17 +10,17 @@ import Spinner from '../../components/Spinner';
 function ResetPassword() {
     const [email, setEmail] = useState('');
 
-    const { data, loading, error, execute } = useAsync(resetPassword, [], false);
+    const { data: response, loading, error, execute: reset } = useAsync(resetPassword, [], false);
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (data) {
+        if (response) {
             showNotification('Se le ha enviado un correo electrónico para reestablecer su contraseña', 'success');
             scrollToTop();
             navigate('/');
         }
-    }, [data, showNotification, navigate]);
+    }, [response, showNotification, navigate]);
 
     useEffect(() => {
         if (error) {
@@ -36,7 +36,7 @@ function ResetPassword() {
             return;
         }
 
-        await execute(email);
+        await reset(email);
     };
 
     return (
