@@ -11,23 +11,23 @@ function Favorites() {
     const { itemsPerPage } = useItemsPerPage();
     const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(favorites, itemsPerPage);
 
-    if (loading) return <Spinner />;
-
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tus favoritos</h1>
 
-                {currentItems.length > 0 ? (
-                    <FavoritesList
-                        items={currentItems}
-                        totalPages={totalPages}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                    />
-                ) : (
-                    <EmptyFavorites />
-                )}
+                {loading
+                    ? <Spinner />
+                    : (currentItems.length > 0
+                        ? <FavoritesList
+                            items={currentItems}
+                            totalPages={totalPages}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
+                        : <EmptyFavorites />
+                    )
+                }
 
                 <BackButton />
             </div>

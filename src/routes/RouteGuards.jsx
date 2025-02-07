@@ -37,7 +37,12 @@ const PublicRoute = ({ children }) => {
 const AuthenticatedRoute = ({ children }) => {
     const { user, isAdmin, loading } = useAuth();
 
-    if (loading) return <Spinner />;
+    if (loading) return (
+        <>
+            <Spinner />
+            {children}
+        </>
+    );
 
     if (!user) {
         scrollToTop();

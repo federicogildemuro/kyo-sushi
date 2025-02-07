@@ -8,7 +8,8 @@ const fetchFavorites = async (userId) => {
 
         if (!docSnap.exists()) return [];
 
-        return docSnap.data().items;
+        const data = docSnap.data();
+        return Array.isArray(data.items) ? data.items : [];
     } catch (error) {
         console.error('Error fetching favorites:', error);
         return [];
