@@ -1,20 +1,21 @@
-import { getDocs, collection, doc, getDoc, query, where, updateDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
+import { getDocs, collection, doc, getDoc, query, where, updateDoc, setDoc, addDoc } from 'firebase/firestore';
 import { db } from './firebaseServices';
-import { createProductAdapterFromFirebase } from '../adapters/ProductAdapter';
+import { parseProductFromFirebase } from '../adapters/productAdapters';
 
 const fetchProducts = async (category) => {
     try {
         if (category) {
             const q = query(collection(db, 'products'), where('category', '==', category));
             const querySnapshot = await getDocs(q);
-            const products = querySnapshot.docs.map(doc => createProductAdapterFromFirebase(doc));
+            const products = querySnapshot.docs.map(doc => parseProductFromFirebase(doc));
             return products;
         }
         const querySnapshot = await getDocs(collection(db, 'products'));
-        const products = querySnapshot.docs.map(doc => createProductAdapterFromFirebase(doc));
+        const products = querySnapshot.docs.map(doc => parseProductFromFirebase(doc));
         return products;
     } catch (error) {
-        throw new Error(error.message || error);
+        console.error(error);
+        throw new Error(error.message || 'Error al obtener los productos');
     }
 }
 
@@ -24,7 +25,8 @@ const fetchCategories = async () => {
         const categories = new Set(querySnapshot.docs.map(doc => doc.data().category));
         return Array.from(categories);
     } catch (error) {
-        throw new Error(error.message || error);
+        console.error(error);
+        throw new Error(error.message || 'Error al obtener las categorías');
     }
 }
 
@@ -33,14 +35,13 @@ const fetchProductById = async (id) => {
         const docRef = doc(db, 'products', id);
         const docSnap = await getDoc(docRef);
 
-        if (!docSnap.exists()) {
-            return null;
-        }
+        if (!docSnap.exists()) return null;
 
-        const product = createProductAdapterFromFirebase(docSnap);
+        const product = parseProductFromFirebase(docSnap);
         return product;
     } catch (error) {
-        throw new Error(error.message || error);
+        console.error(error);
+        throw new Error(error.message || 'Error al obtener el producto');
     }
 }
 
@@ -49,7 +50,8 @@ const createProduct = async (product) => {
         const docRef = await addDoc(collection(db, 'products'), product);
         return docRef.id;
     } catch (error) {
-        throw new Error(error.message || error);
+        console.error(error);
+        throw new Error(error.message || 'Error al crear el producto');
     }
 }
 
@@ -58,16 +60,8 @@ const updateProduct = async (id, product) => {
         const docRef = doc(db, 'products', id);
         await setDoc(docRef, product);
     } catch (error) {
-        throw new Error(error.message || error);
-    }
-}
-
-const deleteProduct = async (id) => {
-    try {
-        const docRef = doc(db, 'products', id);
-        await deleteDoc(docRef);
-    } catch (error) {
-        throw new Error(error.message || error);
+        console.error(error);
+        throw new Error(error.message || 'Error al actualizar el producto');
     }
 }
 
@@ -102,4 +96,4 @@ const checkProductStockAndUpdate = async (cart) => {
     }
 }
 
-export { fetchProducts, fetchCategories, fetchProductById, createProduct, updateProduct, deleteProduct, checkProductStockAndUpdate };
+export { fetchProducts, fetchCategories, fetchProductById, createProduct, updateProduct, checkProductStockAndUpdate };
