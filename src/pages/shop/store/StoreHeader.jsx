@@ -24,7 +24,9 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
                             className="btn custom-btn"
                             onClick={toggleFiltersMenu}
                         >
-                            <i className="bi bi-filter" />
+                            <i className="bi bi-search me-2" />
+                            <i className="bi bi-filter me-2" />
+                            <i className={`bi bi-${isFiltersMenuVisible ? 'caret-up-fill' : 'caret-down-fill'}`} />
                         </button>
 
                         <SortButtons
