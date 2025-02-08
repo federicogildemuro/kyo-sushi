@@ -12,6 +12,7 @@ function useAsync(asyncFunction, dependencies = [], autoExecute = true) {
         try {
             const result = await asyncFunction(...args);
             setData(result);
+            return result;
         } catch (error) {
             setError(error);
         } finally {
