@@ -20,7 +20,7 @@ function SearchBar({ searchValue, onChange }) {
     };
 
     return (
-        <div className="d-flex flex-column align-items-center gap-3">
+        <div className="d-flex flex-column align-items-center gap-3 w-50">
             <label
                 htmlFor="search-bar"
                 className="fw-semibold"
