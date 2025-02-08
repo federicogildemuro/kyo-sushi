@@ -1,5 +1,5 @@
-import { db } from './firebaseServices';
 import { getDocs, collection, doc, getDoc, query, where, updateDoc, setDoc, deleteDoc, addDoc } from 'firebase/firestore';
+import { db } from './firebaseServices';
 import { createProductAdapterFromFirebase } from '../adapters/ProductAdapter';
 
 const fetchProducts = async (category) => {
@@ -73,27 +73,20 @@ const deleteProduct = async (id) => {
 
 const checkProductStockAndUpdate = async (cart) => {
     try {
-        /* Check stock */
         const productsWithNoStock = [];
+
         for (const item of cart) {
             const docRef = doc(db, 'products', item.id);
             const docSnap = await getDoc(docRef);
             const product = docSnap.data();
 
-            if (!product) {
-                throw new Error(`Producto ID ${item.id} no encontrado.`);
-            }
+            if (!product) throw new Error(`Producto ID ${item.id} no encontrado.`);
 
-            if (product.stock < item.quantity) {
-                productsWithNoStock.push(item);
-            }
-        }
-        /* If there are products with no stock, return them */
-        if (productsWithNoStock.length > 0) {
-            return { success: false, productsWithNoStock: productsWithNoStock };
+            if (product.stock < item.quantity) productsWithNoStock.push(item);
         }
 
-        /* Update stock */
+        if (productsWithNoStock.length > 0) return { success: false, productsWithNoStock: productsWithNoStock };
+
         for (const item of cart) {
             const docRef = doc(db, 'products', item.id);
             const docSnap = await getDoc(docRef);
@@ -101,10 +94,12 @@ const checkProductStockAndUpdate = async (cart) => {
             const newStock = product.stock - item.quantity;
             await updateDoc(docRef, { stock: newStock });
         }
+
         return { success: true, productsWithNoStock: [] };
     } catch (error) {
-        throw new Error(error.message || error);
+        console.error(error);
+        throw new Error(error.message || 'Error al actualizar el stock de los productos');
     }
 }
 
-export { fetchProducts, fetchCategories, fetchProductById, createProduct, updateProduct, checkProductStockAndUpdate, deleteProduct };
+export { fetchProducts, fetchCategories, fetchProductById, createProduct, updateProduct, deleteProduct, checkProductStockAndUpdate };
