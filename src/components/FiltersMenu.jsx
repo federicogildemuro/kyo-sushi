@@ -5,7 +5,6 @@ import CategoryCheckboxes from './CategoryCheckboxes';
 import PriceRange from './PriceRange';
 
 function FiltersMenu({ items, onFilterChange }) {
-    /* Custom filter function */
     const customFilterFunction = useCallback((item, filter) => {
         const { selectedCategories = [], priceRange = {} } = filter;
 
@@ -19,22 +18,18 @@ function FiltersMenu({ items, onFilterChange }) {
         return matchesCategory && matchesPrice;
     }, []);
 
-    /* Data filter */
     const { filteredData, setFilter } = useDataFilter(items, ['title'], customFilterFunction);
 
-    /* Update parent component */
     useEffect(() => {
         onFilterChange(filteredData);
     }, [filteredData, onFilterChange]);
 
-    /* Search */
     const [searchValue, setSearchValue] = useState('');
     const handleSearchChange = useCallback((value) => {
         setSearchValue(value);
         setFilter({ search: value });
     }, [setFilter]);
 
-    /* Categories */
     const categories = Array.from(new Set(items.map((item) => item.category)));
     const [selectedCategories, setSelectedCategories] = useState([]);
     const handleCategoryChange = useCallback((categories) => {
@@ -42,14 +37,12 @@ function FiltersMenu({ items, onFilterChange }) {
         setFilter({ selectedCategories: categories });
     }, [setFilter]);
 
-    /* Price */
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
     const handlePriceRangeChange = useCallback((priceRange) => {
         setPriceRange(priceRange);
         setFilter({ priceRange });
     }, [setFilter]);
 
-    /* Clear filters */
     const handleClearFilters = () => {
         setSearchValue('');
         setSelectedCategories([]);
@@ -81,7 +74,7 @@ function FiltersMenu({ items, onFilterChange }) {
                 Limpiar filtros
             </button>
         </div>
-    )
+    );
 }
 
 export default FiltersMenu;
