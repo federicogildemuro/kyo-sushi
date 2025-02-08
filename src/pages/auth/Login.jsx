@@ -96,7 +96,7 @@ function Login() {
                         className="auth-link"
                         onClick={scrollToTop}
                     >
-                        Olvidaste tu contraseña?
+                        No recuerdas tu contraseña?
                     </Link>
 
                     <Link
