@@ -1,4 +1,4 @@
-export const createProductAdapterFromFirebase = (doc) => {
+const parseProductFromFirebase = (doc) => {
     const data = doc.data();
     return {
         id: doc.id,
@@ -9,4 +9,6 @@ export const createProductAdapterFromFirebase = (doc) => {
         stock: data.stock,
         pictureUrl: data.pictureUrl
     }
-}
+};
+
+export { parseProductFromFirebase };
