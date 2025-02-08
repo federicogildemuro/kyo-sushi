@@ -1,5 +1,5 @@
-import { db } from './firebaseServices'
-import { addDoc, collection, getDoc } from 'firebase/firestore'
+import { addDoc, collection, getDoc } from 'firebase/firestore';
+import { db } from './firebaseServices';
 
 const createOrder = async (order) => {
     try {
@@ -7,9 +7,9 @@ const createOrder = async (order) => {
         const docSnapshot = await getDoc(docRef);
         return { id: docRef.id, ...docSnapshot.data() };
     } catch (error) {
-        console.error('Error creating order:', error);
-        throw error;
+        console.error(error);
+        throw new Error(error.message || 'Error al crear la orden');
     }
 };
 
-export { createOrder }
+export { createOrder };
