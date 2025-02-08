@@ -5,7 +5,7 @@ function RelatedItems({ items }) {
 
     return (
         <section className="d-flex flex-column text-center">
-            <h1 className="display-6 fw-bold mb-5">Productos relacionados</h1>
+            <h1 className="display-6 fw-bold">Productos relacionados</h1>
 
             <ItemList items={items} />
         </section>
