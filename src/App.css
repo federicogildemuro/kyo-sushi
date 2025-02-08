@@ -51,9 +51,18 @@ li {
     color: var(--tertiary-color) !important;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-check-input:focus {
     border-color: var(--tertiary-color);
     box-shadow: 0 0 0 .1rem var(--tertiary-color);
+}
+
+.form-check-input:hover {
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--tertiary-color);
 }
 
 .auth-link {
