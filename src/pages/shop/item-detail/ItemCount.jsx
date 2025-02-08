@@ -1,7 +1,7 @@
 import useCart from '../../../hooks/useCart';
 import useCount from '../../../hooks/useCount';
 
-function ItemCount({ item, onAddToCart }) {
+function ItemCount({ item, addToCart }) {
     const { isItemInCart, cartItemQuantity } = useCart();
     const stock = item.stock;
     const initial = isItemInCart(item.id) ? cartItemQuantity(item.id) : 0;
@@ -35,11 +35,11 @@ function ItemCount({ item, onAddToCart }) {
 
             <button
                 className="btn custom-btn ms-2"
-                onClick={() => onAddToCart(count)}
+                onClick={() => addToCart(count)}
                 disabled={stock === 0}
             >
-                <i className="bi bi-cart-plus me-2" />
                 Agregar
+                <i className="bi bi-cart-plus ms-2" />
             </button>
         </div>
     );
