@@ -1,28 +1,52 @@
-import { useParams, Link } from 'react-router-dom'
-import { fetchProductById } from '../../../services/productsServices'
-import useAsync from '../../../hooks/useAsync'
-import { scrollToTop } from '../../../utils/scrollUtils'
-import Spinner from '../../../components/Spinner'
-import ItemDetail from './ItemDetail'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchProductById, fetchProducts } from '../../../services/productsServices';
+import useAsync from '../../../hooks/useAsync';
+import ItemDetail from './ItemDetail';
+import RelatedItems from './RelatedItems';
+import ProductNotFound from './ProductNotFound';
+import BackButton from '../../../components/BackButton';
+import Spinner from '../../../components/Spinner';
+import './ItemDetailContainer.css';
 
 function ItemDetailContainer() {
     const { id } = useParams();
-    const { data, loading } = useAsync(() => fetchProductById(id), [id]);
+    const { data: item, loading: loadingItem } = useAsync(() => fetchProductById(id), [id]);
+
+    const category = item?.category;
+    const { data: relatedItems, loading: loadingRelatedItems } = useAsync(
+        () => (category ? fetchProducts(category) : []),
+        [category]
+    );
+
+    const loading = loadingItem || loadingRelatedItems;
+
+    const [hasLoaded, setHasLoaded] = useState(false);
+
+    useEffect(() => {
+        if (!loading) {
+            setHasLoaded(true);
+        }
+    }, [loading]);
 
     return (
-        <section className="custom-container d-flex flex-column text-center">
-            {loading ? (
-                <Spinner />
-            ) : data ? (
-                <ItemDetail item={data} />
-            ) : (
-                <>
-                    <p className="fs-5 fs-sm-6 fs-md-7 fs-lg-8 mt-3 mb-3">Producto no encontrado</p>
-                    <Link to="/tienda" className="btn custom-btn mx-auto" onClick={scrollToTop}>Volver a la tienda</Link>
-                </>
-            )}
+        <section className="d-flex flex-column text-center">
+            <div className="container">
+                {loading ? (
+                    <Spinner />
+                ) : hasLoaded && item ? (
+                    <>
+                        {item && <ItemDetail item={item} />}
+                        <RelatedItems items={relatedItems} />
+                    </>
+                ) : (
+                    <ProductNotFound />
+                )}
+
+                <BackButton />
+            </div>
         </section>
-    )
+    );
 }
 
-export default ItemDetailContainer
+export default ItemDetailContainer;

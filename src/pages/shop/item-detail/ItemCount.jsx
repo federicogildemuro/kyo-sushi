@@ -1,11 +1,10 @@
 import useCart from '../../../hooks/useCart';
 import useCount from '../../../hooks/useCount';
-import './ItemCount.css';
 
 function ItemCount({ item, onAddToCart }) {
-    const { checkItemInCart, cartItemQuantity } = useCart();
+    const { isItemInCart, cartItemQuantity } = useCart();
     const stock = item.stock;
-    const initial = checkItemInCart(item.id) ? cartItemQuantity(item.id) : 0;
+    const initial = isItemInCart(item.id) ? cartItemQuantity(item.id) : 0;
 
     const { count, increment, decrement } = useCount(initial, 1, stock);
 
