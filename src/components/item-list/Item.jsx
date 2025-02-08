@@ -7,7 +7,7 @@ import './Item.css';
 
 function Item({ item }) {
     const { user } = useAuth();
-    const { toggleFavorite, checkFavorite } = useFavorites();
+    const { toggleFavorite, isItemFavorite } = useFavorites();
     const { showNotification } = useNotification();
 
     const [isFavorite, setIsFavorite] = useState(false);
@@ -15,12 +15,12 @@ function Item({ item }) {
     useEffect(() => {
         const checkIfFavorite = async () => {
             if (user) {
-                const favoriteStatus = await checkFavorite(item.id);
+                const favoriteStatus = await isItemFavorite(item.id);
                 setIsFavorite(favoriteStatus);
             }
         };
         checkIfFavorite();
-    }, [user, item.id, checkFavorite]);
+    }, [user, item.id, isItemFavorite]);
 
     const handleFavoriteToggle = async (event) => {
         event.preventDefault();
@@ -37,7 +37,10 @@ function Item({ item }) {
     if (!item) return null;
 
     return (
-        <Link to={`/item/${item.id}`} className="item-container card h-100">
+        <Link
+            to={`/item/${item.id}`}
+            className="item-container card h-100"
+        >
             <div className="favorite-icon-container">
                 <i
                     className={`favorite-icon fs-5 p-1 bi bi-heart${isFavorite ? '-fill' : ''}`}
@@ -56,7 +59,7 @@ function Item({ item }) {
 
                 <h5 className="card-title">{item.title}</h5>
 
-                <p className="card-text">€{item.price.toFixed(2)}</p>
+                <p className="card-text">${item.price.toFixed(2)}</p>
             </div>
         </Link>
     );

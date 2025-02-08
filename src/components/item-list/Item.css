@@ -5,12 +5,12 @@
     background-color: var(--primary-color);
     border: .1rem solid var(--tertiary-color);
     border-radius: .5rem;
+    transform: scale(1);
     transition: all .5s ease;
 }
 
 .item-container:hover {
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
+    transform: scale(1.05);
 }
 
 .favorite-icon-container {
