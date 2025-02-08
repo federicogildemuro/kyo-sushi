@@ -17,81 +17,57 @@ function Checkout() {
     const { user, loading: loadingUser } = useAuth();
     const userData = user?.userData || {};
 
-    const {
-        cart,
-        cartTotalAmount,
-        clearCartItems,
-        loading: isCartLoading
-    } = useCart();
-
-    const {
-        loading: isCheckingStock,
-        error: stockCheckError,
-        execute: handleStockCheckAndUpdate
-    } = useAsync(checkProductStockAndUpdate, [cart], false);
-
-    const {
-        loading: isCreatingOrder,
-        error: orderError,
-        execute: handleCreateOrder
-    } = useAsync(createOrder, [], false);
-
-    const {
-        loading: isSendingEmail,
-        error: emailError,
-        execute: handleSendOrderEmail
-    } = useAsync(sendOrderEmail, [], false);
-
-    const loading = loadingUser || isCartLoading || isCheckingStock || isCreatingOrder || isSendingEmail;
-    const error = stockCheckError || orderError || emailError;
-
+    const { cart, cartTotalAmount, clearCartItems, loading: isCartLoading } = useCart();
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
+    const { loading: isCheckingStock, error: stockError, execute: checkStock } = useAsync(checkProductStockAndUpdate, [cart], false);
+    const { loading: isCreatingOrder, error: orderError, execute: createNewOrder } = useAsync(createOrder, [], false);
+    const { loading: isSendingEmail, error: emailError, execute: sendEmail } = useAsync(sendOrderEmail, [], false);
+
+    const isLoading = loadingUser || isCartLoading || isCheckingStock || isCreatingOrder || isSendingEmail;
+    const error = stockError || orderError || emailError;
+
     useEffect(() => {
-        if (error) {
-            showNotification(error.message, 'danger');
-        }
+        if (error) showNotification(error.message, "danger");
     }, [error, showNotification]);
 
     const handleConfirm = async () => {
-        const stockResult = await handleStockCheckAndUpdate(cart);
+        const stockResult = await checkStock(cart);
 
         if (stockResult?.success) {
             clearCartItems();
+
             const adaptedOrder = createOrderAdapter(userData, cart, cartTotalAmount);
-            const order = await handleCreateOrder(adaptedOrder);
-            showNotification('Compra realizada exitosamente', 'success');
-            handleSendOrderEmail(order);
+            const order = await createNewOrder(adaptedOrder);
+
+            showNotification("Compra realizada exitosamente", "success");
+            sendEmail(order);
             navigate(`/order-confirmation/${order?.id}`);
         } else {
-            const productsWithNoStock = stockResult?.productsWithNoStock || [];
-            const productsNames = productsWithNoStock.map(item => item.title).join(', ');
-            showNotification(`No hay stock suficiente de ${productsNames}.`, 'warning');
+            const outOfStockItems = stockResult?.productsWithNoStock || [];
+            const productNames = outOfStockItems.map((item) => item.title).join(", ");
+            showNotification(`No hay stock suficiente de ${productNames}.`, "warning");
         }
     };
 
-    if (loading) return <Spinner />;
+    if (isLoading) return <Spinner />;
 
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Finalizar compra</h1>
 
-                {cart.length > 0
-                    ? <OrderSummary
-                        user={userData}
-                        cart={cart}
-                        total={cartTotalAmount}
-                        onConfirm={handleConfirm}
-                    />
-                    : <EmptyCart />
-                }
+                {cart.length > 0 ? (
+                    <OrderSummary user={userData} cart={cart} total={cartTotalAmount} onConfirm={handleConfirm} />
+                ) : (
+                    <EmptyCart />
+                )}
 
                 <BackButton />
             </div>
         </section>
     );
-};
+}
 
 export default Checkout;

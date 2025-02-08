@@ -34,11 +34,15 @@ function HeaderNavBar() {
         <nav>
             <div className="d-none d-lg-flex">
                 {isAdmin ? <AdminNavLinks /> : <UserNavLinks />}
+
                 <AuthenticatedUserNavLinks />
             </div>
 
             <div className="d-lg-none">
-                <HamburgerButton isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+                <HamburgerButton
+                    isOpen={isMenuOpen}
+                    toggleMenu={toggleMenu}
+                />
 
                 {isMenuOpen && (
                     <div className="custom-offcanvas offcanvas offcanvas-end show" ref={menuRef}>

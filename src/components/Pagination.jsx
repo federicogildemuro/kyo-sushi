@@ -12,9 +12,7 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
     };
 
     const handlePageClick = (pageNumber) => {
-        if (pageNumber !== currentPage) {
-            onPageChange(pageNumber);
-        }
+        if (pageNumber !== currentPage) onPageChange(pageNumber);
     };
 
     const visiblePages = 3;
@@ -35,14 +33,13 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
     }
 
     return (
-        <nav className="d-flex justify-content-center mt-4" aria-label="Page navigation">
+        <nav className="d-flex justify-content-center mt-4">
             <ul className="pagination gap-2">
                 {currentPage > 1 && (
                     <li className="page-item">
                         <button
                             className="page-link fw-semibold p-2"
                             onClick={handlePreviousPage}
-                            aria-label="Previous page"
                         >
                             &lt;
                         </button>
@@ -63,7 +60,6 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
                         <button
                             className="page-link fw-semibold p-2"
                             onClick={() => handlePageClick(pageNumber)}
-                            aria-label={`Page ${pageNumber}`}
                         >
                             {pageNumber}
                         </button>
@@ -81,7 +77,6 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
                         <button
                             className="page-link fw-semibold p-2"
                             onClick={handleNextPage}
-                            aria-label="Next page"
                         >
                             &gt;
                         </button>

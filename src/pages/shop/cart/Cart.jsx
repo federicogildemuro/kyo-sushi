@@ -7,33 +7,41 @@ import Spinner from '../../../components/Spinner';
 import './Cart.css';
 
 function Cart() {
-    const { cart, removeCartItem, clearCartItems, cartTotalAmount, loading: loadingCart } = useCart();
+    const {
+        cart,
+        removeCartItem,
+        clearCartItems,
+        cartTotalAmount,
+        loading: loadingCart
+    } = useCart();
+
     const { loading: loadingRemove, execute: removeItem } = useAsync(removeCartItem, [], false);
     const { loading: loadingClear, execute: clearCart } = useAsync(clearCartItems, [], false);
 
-    const loading = loadingCart || loadingRemove || loadingClear;
+    const isLoading = loadingCart || loadingRemove || loadingClear;
+    const hasItems = cart.length > 0;
 
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tu carrito</h1>
 
-                {loading
-                    ? <Spinner />
-                    : (cart.length > 0
-                        ? <CartDetail
-                            cart={cart}
-                            onRemoveFromCart={removeItem}
-                            totalAmount={cartTotalAmount}
-                            onClearCart={clearCart}
-                        />
-                        : <EmptyCart />
-                    )
-                }
+                {isLoading ? (
+                    <Spinner />
+                ) : hasItems ? (
+                    <CartDetail
+                        cart={cart}
+                        onRemoveFromCart={removeItem}
+                        totalAmount={cartTotalAmount}
+                        onClearCart={clearCart}
+                    />
+                ) : (
+                    <EmptyCart />
+                )}
 
                 <BackButton />
             </div>
-        </section >
+        </section>
     );
 }
 
