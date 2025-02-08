@@ -1,4 +1,4 @@
-import { getDocs, collection, doc, getDoc, query, where, updateDoc, setDoc, addDoc } from 'firebase/firestore';
+import { query, collection, where, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from './firebaseServices';
 import { parseProductFromFirebase } from '../adapters/productAdapters';
 
@@ -45,26 +45,6 @@ const fetchProductById = async (id) => {
     }
 }
 
-const createProduct = async (product) => {
-    try {
-        const docRef = await addDoc(collection(db, 'products'), product);
-        return docRef.id;
-    } catch (error) {
-        console.error(error);
-        throw new Error(error.message || 'Error al crear el producto');
-    }
-}
-
-const updateProduct = async (id, product) => {
-    try {
-        const docRef = doc(db, 'products', id);
-        await setDoc(docRef, product);
-    } catch (error) {
-        console.error(error);
-        throw new Error(error.message || 'Error al actualizar el producto');
-    }
-}
-
 const checkProductStockAndUpdate = async (cart) => {
     try {
         const productsWithNoStock = [];
@@ -96,4 +76,4 @@ const checkProductStockAndUpdate = async (cart) => {
     }
 }
 
-export { fetchProducts, fetchCategories, fetchProductById, createProduct, updateProduct, checkProductStockAndUpdate };
+export { fetchProducts, fetchCategories, fetchProductById, checkProductStockAndUpdate };
