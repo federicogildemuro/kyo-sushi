@@ -3,7 +3,7 @@ import { lazy } from 'react';
 const Cart = lazy(() => import('../pages/shop/cart/Cart'));
 const Favorites = lazy(() => import('../pages/shop/favorites/Favorites'));
 const Checkout = lazy(() => import('../pages/shop/checkout/Checkout'));
-const OrderConfirmation = lazy(() => import('../pages/shop/OrderConfirmation'));
+const OrderConfirmation = lazy(() => import('../pages/shop/checkout/OrderConfirmation'));
 
 const userRoutes = [
     { path: '/cart', component: Cart },
