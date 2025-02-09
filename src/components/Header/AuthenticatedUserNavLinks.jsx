@@ -24,6 +24,17 @@ function AuthenticatedUserNavLinks({ isMenuOpen }) {
                 <>
                     <li>
                         <Link
+                            to="/profile"
+                            title="Perfil"
+                            className="nav-link"
+                            onClick={scrollToTop}
+                        >
+                            <i className={`nav-bar-icon bi bi-person`} />
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
                             to="/favorites"
                             title="Favoritos"
                             className="nav-link"
