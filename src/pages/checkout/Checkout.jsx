@@ -7,7 +7,6 @@ import useAuth from '../../hooks/useAuth';
 import useCart from '../../hooks/useCart';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
-import { createOrderAdapter } from '../../adapters/orderAdapters';
 import { scrollToTop } from '../../utils/scrollUtils';
 import OrderSummary from './OrderSummary';
 import EmptyCart from '../cart/EmptyCart';
@@ -38,10 +37,7 @@ function Checkout() {
 
         if (stockResult?.success) {
             clearCartItems();
-
-            const adaptedOrder = createOrderAdapter(userData, cart, cartTotalAmount);
-            const order = await createNewOrder(adaptedOrder);
-
+            const order = await createNewOrder();
             showNotification("Compra realizada exitosamente", "success");
             sendEmail(order);
             navigate(`/order-confirmation/${order?.id}`);
