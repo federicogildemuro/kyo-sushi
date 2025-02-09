@@ -33,7 +33,7 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
     }
 
     return (
-        <nav className="d-flex justify-content-center mt-4">
+        <nav className="d-flex justify-content-center m-5">
             <ul className="pagination gap-2">
                 {currentPage > 1 && (
                     <li className="page-item">
