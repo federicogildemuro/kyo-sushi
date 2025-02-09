@@ -65,11 +65,9 @@ li {
     background-color: var(--tertiary-color);
 }
 
-.auth-link {
+.custom-card {
     color: var(--tertiary-color);
-    text-decoration: none;
-}
-
-.auth-link:hover {
-    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    border: .1rem solid var(--tertiary-color);
+    border-radius: .5rem;
 }
