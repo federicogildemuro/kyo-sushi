@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import useAuth from '../../../hooks/useAuth';
-import useCart from '../../../hooks/useCart';
-import useFavorites from '../../../hooks/useFavorites';
-import useNotification from '../../../hooks/useNotification';
+import useAuth from '../../hooks/useAuth';
+import useCart from '../../hooks/useCart';
+import useFavorites from '../../hooks/useFavorites';
+import useNotification from '../../hooks/useNotification';
 import ItemDetailPicture from './ItemDetailPicture';
 import ItemDetailInfo from './ItemDetailInfo';
 
-function ItemDetail({ item }) {
+function ItemDetailContent({ item }) {
     const { user } = useAuth();
     const { isItemInCart, cartItemQuantity, addCartItem } = useCart();
     const { toggleFavorite, isItemFavorite } = useFavorites();
@@ -82,4 +82,4 @@ function ItemDetail({ item }) {
     );
 }
 
-export default ItemDetail;
+export default ItemDetailContent;

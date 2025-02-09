@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProducts } from '../../../services/productsServices';
-import useAsync from '../../../hooks/useAsync';
-import useItemsPerPage from '../../../hooks/useItemsPerPage';
-import usePagination from '../../../hooks/usePagination';
+import { fetchProducts } from '../../services/productsServices';
+import useAsync from '../../hooks/useAsync';
+import useItemsPerPage from '../../hooks/useItemsPerPage';
+import usePagination from '../../hooks/usePagination';
 import StoreHeader from './StoreHeader';
 import StoreContent from './StoreContent';
-import Spinner from '../../../components/Spinner';
+import Spinner from '../../components/Spinner';
 
 function Store() {
     const { category } = useParams();

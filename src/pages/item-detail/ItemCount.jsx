@@ -1,5 +1,5 @@
-import useCart from '../../../hooks/useCart';
-import useCount from '../../../hooks/useCount';
+import useCart from '../../hooks/useCart';
+import useCount from '../../hooks/useCount';
 
 function ItemCount({ item, addToCart }) {
     const { isItemInCart, cartItemQuantity } = useCart();

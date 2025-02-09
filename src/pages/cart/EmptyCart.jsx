@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { scrollToTop } from '../../../utils/scrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
-function EmptyFavorites() {
+function EmptyCart() {
     return (
-        <div>
+        <div className="text-center">
             <p className="fs-5 mb-5">
-                <i className="bi bi-heart me-2" />
-                No tienes productos marcados como favoritos
+                <i className="bi bi-cart-x me-2" />
+                No tienes productos en tu carrito
             </p>
 
             <Link
@@ -21,4 +21,4 @@ function EmptyFavorites() {
     );
 }
 
-export default EmptyFavorites;
+export default EmptyCart;

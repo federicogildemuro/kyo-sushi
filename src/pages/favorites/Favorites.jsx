@@ -1,10 +1,10 @@
-import useFavorites from "../../../hooks/useFavorites";
-import useItemsPerPage from "../../../hooks/useItemsPerPage";
-import usePagination from "../../../hooks/usePagination";
-import FavoritesList from "./FavoritesList";
-import EmptyFavorites from "./EmptyFavorites";
-import BackButton from "../../../components/BackButton";
-import Spinner from "../../../components/Spinner";
+import useFavorites from '../../hooks/useFavorites';
+import useItemsPerPage from '../../hooks/useItemsPerPage';
+import usePagination from '../../hooks/usePagination';
+import FavoritesList from './FavoritesList';
+import EmptyFavorites from './EmptyFavorites';
+import BackButton from '../../components/BackButton';
+import Spinner from '../../components/Spinner';
 
 function Favorites() {
     const { favorites, loading } = useFavorites();

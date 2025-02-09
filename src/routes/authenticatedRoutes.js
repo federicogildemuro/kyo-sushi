@@ -1,9 +1,9 @@
 import { lazy } from 'react';
 
-const Cart = lazy(() => import('../pages/shop/cart/Cart'));
-const Favorites = lazy(() => import('../pages/shop/favorites/Favorites'));
-const Checkout = lazy(() => import('../pages/shop/checkout/Checkout'));
-const OrderConfirmation = lazy(() => import('../pages/shop/checkout/OrderConfirmation'));
+const Cart = lazy(() => import('../pages/cart/Cart'));
+const Favorites = lazy(() => import('../pages/favorites/Favorites'));
+const Checkout = lazy(() => import('../pages/checkout/Checkout'));
+const OrderConfirmation = lazy(() => import('../pages/checkout/OrderConfirmation'));
 
 const userRoutes = [
     { path: '/cart', component: Cart },

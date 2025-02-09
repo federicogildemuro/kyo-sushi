@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { fetchProductById, fetchProducts } from '../../../services/productsServices';
-import useAsync from '../../../hooks/useAsync';
-import ItemDetail from './ItemDetail';
+import { fetchProductById, fetchProducts } from '../../services/productsServices';
+import useAsync from '../../hooks/useAsync';
+import ItemDetailContent from './ItemDetailContent';
 import RelatedItems from './RelatedItems';
 import ProductNotFound from './ProductNotFound';
-import Spinner from '../../../components/Spinner';
-import './ItemDetailContainer.css';
+import Spinner from '../../components/Spinner';
+import './ItemDetail.css';
 
-function ItemDetailContainer() {
+function ItemDetail() {
     const { id } = useParams();
     const { data: item, loading: loadingItem } = useAsync(
         () => fetchProductById(id),
@@ -31,7 +31,7 @@ function ItemDetailContainer() {
             <div className="container">
                 {item ? (
                     <>
-                        <ItemDetail item={item} />
+                        <ItemDetailContent item={item} />
                         <RelatedItems items={filteredRelatedItems} />
                     </>
                 ) : (
@@ -42,4 +42,4 @@ function ItemDetailContainer() {
     );
 }
 
-export default ItemDetailContainer;
+export default ItemDetail;

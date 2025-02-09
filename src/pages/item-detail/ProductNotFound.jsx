@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { scrollToTop } from '../../../utils/scrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
-function ProductsNotFound() {
+function ProductNotFound() {
     return (
         <div className="text-center m-5">
             <p className="fs-5 mb-5">
                 <i className="bi bi-exclamation-triangle me-2" />
-                No se encontraron productos
+                Producto no encontrado
             </p>
 
             <Link
@@ -21,4 +21,4 @@ function ProductsNotFound() {
     );
 }
 
-export default ProductsNotFound;
+export default ProductNotFound;

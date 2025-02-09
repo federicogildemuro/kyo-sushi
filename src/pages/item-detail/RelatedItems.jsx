@@ -1,4 +1,4 @@
-import ItemList from '../../../components/item-list/ItemList';
+import ItemList from '../../components/item-list/ItemList';
 
 function RelatedItems({ items }) {
     if (!items) return null;

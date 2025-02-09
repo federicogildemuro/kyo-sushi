@@ -1,17 +1,17 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { checkProductStockAndUpdate } from "../../../services/productsServices";
-import { createOrder } from "../../../services/ordersServices";
-import { sendOrderEmail } from "../../../services/mailingServices";
-import useAuth from "../../../hooks/useAuth";
-import useCart from "../../../hooks/useCart";
-import useAsync from "../../../hooks/useAsync";
-import useNotification from "../../../hooks/useNotification";
-import { createOrderAdapter } from "../../../adapters/orderAdapters";
-import OrderSummary from "./OrderSummary";
-import EmptyCart from "../cart/EmptyCart";
-import BackButton from "../../../components/BackButton";
-import Spinner from "../../../components/Spinner";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { checkProductStockAndUpdate } from '../../services/productsServices';
+import { createOrder } from '../../services/ordersServices';
+import { sendOrderEmail } from '../../services/mailingServices';
+import useAuth from '../../hooks/useAuth';
+import useCart from '../../hooks/useCart';
+import useAsync from '../../hooks/useAsync';
+import useNotification from '../../hooks/useNotification';
+import { createOrderAdapter } from '../../adapters/orderAdapters';
+import OrderSummary from './OrderSummary';
+import EmptyCart from '../cart/EmptyCart';
+import BackButton from '../../components/BackButton';
+import Spinner from '../../components/Spinner';
 
 function Checkout() {
     const { user, loading: isUserLoading } = useAuth();

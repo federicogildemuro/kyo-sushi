@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { scrollToTop } from '../../../utils/scrollUtils';
+import { scrollToTop } from '../../utils/scrollUtils';
 
 function OrderConfirmation() {
     const orderId = useParams().orderId;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import SortButtons from '../../../components/SortButtons';
-import FiltersMenu from '../../../components/FiltersMenu';
+import SortButtons from '../../components/SortButtons';
+import FiltersMenu from '../../components/FiltersMenu';
 
 function StoreHeader({ category, items, filteredItems, handleFilterChange, handleSortChange }) {
     const [isFiltersMenuVisible, setFiltersMenuVisible] = useState(false);
