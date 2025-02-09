@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../services/firebaseServices';
 import { getUserById } from '../services/userServices';
+import { isSessionExpired, setLoginTime, clearLoginTime } from '../utils/sessionUtils';
 
 const AuthContext = createContext();
 
@@ -16,15 +17,20 @@ function AuthProvider({ children }) {
             setError(null);
             try {
                 if (firebaseUser) {
-                    const userData = await getUserById(firebaseUser.uid);
-                    setUser({ ...firebaseUser, userData });
-                    setIsAdmin(userData?.role === 'admin');
+                    if (isSessionExpired()) {
+                        await signOut(auth);
+                        clearLoginTime();
+                        return;
+                    }
+
+                    await fetchAndSetUser(firebaseUser);
                 } else {
                     setUser(null);
                     setIsAdmin(false);
+                    clearLoginTime();
                 }
             } catch (error) {
-                setError(error.message || 'Error obteniendo datos de usuario');
+                setError(error.message || 'Error verificando el cambio en el estado de autenticación');
             } finally {
                 setLoading(false);
             }
@@ -33,11 +39,22 @@ function AuthProvider({ children }) {
         return () => unsubscribe();
     }, []);
 
+    const fetchAndSetUser = async (firebaseUser) => {
+        try {
+            const userData = await getUserById(firebaseUser.uid);
+            setUser({ ...firebaseUser, userData });
+            setIsAdmin(userData?.role === 'admin');
+        } catch (error) {
+            setError(error.message || 'Error obteniendo datos del usuario');
+        }
+    };
+
     const login = async (email, password) => {
         setLoading(true);
         setError(null);
         try {
             await signInWithEmailAndPassword(auth, email, password);
+            setLoginTime();
             return true;
         } catch (error) {
             console.error(error);
@@ -58,6 +75,7 @@ function AuthProvider({ children }) {
         setError(null);
         try {
             await signOut(auth);
+            clearLoginTime();
             return true;
         } catch (error) {
             console.error(error);
