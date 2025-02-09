@@ -4,7 +4,6 @@ import CartDetail from './CartDetail';
 import EmptyCart from './EmptyCart';
 import BackButton from '../../../components/BackButton';
 import Spinner from '../../../components/Spinner';
-import './Cart.css';
 
 function Cart() {
     const {

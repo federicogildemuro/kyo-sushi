@@ -71,3 +71,29 @@ li {
     border: .1rem solid var(--tertiary-color);
     border-radius: .5rem;
 }
+
+.custom-table {
+    --bs-table-bg: var(--primary-color);
+    --bs-table-color: var(--tertiary-color);
+}
+
+.custom-table th,
+.custom-table td {
+    border: none;
+    vertical-align: middle;
+}
+
+.custom-table tbody tr:hover td:not(:last-child) {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.custom-table tbody tr:hover td:first-child {
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+.custom-table tbody tr:hover td:nth-last-child(2) {
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}

@@ -3,7 +3,7 @@ import CartTableItem from './CartTableItem';
 function CartTable({ cart, removeFromCart }) {
     return (
         <div className="table-responsive">
-            <table className="table cart-table">
+            <table className="table custom-table">
                 <thead>
                     <tr>
                         <th className="text-start">Producto</th>
@@ -28,6 +28,6 @@ function CartTable({ cart, removeFromCart }) {
             </table>
         </div>
     );
-};
+}
 
 export default CartTable;
