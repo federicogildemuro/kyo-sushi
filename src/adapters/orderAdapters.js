@@ -25,7 +25,7 @@ const createOrderAdapter = (user, cart, total) => ({
         quantity: item.quantity,
     })),
     total: total,
-    status: "pending"
+    status: 'pending'
 });
 
 export { parseOrderFromFirebase, createOrderAdapter };

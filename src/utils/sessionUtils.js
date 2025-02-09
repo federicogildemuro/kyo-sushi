@@ -1,15 +1,15 @@
 const SESSION_DURATION = 60 * 60 * 1000;
 
 const getLoginTime = () => {
-    return localStorage.getItem("loginTime");
+    return localStorage.getItem('loginTime');
 };
 
 const setLoginTime = () => {
-    localStorage.setItem("loginTime", Date.now());
+    localStorage.setItem('loginTime', Date.now());
 };
 
 const clearLoginTime = () => {
-    localStorage.removeItem("loginTime");
+    localStorage.removeItem('loginTime');
 };
 
 const isSessionExpired = () => {

@@ -2,7 +2,7 @@
     color: var(--tertiary-color);
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-    border-radius: .5rem;
+    border-radius: .5rem !important;
     transition: all .5s ease;
 }
 

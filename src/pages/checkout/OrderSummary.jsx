@@ -1,6 +1,6 @@
 function OrderSummary({ user, cart, total, onConfirm }) {
-    const firstName = user?.firstName || "";
-    const lastName = user?.lastName || "";
+    const firstName = user?.firstName || '';
+    const lastName = user?.lastName || '';
     const address = user?.address || {};
 
     return (

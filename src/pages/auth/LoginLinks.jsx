@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { scrollToTop } from "../../utils/scrollUtils";
+import { Link } from 'react-router-dom';
+import { scrollToTop } from '../../utils/scrollUtils';
 
 function LoginLinks() {
     return (
