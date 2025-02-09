@@ -19,8 +19,14 @@ const validateField = (name, value, formData) => {
             return '';
         case 'apartment':
             return '';
-        case 'terms':
-            if (!value) return 'Debe aceptar los términos y condiciones';
+        case 'price':
+            if (isNaN(value)) return 'El precio debe ser un número';
+            if (parseFloat(value) <= 0) return 'El precio debe ser mayor a 0';
+            return '';
+        case 'stock':
+            if (isNaN(value)) return 'El stock debe ser un número';
+            if (!Number.isInteger(parseFloat(value))) return 'El stock debe ser un número entero';
+            if (parseInt(value, 10) < 0) return 'El stock no puede ser negativo';
             return '';
         default:
             if (!value) return 'Campo obligatorio';
