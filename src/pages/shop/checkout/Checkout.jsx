@@ -25,7 +25,7 @@ function Checkout() {
     const { loading: isCreatingOrder, error: orderError, execute: createNewOrder } = useAsync(createOrder, [], false);
     const { loading: isSendingEmail, error: emailError, execute: sendEmail } = useAsync(sendOrderEmail, [], false);
 
-    const isLoading = loadingUser || isCartLoading || isCheckingStock || isCreatingOrder || isSendingEmail;
+    const loading = loadingUser || isCartLoading || isCheckingStock || isCreatingOrder || isSendingEmail;
     const error = stockError || orderError || emailError;
 
     useEffect(() => {
@@ -51,7 +51,7 @@ function Checkout() {
         }
     };
 
-    if (isLoading) return <Spinner />;
+    if (loading) return <Spinner />;
 
     return (
         <section className="d-flex flex-column text-center">
@@ -59,7 +59,12 @@ function Checkout() {
                 <h1 className="display-6 fw-bold mb-5">Finalizar compra</h1>
 
                 {cart.length > 0 ? (
-                    <OrderSummary user={userData} cart={cart} total={cartTotalAmount} onConfirm={handleConfirm} />
+                    <OrderSummary
+                        user={userData}
+                        cart={cart}
+                        total={cartTotalAmount}
+                        onConfirm={handleConfirm}
+                    />
                 ) : (
                     <EmptyCart />
                 )}

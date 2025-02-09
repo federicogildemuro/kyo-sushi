@@ -18,17 +18,16 @@ function Cart() {
     const { loading: loadingRemove, execute: removeItem } = useAsync(removeCartItem, [], false);
     const { loading: loadingClear, execute: clearCart } = useAsync(clearCartItems, [], false);
 
-    const isLoading = loadingCart || loadingRemove || loadingClear;
-    const hasItems = cart.length > 0;
+    const loading = loadingCart || loadingRemove || loadingClear;
 
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tu carrito</h1>
 
-                {isLoading ? (
+                {loading ? (
                     <Spinner />
-                ) : hasItems ? (
+                ) : cart.length > 0 ? (
                     <CartDetail
                         cart={cart}
                         onRemoveFromCart={removeItem}
