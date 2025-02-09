@@ -11,4 +11,15 @@ const parseProductFromFirebase = (doc) => {
     }
 };
 
-export { parseProductFromFirebase };
+const createProductAdapter = (formData) => {
+    return {
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        price: parseFloat(formData.price) || 0,
+        stock: parseInt(formData.stock) || 0,
+        pictureUrl: formData.pictureUrl
+    }
+};
+
+export { parseProductFromFirebase, createProductAdapter };
