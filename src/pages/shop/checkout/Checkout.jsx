@@ -14,7 +14,7 @@ import BackButton from "../../../components/BackButton";
 import Spinner from "../../../components/Spinner";
 
 function Checkout() {
-    const { user, loading: loadingUser } = useAuth();
+    const { user, loading: isUserLoading } = useAuth();
     const userData = user?.userData || {};
 
     const { cart, cartTotalAmount, clearCartItems, loading: isCartLoading } = useCart();
@@ -25,7 +25,7 @@ function Checkout() {
     const { loading: isCreatingOrder, error: orderError, execute: createNewOrder } = useAsync(createOrder, [], false);
     const { loading: isSendingEmail, error: emailError, execute: sendEmail } = useAsync(sendOrderEmail, [], false);
 
-    const loading = loadingUser || isCartLoading || isCheckingStock || isCreatingOrder || isSendingEmail;
+    const loading = isUserLoading || isCartLoading || isCheckingStock || isCreatingOrder || isSendingEmail;
     const error = stockError || orderError || emailError;
 
     useEffect(() => {
@@ -45,7 +45,7 @@ function Checkout() {
             sendEmail(order);
             navigate(`/order-confirmation/${order?.id}`);
         } else {
-            const outOfStockItems = stockResult?.productsWithNoStock || [];
+            const outOfStockItems = stockResult?.outOfStockProducts || [];
             const productNames = outOfStockItems.map((item) => item.title).join(", ");
             showNotification(`No hay stock suficiente de ${productNames}.`, "warning");
         }

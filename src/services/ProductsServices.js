@@ -47,7 +47,7 @@ const fetchProductById = async (id) => {
 
 const checkProductStockAndUpdate = async (cart) => {
     try {
-        const productsWithNoStock = [];
+        const outOfStockProducts = [];
 
         for (const item of cart) {
             const docRef = doc(db, 'products', item.id);
@@ -56,10 +56,10 @@ const checkProductStockAndUpdate = async (cart) => {
 
             if (!product) throw new Error(`Producto ID ${item.id} no encontrado.`);
 
-            if (product.stock < item.quantity) productsWithNoStock.push(item);
+            if (product.stock < item.quantity) outOfStockProducts.push(item);
         }
 
-        if (productsWithNoStock.length > 0) return { success: false, productsWithNoStock: productsWithNoStock };
+        if (outOfStockProducts.length > 0) return { success: false, outOfStockProducts: outOfStockProducts };
 
         for (const item of cart) {
             const docRef = doc(db, 'products', item.id);
@@ -69,7 +69,7 @@ const checkProductStockAndUpdate = async (cart) => {
             await updateDoc(docRef, { stock: newStock });
         }
 
-        return { success: true, productsWithNoStock: [] };
+        return { success: true, outOfStockProducts: [] };
     } catch (error) {
         console.error(error);
         throw new Error(error.message || 'Error al actualizar el stock de los productos');
