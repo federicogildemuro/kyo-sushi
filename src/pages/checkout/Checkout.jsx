@@ -8,6 +8,7 @@ import useCart from '../../hooks/useCart';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import { createOrderAdapter } from '../../adapters/orderAdapters';
+import { scrollToTop } from '../../utils/scrollUtils';
 import OrderSummary from './OrderSummary';
 import EmptyCart from '../cart/EmptyCart';
 import BackButton from '../../components/BackButton';
@@ -49,6 +50,8 @@ function Checkout() {
             const productNames = outOfStockItems.map((item) => item.title).join(", ");
             showNotification(`No hay stock suficiente de ${productNames}.`, "warning");
         }
+
+        scrollToTop();
     };
 
     if (loading) return <Spinner />;

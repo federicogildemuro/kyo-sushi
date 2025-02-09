@@ -9,7 +9,7 @@ function OrderConfirmation() {
 
     useEffect(() => {
         AOS.init({
-            duration: 2000,
+            duration: 3000,
             once: true,
         });
     }, []);
@@ -19,16 +19,36 @@ function OrderConfirmation() {
             <div className="container">
                 <h1
                     className="display-6 fw-bold mb-5"
-                    data-aos="fade-down"
+                    data-aos="zoom-in"
                 >
-                    Gracias por su compra!!!
+                    <i className="bi bi-check-circle me-2" />
+                    Pedido confirmado
                 </h1>
 
-                <p className="lead">Su pedido ha sido registrado con el número {orderId}</p>
-                <p className="lead">Le hemos enviado un correo electrónico con los detalles del mismo</p>
-                <p className="lead">Si tiene alguna consulta, no dude en contactarnos</p>
-                <p className="lead">¡Gracias por elegirnos!</p>
-                <p className="lead">Lo esperamos nuevamente en nuestra tienda</p>
+                <p className="lead">
+                    <i className="bi bi-cart-fill me-2" />
+                    Se ha registrado con el número {orderId}
+                </p>
+
+                <p className="lead">
+                    <i className="bi bi-envelope-check me-2" />
+                    Le hemos enviado un correo electrónico con los detalles del mismo
+                </p>
+
+                <p className="lead">
+                    <i className="bi bi-clock me-2" />
+                    Si tiene alguna consulta, no dude en contactarnos
+                </p>
+
+                <p className="lead">
+                    <i className="bi bi-heart me-2" />
+                    ¡Gracias por elegirnos!
+                </p>
+
+                <p className="lead">
+                    <i className="bi bi-star-fill me-2" />
+                    Lo esperamos nuevamente en nuestra tienda
+                </p>
 
                 <Link
                     to="/tienda"
@@ -38,7 +58,6 @@ function OrderConfirmation() {
                     Ir a la tienda
                     <i className="bi bi-shop ms-2" />
                 </Link>
-
             </div>
         </section>
     );
