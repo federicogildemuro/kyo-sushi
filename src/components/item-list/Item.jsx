@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useFavorites from '../../hooks/useFavorites';
 import useNotification from '../../hooks/useNotification';
+import { scrollToTop } from '../../utils/scrollUtils';
 import './Item.css';
 
 function Item({ item }) {
@@ -40,6 +41,7 @@ function Item({ item }) {
         <Link
             to={`/item/${item.id}`}
             className="item-container card h-100"
+            onClick={scrollToTop}
         >
             <div className="favorite-icon-container">
                 <i
