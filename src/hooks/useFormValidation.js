@@ -8,23 +8,27 @@ function useFormValidation(initialData) {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
+        const updatedValue = name === 'price' || name === 'stock' ? Number(value) : value;
+
         setFormData((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: updatedValue,
         }));
 
         setFormErrors((prev) => ({
             ...prev,
-            [name]: validateField(name, value, formData),
+            [name]: validateField(name, updatedValue, formData),
         }));
     };
 
     const handleBlur = (event) => {
         const { name, value } = event.target;
 
+        const updatedValue = name === 'price' || name === 'stock' ? Number(value) : value;
+
         setFormErrors((prev) => ({
             ...prev,
-            [name]: validateField(name, value, formData),
+            [name]: validateField(name, updatedValue, formData),
         }));
     };
 
