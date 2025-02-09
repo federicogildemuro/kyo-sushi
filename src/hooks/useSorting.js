@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 function useSorting() {
     const [sortOrder, setSortOrder] = useState({ field: '', direction: 'asc' });
@@ -20,10 +20,10 @@ function useSorting() {
         });
     };
 
-    const applySorting = (data) => {
+    const applySorting = useCallback((data) => {
         if (!sortOrder.field) return data;
         return sortData(data, sortOrder.field, sortOrder.direction);
-    };
+    }, [sortOrder]);
 
     return { sortOrder, handleSort, applySorting };
 }
