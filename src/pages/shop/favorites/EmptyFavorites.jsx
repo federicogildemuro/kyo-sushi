@@ -19,6 +19,6 @@ function EmptyFavorites() {
             </Link>
         </div>
     );
-};
+}
 
 export default EmptyFavorites;

@@ -19,6 +19,6 @@ function EmptyCart() {
             </Link>
         </div>
     );
-};
+}
 
 export default EmptyCart;

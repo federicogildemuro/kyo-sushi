@@ -36,6 +36,6 @@ function CartActions({ totalAmount, clearCart }) {
             </div>
         </div>
     );
-};
+}
 
 export default CartActions;

@@ -37,6 +37,6 @@ function CartTableItem({ item, removeItem }) {
             </td>
         </tr>
     );
-};
+}
 
 export default CartTableItem;
