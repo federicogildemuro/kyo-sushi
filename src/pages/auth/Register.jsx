@@ -6,6 +6,7 @@ import useNotification from '../../hooks/useNotification';
 import useFormValidation from '../../hooks/useFormValidation';
 import Spinner from '../../components/Spinner';
 import BackButton from '../../components/BackButton';
+import './Auth.css';
 
 function Register() {
     const { loading, error, execute: register } = useAsync(createUser, [], false);

@@ -4,6 +4,7 @@ import useNotification from '../../hooks/useNotification';
 import LoginLinks from './LoginLinks';
 import BackButton from '../../components/BackButton';
 import Spinner from '../../components/Spinner';
+import './Auth.css';
 
 function Login() {
     const { login, loading, error } = useAuth();
