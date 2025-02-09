@@ -18,8 +18,6 @@ function AuthenticatedUserNavLinks({ isMenuOpen }) {
         }
     };
 
-    console.log(!isAdmin);
-
     return (
         <ul className={`d-flex gap-5 m-0 ${isMenuOpen ? 'justify-content-center' : ''}`}>
             {(user && !isAdmin) && (
