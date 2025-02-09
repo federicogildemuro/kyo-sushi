@@ -1,6 +1,6 @@
-import { query, collection, where, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { query, collection, where, getDocs, doc, getDoc, updateDoc, addDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebaseServices';
-import { parseProductFromFirebase } from '../adapters/productAdapters';
+import { parseProductFromFirebase, createProductAdapter } from '../adapters/productAdapters';
 
 const fetchProducts = async (category) => {
     try {
@@ -14,10 +14,10 @@ const fetchProducts = async (category) => {
         const products = querySnapshot.docs.map(doc => parseProductFromFirebase(doc));
         return products;
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching products:', error);
         throw new Error(error.message || 'Error al obtener los productos');
     }
-}
+};
 
 const fetchCategories = async () => {
     try {
@@ -25,10 +25,10 @@ const fetchCategories = async () => {
         const categories = new Set(querySnapshot.docs.map(doc => doc.data().category));
         return Array.from(categories);
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching categories:', error);
         throw new Error(error.message || 'Error al obtener las categorías');
     }
-}
+};
 
 const fetchProductById = async (id) => {
     try {
@@ -40,10 +40,10 @@ const fetchProductById = async (id) => {
         const product = parseProductFromFirebase(docSnap);
         return product;
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching product by id:', error);
         throw new Error(error.message || 'Error al obtener el producto');
     }
-}
+};
 
 const checkProductStockAndUpdate = async (cart) => {
     try {
@@ -71,9 +71,51 @@ const checkProductStockAndUpdate = async (cart) => {
 
         return { success: true, outOfStockProducts: [] };
     } catch (error) {
-        console.error(error);
-        throw new Error(error.message || 'Error al actualizar el stock de los productos');
+        console.error('Error checking product stock and updating:', error);
+        throw new Error(error.message || 'Error al verificar el stock de los productos y actualizarlo');
+    }
+};
+
+const createProduct = async (product) => {
+    try {
+        const adaptedProduct = createProductAdapter(product);
+        const docRef = await addDoc(collection(db, 'products'), adaptedProduct);
+        const docSnapshot = await getDoc(docRef);
+        return { id: docRef.id, ...docSnapshot.data() };
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw new Error(error.message || 'Error al crear el producto');
+    }
+};
+
+const updateProduct = async (id, product) => {
+    try {
+        const docRef = doc(db, 'products', id);
+        await updateDoc(docRef, product);
+        return true;
+    } catch (error) {
+        console.error('Error updating product:', error);
+        throw new Error(error.message || 'Error al actualizar el producto');
+    }
+};
+
+const deleteProduct = async (id) => {
+    try {
+        const docRef = doc(db, 'products', id);
+        await deleteDoc(docRef);
+        return true;
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        throw new Error(error.message || 'Error al eliminar el producto');
     }
 }
 
-export { fetchProducts, fetchCategories, fetchProductById, checkProductStockAndUpdate };
+export {
+    fetchProducts,
+    fetchCategories,
+    fetchProductById,
+    checkProductStockAndUpdate,
+    createProduct,
+    updateProduct,
+    deleteProduct
+};

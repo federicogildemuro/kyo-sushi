@@ -7,9 +7,9 @@ const createUser = async (email, password, userData) => {
     try {
         const firebaseUser = await createUserWithEmailAndPassword(auth, email, password);
         const userId = firebaseUser.user.uid;
-        const userRef = doc(db, 'users', userId);
+        const docRef = doc(db, 'users', userId);
         const adaptedUserData = createUserAdapter({ ...userData });
-        await setDoc(userRef, adaptedUserData);
+        await setDoc(docRef, adaptedUserData);
         return true;
     } catch (error) {
         console.error('Error creating user:', error);
@@ -22,12 +22,10 @@ const createUser = async (email, password, userData) => {
 
 const getUserById = async (id) => {
     try {
-        const userRef = doc(db, 'users', id);
-        const userDoc = await getDoc(userRef);
-        if (!userDoc.exists()) {
-            return null;
-        }
-        return { id: userDoc.id, ...userDoc.data() };
+        const docRef = doc(db, 'users', id);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) return null;
+        return { id: docSnap.id, ...docSnap.data() };
     } catch (error) {
         console.error('Error getting user by id:', error);
         throw new Error(error.message || 'Error al obtener el usuario');
@@ -36,14 +34,14 @@ const getUserById = async (id) => {
 
 const getUserByEmail = async (email) => {
     try {
-        const usersRef = collection(db, 'users');
-        const querySnapshot = await getDocs(query(usersRef, where('email', '==', email)));
+        const docsRef = collection(db, 'users');
+        const querySnapshot = await getDocs(query(docsRef, where('email', '==', email)));
 
         if (querySnapshot.empty) return null;
 
-        const userDoc = querySnapshot.docs[0];
+        const docSnap = querySnapshot.docs[0];
 
-        return { id: userDoc.id, ...userDoc.data() };
+        return { id: docSnap.id, ...docSnap.data() };
     } catch (error) {
         console.error('Error getting user by email:', error);
         throw new Error(error.message || 'Error al obtener el usuario');
