@@ -1,6 +1,6 @@
 import BackButton from '../../components/misc/BackButton';
 
-function NotFound() {
+function UnderConstruction() {
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
@@ -15,4 +15,4 @@ function NotFound() {
     );
 }
 
-export default NotFound;
+export default UnderConstruction;
