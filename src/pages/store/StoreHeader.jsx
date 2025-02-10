@@ -18,8 +18,8 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
     return (
         <>
             {category ? (
-                <div className="d-flex flex-column">
-                    <h1 className="display-6 fw-bold mb-5">{category}</h1>
+                <div className="d-flex flex-column align-items-center gap-3 mb-5">
+                    <h1 className="display-6 fw-bold">{category}</h1>
 
                     <Link to="/tienda" className="btn custom-btn">
                         Ver todos
@@ -28,7 +28,7 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
                 </div>
             ) : (
                 <>
-                    <div className="d-flex gap-3 mt-5 mx-5">
+                    <div className="d-flex gap-3 justify-content-center mt-5">
                         <button
                             className="btn custom-btn"
                             onClick={() => toggleMenu('filters')}
@@ -47,7 +47,7 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
                         </button>
                     </div>
 
-                    <div className="d-flex mt-5 mx-5">
+                    <div className="d-flex justify-content-center mt-5">
                         {visibleMenu === 'filters' && (
                             <div className="filters-container visible">
                                 <FiltersMenu
