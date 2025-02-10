@@ -16,9 +16,7 @@ function HeaderNavBar() {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                closeMenu();
-            }
+            if (menuRef.current && !menuRef.current.contains(event.target)) closeMenu();
         };
 
         if (isMenuOpen) {

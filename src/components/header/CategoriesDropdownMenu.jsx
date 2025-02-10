@@ -15,9 +15,7 @@ function CategoriesDropdownMenu() {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsDropdownOpen(false);
-            }
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setIsDropdownOpen(false);
         };
 
         document.addEventListener('click', handleClickOutside);
