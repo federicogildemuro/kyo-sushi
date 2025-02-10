@@ -1,4 +1,5 @@
 import Item from './Item';
+import './ItemList.css';
 
 function ItemList({ items }) {
     if (!items) return null;

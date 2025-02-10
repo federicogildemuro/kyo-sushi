@@ -4,7 +4,6 @@ import useAuth from '../../hooks/useAuth';
 import useFavorites from '../../hooks/useFavorites';
 import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
-import './Item.css';
 
 function Item({ item }) {
     const { user } = useAuth();
