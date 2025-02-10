@@ -4,7 +4,7 @@ function ItemList({ items }) {
     if (!items) return null;
 
     return (
-        <ul className="row justify-content-center g-3 m-5 p-0">
+        <ul className="row justify-content-center g-3 mx-5 p-0">
             {items.map((item) => (
                 <li
                     key={item.id}
