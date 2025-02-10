@@ -1,17 +1,26 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import SortButtons from '../../components/SortButtons';
-import FiltersMenu from '../../components/FiltersMenu';
+import SortButtons from '../../components/sort-buttons/SortButtons';
+import FiltersMenu from '../../components/filters-menu/FiltersMenu';
 
 function StoreHeader({ category, items, filteredItems, handleFilterChange, handleSortChange }) {
-    const [isFiltersMenuVisible, setFiltersMenuVisible] = useState(false);
-    const toggleFiltersMenu = () => setFiltersMenuVisible(!isFiltersMenuVisible);
+    const [visibleMenu, setVisibleMenu] = useState(null);
+
+    const toggleMenu = (menu) => {
+        setVisibleMenu(prevMenu => (prevMenu === menu ? null : menu));
+    };
+
+    const sortFields = [
+        { name: 'Nombre', key: 'title' },
+        { name: 'Precio', key: 'price' }
+    ];
 
     return (
         <>
             {category ? (
-                <div className="d-flex flex-column align-items-center justify-content-center">
+                <div className="d-flex flex-column">
                     <h1 className="display-6 fw-bold mb-5">{category}</h1>
+
                     <Link to="/tienda" className="btn custom-btn">
                         Ver todos
                         <i className="bi bi-grid ms-2" />
@@ -19,32 +28,45 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
                 </div>
             ) : (
                 <>
-                    <div className="d-flex align-items-center justify-content-center justify-content-md-between gap-3 gap-md-0 mt-5 mx-5">
+                    <div className="d-flex gap-3 mt-5 mx-5">
                         <button
                             className="btn custom-btn"
-                            onClick={toggleFiltersMenu}
+                            onClick={() => toggleMenu('filters')}
                         >
                             <i className="bi bi-search me-2" />
                             <i className="bi bi-filter me-2" />
-                            <i className={`bi bi-${isFiltersMenuVisible ? 'caret-up-fill' : 'caret-down-fill'}`} />
+                            <i className={`bi bi-${visibleMenu === 'filters' ? 'caret-up-fill' : 'caret-down-fill'}`} />
                         </button>
 
-                        <SortButtons
-                            items={filteredItems}
-                            onChange={handleSortChange}
-                            fields={[
-                                { name: 'Nombre', key: 'title' },
-                                { name: 'Precio', key: 'price' },
-                            ]}
-                        />
+                        <button
+                            className="btn custom-btn"
+                            onClick={() => toggleMenu('sort')}
+                        >
+                            <i className="bi bi-funnel me-2" />
+                            <i className={`bi bi-${visibleMenu === 'sort' ? 'caret-up-fill' : 'caret-down-fill'}`} />
+                        </button>
                     </div>
 
-                    {isFiltersMenuVisible && (
-                        <FiltersMenu
-                            items={items}
-                            onFilterChange={handleFilterChange}
-                        />
-                    )}
+                    <div className="d-flex mt-5 mx-5">
+                        {visibleMenu === 'filters' && (
+                            <div className="filters-container visible">
+                                <FiltersMenu
+                                    items={items}
+                                    onChange={handleFilterChange}
+                                />
+                            </div>
+                        )}
+
+                        {visibleMenu === 'sort' && (
+                            <div className="sort-container visible">
+                                <SortButtons
+                                    items={filteredItems}
+                                    onChange={handleSortChange}
+                                    fields={sortFields}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
         </>
