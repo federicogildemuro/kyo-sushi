@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../../utils/scrollUtils';
 
-const BackButton = () => {
+function BackButton() {
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -20,6 +20,6 @@ const BackButton = () => {
             </button>
         </div>
     );
-};
+}
 
 export default BackButton;
