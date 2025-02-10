@@ -11,9 +11,7 @@ function AdminProductsTableItem({ product, onDelete }) {
     const { showNotification } = useNotification();
 
     useEffect(() => {
-        if (error) {
-            showNotification(error.message, 'danger');
-        }
+        if (error) showNotification(error.message, 'danger');
     }, [error, showNotification]);
 
     const handleDeleteProduct = async () => {

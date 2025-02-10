@@ -10,6 +10,8 @@ import BackButton from '../../../components/misc/BackButton';
 
 function ProductForm() {
     const { id } = useParams();
+    const { showNotification } = useNotification();
+    const navigate = useNavigate();
 
     const {
         data: product,
@@ -32,9 +34,6 @@ function ProductForm() {
         error: errorCreateProduct,
         execute: executeCreateProduct
     } = useAsync(createProduct, [], false);
-
-    const { showNotification } = useNotification();
-    const navigate = useNavigate();
 
     const loading = loadingCreateProduct || loadingUpdateProduct;
     const error = errorCreateProduct || errorUpdateProduct;
@@ -98,9 +97,7 @@ function ProductForm() {
     }, [newProduct, setFormData, updatedProduct, showNotification, navigate]);
 
     useEffect(() => {
-        if (error) {
-            showNotification(error.message, 'danger');
-        }
+        if (error) showNotification(error.message, 'danger');
     }, [error, showNotification]);
 
     const handleSubmit = async (event) => {
@@ -121,7 +118,7 @@ function ProductForm() {
 
     const isFormUnchanged = useMemo(() => {
         if (!product) return false;
-        const { id, ...productWithoutId } = product;
+        const { id: _, ...productWithoutId } = product;
         return JSON.stringify(formData) === JSON.stringify(productWithoutId);
     }, [formData, product]);
 

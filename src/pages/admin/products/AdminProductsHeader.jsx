@@ -19,7 +19,7 @@ function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleS
 
     return (
         <>
-            <div className="d-flex justify-content-center mt-5 mx-5">
+            <div className="d-flex justify-content-center mt-5">
                 <Link
                     to="/admin/products/new"
                     className="btn custom-btn"
@@ -29,7 +29,7 @@ function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleS
                 </Link>
             </div>
 
-            <div className="d-flex gap-3 mt-5 mx-5">
+            <div className="d-flex gap-3 justify-content-center mt-5">
                 <button
                     className="btn custom-btn"
                     onClick={() => toggleMenu('filters')}
@@ -48,7 +48,7 @@ function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleS
                 </button>
             </div>
 
-            <div className="d-flex flex-column mt-5 mx-5">
+            <div className="d-flex justify-content-center mt-5">
                 {visibleMenu === 'filters' && (
                     <div className="filters-container visible">
                         <FiltersMenu
