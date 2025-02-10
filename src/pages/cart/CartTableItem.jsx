@@ -11,7 +11,7 @@ function CartTableItem({ item, removeItem }) {
         <tr>
             <td className="text-start">{title}</td>
 
-            <td className="text-center d-none d-sm-table-cell">{quantity}</td>
+            <td className="text-end d-none d-sm-table-cell">{quantity}</td>
 
             <td className="text-end d-none d-sm-table-cell">${price.toFixed(2)}</td>
 

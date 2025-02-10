@@ -8,7 +8,7 @@ function CartTable({ cart, removeFromCart }) {
                     <tr>
                         <th className="text-start">Producto</th>
 
-                        <th className="text-center d-none d-sm-table-cell">Cantidad</th>
+                        <th className="text-end d-none d-sm-table-cell">Cantidad</th>
 
                         <th className="text-end d-none d-sm-table-cell">Precio</th>
 
