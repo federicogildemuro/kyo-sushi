@@ -59,14 +59,21 @@ This will start the app on [http://localhost:5173](http://localhost:5173).
 
 ## Features
 
-- **Routing**: The project uses `react-router-dom` for navigation between different pages such as Home, Products and Cart.
 - **Styling**: The project's styles are mostly handled using Bootstrap, implemented via its CDN for simplicity.
 - **Responsive Design**: The application is fully responsive and optimized for mobile, tablet, and desktop.
-- **Product Categories View**: The app displays products organized by categories, allowing users to easily navigate and find products in their preferred category.
-- **Shopping Cart**: Users can add and remove the quantity of items in their cart.
+- **Lazy Loading**: Components are lazily loaded to improve performance, ensuring that only the necessary parts of the application are loaded initially.
+- **Routing**: The project uses `react-router-dom` for navigation between different pages such as Home, Products and Cart.
+- **User Authentication with Firebase**: Firebase authentication is used to manage user accounts, allowing for sign-up, login, and session management.
+- **Admin Panel**: An admin panel allows authorized users to manage products, orders, and users within the application.
+- **Protected Routes**: Certain routes, like the admin panel, are protected to ensure only authorized users can access them.
+- **Product Search, Filters, and Sorting**: The project allows users to search products by name, apply filters based on category or price range, and sort products in ascending or descending order by name or price.
+- **Pagination**: The product list is paginated to improve performance and user experience, displaying a limited number of products per page.
+- **Shopping Cart**: Users can easily add, remove, and update the quantity of items in their cart. The cart automatically reflects changes in real-time, ensuring a seamless shopping experience.
+- **Favorites**: Users can add products to their favorites, creating a personalized shopping experience.
+- **Real-time Stock Management**: The application updates product stock in real-time, preventing users from purchasing more items than available in stock.
 - **Email Functionality**: EmailJS is used to send contact form messages and order details, including products and total price, directly to the user's email.
 - **Animations**: Scroll-based animations are powered by AOS.
-- **SEO Optimized**: The app is optimized for search engines with proper metadata and route-based dynamic content.
+- **SEO Optimization**: The app is optimized for search engines with proper metadata, dynamic content for better indexing, and route-based SEO improvements.
 
 ## Contribution
 
