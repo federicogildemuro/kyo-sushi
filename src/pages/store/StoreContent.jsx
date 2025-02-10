@@ -1,5 +1,5 @@
 import ItemList from '../../components/item-list/ItemList';
-import Pagination from '../../components/Pagination';
+import Pagination from '../../components/pagination/Pagination';
 import ProductsNotFound from './ProductsNotFound';
 
 function StoreContent({ currentItems, totalPages, currentPage, setCurrentPage }) {
