@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useFavorites from '../../hooks/useFavorites';
@@ -13,6 +13,8 @@ function Item({ item }) {
 
     const [isFavorite, setIsFavorite] = useState(false);
 
+    const favoriteIconRef = useRef(null);
+
     useEffect(() => {
         const checkIfFavorite = async () => {
             if (user) {
@@ -22,6 +24,11 @@ function Item({ item }) {
         };
         checkIfFavorite();
     }, [user, item.id, isItemFavorite]);
+
+    const handleLinkClick = (event) => {
+        if (favoriteIconRef.current && favoriteIconRef.current.contains(event.target)) return;
+        scrollToTop();
+    };
 
     const handleFavoriteToggle = async (event) => {
         event.preventDefault();
@@ -33,7 +40,7 @@ function Item({ item }) {
 
         const updatedFavoriteStatus = await toggleFavorite(item);
         setIsFavorite(updatedFavoriteStatus);
-    }
+    };
 
     if (!item) return null;
 
@@ -41,11 +48,12 @@ function Item({ item }) {
         <Link
             to={`/item/${item.id}`}
             className="item-container card h-100"
-            onClick={scrollToTop}
+            onClick={handleLinkClick}
         >
             <div className="favorite-icon-container">
                 <i
                     className={`favorite-icon fs-5 p-1 bi bi-heart${isFavorite ? '-fill' : ''}`}
+                    ref={favoriteIconRef}
                     onClick={handleFavoriteToggle}
                 />
             </div>
