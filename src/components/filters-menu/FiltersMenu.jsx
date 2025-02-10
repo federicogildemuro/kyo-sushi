@@ -51,7 +51,7 @@ function FiltersMenu({ items, onChange }) {
     };
 
     return (
-        <div className="d-flex flex-column align-items-center align-items-md-start gap-3 mb-5">
+        <div className="d-flex flex-column align-items-center gap-3 mb-5">
             <SearchBar
                 searchValue={searchValue}
                 onChange={handleSearchChange}
@@ -69,7 +69,7 @@ function FiltersMenu({ items, onChange }) {
             />
 
             <button
-                className="btn custom-btn"
+                className="btn custom-btn mt-3"
                 onClick={handleClearFilters}
             >
                 Limpiar filtros

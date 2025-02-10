@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 function PriceRange({ onChange, priceRange }) {
-    const [isVisible, setIsVisible] = useState(false);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
 
@@ -35,54 +34,46 @@ function PriceRange({ onChange, priceRange }) {
     };
 
     return (
-        <div className="d-flex flex-column align-items-center align-items-md-start gap-3 w-100">
-            <h5
-                onClick={() => setIsVisible(!isVisible)}
-                style={{ cursor: 'pointer' }}
-            >
-                Filtrar por precio
-                <i className={`bi bi-caret-${isVisible ? 'up-fill' : 'down-fill'}`} />
-            </h5>
+        <div className="d-flex flex-column align-items-center gap-3">
+            <h5>Filtrar por precio</h5>
 
-            {isVisible && (
-                <div className="d-flex gap-3">
-                    <div className="d-flex align-items-center gap-3">
-                        <label
-                            htmlFor="minPrice"
-                            className="form-label m-0"
-                        >
-                            Min
-                        </label>
+            <div className="d-flex gap-3 mx-3">
+                <div className="d-flex align-items-center gap-3">
+                    <label
+                        htmlFor="minPrice"
+                        className="form-label m-0"
+                    >
+                        Min
+                    </label>
 
-                        <input
-                            type="text"
-                            id="minPrice"
-                            className="form-control"
-                            value={minPrice}
-                            onChange={handleMinPriceChange}
-                            onKeyDown={preventKeyboardInput}
-                        />
-                    </div>
-
-                    <div className="d-flex align-items-center gap-3">
-                        <label
-                            htmlFor="maxPrice"
-                            className="form-label m-0"
-                        >
-                            Max
-                        </label>
-
-                        <input
-                            type="text"
-                            id="maxPrice"
-                            className="form-control"
-                            value={maxPrice}
-                            onChange={handleMaxPriceChange}
-                            onKeyDown={preventKeyboardInput}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        id="minPrice"
+                        className="form-control"
+                        value={minPrice}
+                        onChange={handleMinPriceChange}
+                        onKeyDown={preventKeyboardInput}
+                    />
                 </div>
-            )}
+
+                <div className="d-flex align-items-center gap-3">
+                    <label
+                        htmlFor="maxPrice"
+                        className="form-label m-0"
+                    >
+                        Max
+                    </label>
+
+                    <input
+                        type="text"
+                        id="maxPrice"
+                        className="form-control"
+                        value={maxPrice}
+                        onChange={handleMaxPriceChange}
+                        onKeyDown={preventKeyboardInput}
+                    />
+                </div>
+            </div>
         </div>
     );
 }

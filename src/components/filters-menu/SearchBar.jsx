@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 function SearchBar({ searchValue, onChange }) {
-    const [isVisible, setIsVisible] = useState(false);
     const [debouncedValue, setDebouncedValue] = useState(searchValue);
 
     useEffect(() => {
@@ -21,24 +20,16 @@ function SearchBar({ searchValue, onChange }) {
     };
 
     return (
-        <div className="d-flex flex-column align-items-center align-items-md-start gap-3 w-100">
-            <h5
-                onClick={() => setIsVisible(!isVisible)}
-                style={{ cursor: 'pointer' }}
-            >
-                Filtrar por nombre
-                <i className={`bi bi-caret-${isVisible ? 'up-fill' : 'down-fill'}`} />
-            </h5>
+        <div className="d-flex flex-column align-items-center gap-3 w-50">
+            <h5>Filtrar por nombre</h5>
 
-            {isVisible && (
-                <input
-                    type="text"
-                    id="search-bar"
-                    className="form-control"
-                    value={searchValue}
-                    onChange={handleChange}
-                />
-            )}
+            <input
+                type="text"
+                id="search-bar"
+                className="form-control"
+                value={searchValue}
+                onChange={handleChange}
+            />
         </div>
     );
 }
