@@ -13,9 +13,7 @@ const createUser = async (email, password, userData) => {
         return true;
     } catch (error) {
         console.error('Error creating user:', error);
-        if (error.code === 'auth/email-already-in-use') {
-            throw new Error('Ya existe un usuario registrado con ese correo electrónico');
-        }
+        if (error.code === 'auth/email-already-in-use') throw new Error('Ya existe un usuario registrado con ese correo electrónico');
         throw new Error(error.message || 'Error al crear el usuario');
     }
 };
@@ -24,7 +22,9 @@ const getUserById = async (id) => {
     try {
         const docRef = doc(db, 'users', id);
         const docSnap = await getDoc(docRef);
+
         if (!docSnap.exists()) return null;
+
         return { id: docSnap.id, ...docSnap.data() };
     } catch (error) {
         console.error('Error getting user by id:', error);
@@ -40,7 +40,6 @@ const getUserByEmail = async (email) => {
         if (querySnapshot.empty) return null;
 
         const docSnap = querySnapshot.docs[0];
-
         return { id: docSnap.id, ...docSnap.data() };
     } catch (error) {
         console.error('Error getting user by email:', error);
@@ -51,9 +50,9 @@ const getUserByEmail = async (email) => {
 const resetPassword = async (email) => {
     try {
         const userData = await getUserByEmail(email);
-        if (!userData) {
-            throw new Error('No existe un usuario registrado con el correo electrónico ingresado');
-        }
+
+        if (!userData) throw new Error('No existe un usuario registrado con el correo electrónico ingresado');
+
         await sendPasswordResetEmail(auth, email);
         return true;
     } catch (error) {
