@@ -53,7 +53,7 @@ function Item({ item }) {
             <img
                 src={item.pictureUrl}
                 className="card-img-top"
-                alt={item.title}
+                alt={`Imagen del producto ${item.title}`}
             />
 
             <div className="card-body d-flex flex-column justify-content-between align-items-center mb-3">

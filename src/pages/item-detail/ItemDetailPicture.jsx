@@ -11,15 +11,15 @@ function ItemDetailPicture({ item, isFavorite, toggleFavorite }) {
 
                 <img
                     src={item.pictureUrl}
-                    alt={item.title}
                     className="img-fluid d-none d-lg-block rounded-start w-100 h-100"
+                    alt={`Imagen del producto ${item.title}`}
                     style={{ objectFit: "cover" }}
                 />
 
                 <img
                     src={item.pictureUrl}
-                    alt={item.title}
                     className="img-fluid d-block d-lg-none rounded-top w-100"
+                    alt={`Imagen del producto ${item.title}`}
                     style={{ objectFit: "cover" }}
                 />
             </div>
