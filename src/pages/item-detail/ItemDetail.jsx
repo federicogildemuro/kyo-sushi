@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductById, fetchProducts } from '../../services/productsServices';
 import useAsync from '../../hooks/useAsync';
@@ -9,16 +10,18 @@ import './ItemDetail.css';
 
 function ItemDetail() {
     const { id } = useParams();
-    const { data: item, loading: loadingItem } = useAsync(
+    const { data: dataItem, loading: loadingItem } = useAsync(
         () => fetchProductById(id),
         [id]
     );
+    const item = useMemo(() => dataItem, [dataItem]);
 
     const category = item?.category;
-    const { data: relatedItems, loading: loadingRelatedItems } = useAsync(
+    const { data: dataRelatedItems, loading: loadingRelatedItems } = useAsync(
         () => (category ? fetchProducts(category) : []),
         [category]
     );
+    const relatedItems = useMemo(() => Array.isArray(dataRelatedItems) ? dataRelatedItems : [], [dataRelatedItems]);
     const filteredRelatedItems = relatedItems
         ?.filter((item) => item.id !== id)
         .slice(0, 4);
