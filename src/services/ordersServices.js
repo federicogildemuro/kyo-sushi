@@ -3,8 +3,9 @@ import { db } from './firebaseServices';
 import { createOrderAdapter } from '../adapters/orderAdapters';
 
 const createOrder = async (order) => {
+    const { user, cart, total } = order;
     try {
-        const adaptedOrder = createOrderAdapter(order);
+        const adaptedOrder = createOrderAdapter(user, cart, total);
         const docRef = await addDoc(collection(db, 'orders'), adaptedOrder);
         const docSnapshot = await getDoc(docRef);
         return { id: docRef.id, ...docSnapshot.data() };

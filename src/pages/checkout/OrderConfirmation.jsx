@@ -61,6 +61,6 @@ function OrderConfirmation() {
             </div>
         </section>
     );
-};
+}
 
 export default OrderConfirmation;

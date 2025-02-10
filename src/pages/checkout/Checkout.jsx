@@ -37,9 +37,9 @@ function Checkout() {
 
         if (stockResult?.success) {
             clearCartItems();
-            const order = await createNewOrder();
+            const order = await createNewOrder({ user: userData, cart, total: cartTotalAmount });
             showNotification("Compra realizada exitosamente", "success");
-            sendEmail(order);
+            await sendEmail(order);
             navigate(`/order-confirmation/${order?.id}`);
         } else {
             const outOfStockItems = stockResult?.outOfStockProducts || [];
