@@ -2,8 +2,8 @@ import useCart from '../../hooks/useCart';
 import useAsync from '../../hooks/useAsync';
 import CartDetail from './CartDetail';
 import EmptyCart from './EmptyCart';
-import BackButton from '../../components/BackButton';
-import Spinner from '../../components/Spinner';
+import BackButton from '../../components/misc/BackButton';
+import Spinner from '../../components/spinner/Spinner';
 
 function Cart() {
     const {

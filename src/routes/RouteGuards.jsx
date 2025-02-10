@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { scrollToTop } from '../utils/scrollUtils';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/spinner/Spinner';
 
 const UserRoute = ({ children }) => {
     const { isAdmin, loading } = useAuth();

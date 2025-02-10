@@ -3,8 +3,8 @@ import useItemsPerPage from '../../hooks/useItemsPerPage';
 import usePagination from '../../hooks/usePagination';
 import FavoritesList from './FavoritesList';
 import EmptyFavorites from './EmptyFavorites';
-import BackButton from '../../components/BackButton';
-import Spinner from '../../components/Spinner';
+import BackButton from '../../components/misc/BackButton';
+import Spinner from '../../components/spinner/Spinner';
 
 function Favorites() {
     const { favorites, loading } = useFavorites();
@@ -15,7 +15,7 @@ function Favorites() {
 
     return (
         <section className="d-flex flex-column text-center">
-            <div className="container">
+            <div className="container mb-5">
                 <h1 className="display-6 fw-bold mb-5">Tus favoritos</h1>
 
                 {currentItems.length > 0 ? (

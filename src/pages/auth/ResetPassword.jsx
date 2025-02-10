@@ -4,8 +4,8 @@ import { resetPassword } from '../../services/userServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
-import BackButton from '../../components/BackButton';
-import Spinner from '../../components/Spinner';
+import BackButton from '../../components/misc/BackButton';
+import Spinner from '../../components/spinner/Spinner';
 
 function ResetPassword() {
     const [email, setEmail] = useState('');

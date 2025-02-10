@@ -10,8 +10,8 @@ import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
 import OrderSummary from './OrderSummary';
 import EmptyCart from '../cart/EmptyCart';
-import BackButton from '../../components/BackButton';
-import Spinner from '../../components/Spinner';
+import BackButton from '../../components/misc/BackButton';
+import Spinner from '../../components/spinner/Spinner';
 
 function Checkout() {
     const { user, loading: isUserLoading } = useAuth();

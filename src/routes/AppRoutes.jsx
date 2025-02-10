@@ -6,7 +6,7 @@ import publicRoutes from './publicRoutes';
 import authenticatedRoutes from './authenticatedRoutes';
 import adminRoutes from './adminRoutes';
 import NotFound from '../pages/misc/NotFound';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/spinner/Spinner';
 
 function AppRoutes() {
     return (

@@ -3,8 +3,8 @@ import { sendContactEmail } from '../../services/mailingServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import useFormValidation from '../../hooks/useFormValidation';
-import Spinner from '../../components/Spinner';
-import BackButton from '../../components/BackButton';
+import Spinner from '../../components/spinner/Spinner';
+import BackButton from '../../components/misc/BackButton';
 
 function Contact() {
     const { data, loading, error, execute } = useAsync(sendContactEmail, [], false);

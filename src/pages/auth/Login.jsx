@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useNotification from '../../hooks/useNotification';
 import LoginLinks from './LoginLinks';
-import BackButton from '../../components/BackButton';
-import Spinner from '../../components/Spinner';
+import BackButton from '../../components/misc/BackButton';
+import Spinner from '../../components/spinner/Spinner';
 import './Auth.css';
 
 function Login() {
     const { login, loading, error } = useAuth();
     const { showNotification } = useNotification();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,6 +33,8 @@ function Login() {
 
         if (result) {
             showNotification('Sesión iniciada exitosamente', 'success');
+            navigate('/');
+
         }
     }
 

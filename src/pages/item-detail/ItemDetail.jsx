@@ -4,7 +4,7 @@ import useAsync from '../../hooks/useAsync';
 import ItemDetailContent from './ItemDetailContent';
 import RelatedItems from './RelatedItems';
 import ProductNotFound from './ProductNotFound';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/spinner/Spinner';
 import './ItemDetail.css';
 
 function ItemDetail() {
