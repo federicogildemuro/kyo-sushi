@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import { scrollToTop } from '../../utils/scrollUtils';
 import ItemCount from './ItemCount';
 
 function ItemDetailActions({ item, addToCart }) {
+    const { user } = useAuth();
+
     return (
         <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between mt-3 mb-3">
             <ItemCount
@@ -14,6 +17,7 @@ function ItemDetailActions({ item, addToCart }) {
                 to="/cart"
                 className="btn custom-btn mb-3 mb-lg-0 order-lg-3"
                 onClick={scrollToTop}
+                disabled={!user}
             >
                 Ver carrito
                 <i className="bi bi-cart ms-2" />
