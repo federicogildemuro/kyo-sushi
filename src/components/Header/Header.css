@@ -29,6 +29,11 @@
     transition: color .5s ease;
 }
 
+.nav-link:focus {
+    color: var(--tertiary-color);
+    box-shadow: none;
+}
+
 .nav-link.active {
     color: var(--tertiary-color);
 }
