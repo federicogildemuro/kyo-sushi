@@ -37,7 +37,7 @@ li {
     color: var(--light-color);
     background-color: var(--accent-color);
     transform: scale(1);
-    transition: all .5s ease;
+    transition: transform .5s ease;
 }
 
 .custom-btn:hover,
