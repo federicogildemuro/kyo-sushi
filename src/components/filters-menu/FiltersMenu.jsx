@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
-import useDataFilter from '../hooks/useDataFilter';
+import { useState, useCallback, useEffect } from 'react';
+import useDataFilter from '../../hooks/useDataFilter';
 import SearchBar from './SearchBar';
 import CategoryCheckboxes from './CategoryCheckboxes';
 import PriceRange from './PriceRange';
 
-function FiltersMenu({ items, onFilterChange }) {
+function FiltersMenu({ items, onChange }) {
     const customFilterFunction = useCallback((item, filter) => {
         const { selectedCategories = [], priceRange = {} } = filter;
 
@@ -21,8 +21,8 @@ function FiltersMenu({ items, onFilterChange }) {
     const { filteredData, setFilter } = useDataFilter(items, ['title'], customFilterFunction);
 
     useEffect(() => {
-        onFilterChange(filteredData);
-    }, [filteredData, onFilterChange]);
+        onChange(filteredData);
+    }, [filteredData, onChange]);
 
     const [searchValue, setSearchValue] = useState('');
     const handleSearchChange = useCallback((value) => {
@@ -51,7 +51,7 @@ function FiltersMenu({ items, onFilterChange }) {
     };
 
     return (
-        <div className="d-flex flex-column align-items-center gap-5 mt-5">
+        <div className="d-flex flex-column align-items-center align-items-md-start gap-3 mb-5">
             <SearchBar
                 searchValue={searchValue}
                 onChange={handleSearchChange}
@@ -70,7 +70,8 @@ function FiltersMenu({ items, onFilterChange }) {
 
             <button
                 className="btn custom-btn"
-                onClick={handleClearFilters}>
+                onClick={handleClearFilters}
+            >
                 Limpiar filtros
             </button>
         </div>
