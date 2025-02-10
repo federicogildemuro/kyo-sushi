@@ -6,7 +6,7 @@ import useItemsPerPage from '../../hooks/useItemsPerPage';
 import usePagination from '../../hooks/usePagination';
 import StoreHeader from './StoreHeader';
 import StoreContent from './StoreContent';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/spinner/Spinner';
 
 function Store() {
     const { category } = useParams();
@@ -23,6 +23,7 @@ function Store() {
     const [filteredItems, setFilteredItems] = useState([]);
     const handleFilterChange = (filtered) => {
         setFilteredItems(filtered);
+        setSortedItems(filtered);
     };
 
     const [sortedItems, setSortedItems] = useState([]);
