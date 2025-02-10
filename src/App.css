@@ -97,3 +97,23 @@ li {
     border-top-right-radius: .5rem;
     border-bottom-right-radius: .5rem;
 }
+
+.filters-container {
+    visibility: hidden;
+    height: 0;
+}
+
+.filters-container.visible {
+    visibility: visible;
+    height: auto;
+}
+
+.sort-container {
+    visibility: hidden;
+    height: 0;
+}
+
+.sort-container.visible {
+    visibility: visible;
+    height: auto;
+}
