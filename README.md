@@ -26,13 +26,13 @@ Before starting, make sure you have:
 1. Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/react-ecommerce-coderhouse.git
+git clone https://github.com/federicogildemuro/react-coderhouse.git
 ```
 
 2. Navigate into the project directory:
 
 ```bash
-cd react-ecommerce-coderhouse
+cd react-coderhouse
 ```
 
 2. Install the dependencies using npm:
