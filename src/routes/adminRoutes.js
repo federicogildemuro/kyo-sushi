@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 
 const AdminDashboard = lazy(() => import('../pages/admin/AdminDashboard'));
-const AdminProducts = lazy(() => import('../pages/admin/AdminProducts'));
-const ProductForm = lazy(() => import('../pages/admin/ProductForm'));
+const AdminProducts = lazy(() => import('../pages/admin/products/AdminProducts'));
+const ProductForm = lazy(() => import('../pages/admin/products/ProductForm'));
 const UnderConstruction = lazy(() => import('../pages/misc/UnderConstruction'));
 
 const adminRoutes = [
