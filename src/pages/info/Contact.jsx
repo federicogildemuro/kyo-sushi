@@ -3,11 +3,12 @@ import { sendContactEmail } from '../../services/mailingServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import useFormValidation from '../../hooks/useFormValidation';
+import { scrollToTop } from '../../utils/scrollUtils';
 import Spinner from '../../components/spinner/Spinner';
 import BackButton from '../../components/misc/BackButton';
 
 function Contact() {
-    const { data, loading, error, execute } = useAsync(sendContactEmail, [], false);
+    const { data, loading, error, execute: sendEmail } = useAsync(sendContactEmail, [], false);
     const { showNotification } = useNotification();
 
     const labels = {
@@ -39,9 +40,7 @@ function Contact() {
     }, [data, showNotification, setFormData, initialFormData]);
 
     useEffect(() => {
-        if (error) {
-            showNotification(error, 'danger');
-        }
+        if (error) showNotification(error, 'danger');
     }, [error, showNotification]);
 
     const handleSubmit = async (event) => {
@@ -52,7 +51,8 @@ function Contact() {
             return;
         }
 
-        await execute(formData);
+        await sendEmail(formData);
+        scrollToTop();
     };
 
     return (
