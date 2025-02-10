@@ -20,7 +20,7 @@ function SortButtons({ items, onChange, fields }) {
     };
 
     return (
-        <div className="d-flex flex-wrap gap-3 mb-5">
+        <div className="d-flex justify-content-center flex-wrap gap-3 mx-5 mb-5">
             {fields.map((field) => (
                 <button
                     key={field.key}
