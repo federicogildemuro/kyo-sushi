@@ -6,7 +6,12 @@ import Spinner from '../components/Spinner';
 const UserRoute = ({ children }) => {
     const { isAdmin, loading } = useAuth();
 
-    if (loading) return <Spinner />;
+    if (loading) return (
+        <>
+            <Spinner />
+            {children}
+        </>
+    );
 
     if (isAdmin) {
         scrollToTop();
@@ -60,7 +65,12 @@ const AuthenticatedRoute = ({ children }) => {
 const AdminRoute = ({ children }) => {
     const { user, isAdmin, loading } = useAuth();
 
-    if (loading) return <Spinner />;
+    if (loading) return (
+        <>
+            <Spinner />
+            {children}
+        </>
+    );
 
     if (!user || !isAdmin) {
         scrollToTop();
