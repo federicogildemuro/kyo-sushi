@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function CartTableItem({ item, removeItem }) {
-    const { id, title, quantity, price } = item;
+    const { id, title, description, quantity, price } = item;
     const totalPrice = (price * quantity).toFixed(2);
 
     if (!item) return null;
@@ -11,9 +11,11 @@ function CartTableItem({ item, removeItem }) {
         <tr>
             <td className="text-start">{title}</td>
 
+            <td className="text-start d-none d-lg-table-cell">{description}</td>
+
             <td className="text-end d-none d-sm-table-cell">{quantity}</td>
 
-            <td className="text-end d-none d-sm-table-cell">${price.toFixed(2)}</td>
+            <td className="text-end d-none d-md-table-cell">${price.toFixed(2)}</td>
 
             <td className="text-end">${totalPrice}</td>
 

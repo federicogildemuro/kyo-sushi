@@ -16,8 +16,9 @@ function Cart() {
 
     const { loading: loadingRemove, execute: removeItem } = useAsync(removeCartItem, [], false);
     const { loading: loadingClear, execute: clearCart } = useAsync(clearCartItems, [], false);
+    const loading = loadingRemove || loadingClear;
 
-    const loading = loadingCart || loadingRemove || loadingClear;
+    if (loadingCart) return <Spinner />;
 
     return (
         <section className="d-flex flex-column text-center">

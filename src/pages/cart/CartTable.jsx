@@ -8,9 +8,11 @@ function CartTable({ cart, removeFromCart }) {
                     <tr>
                         <th className="text-start">Producto</th>
 
+                        <th className="text-center d-none d-lg-table-cell">Descripción</th>
+
                         <th className="text-end d-none d-sm-table-cell">Cantidad</th>
 
-                        <th className="text-end d-none d-sm-table-cell">Precio</th>
+                        <th className="text-end d-none d-md-table-cell">Precio</th>
 
                         <th className="text-end">Total</th>
                     </tr>
