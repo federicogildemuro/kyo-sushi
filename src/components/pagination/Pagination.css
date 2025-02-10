@@ -1,22 +1,22 @@
 .page-link {
-    color: var(--tertiary-color);
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    border-color: var(--light-color);
     border-radius: .5rem !important;
     transition: all .5s ease;
 }
 
 .page-link:hover,
 .page-link:focus {
-    color: var(--primary-color);
-    background-color: var(--tertiary-color);
-    border-color: var(--tertiary-color);
+    color: var(--light-color);
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
 }
 
 .page-item.active .page-link {
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
+    color: var(--light-color);
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
 }
 
 .dots {

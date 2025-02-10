@@ -8,7 +8,7 @@
 }
 
 .spinner-custom {
-    color: var(--tertiary-color);
+    color: var(--dark-color);
     width: 3rem;
     height: 3rem;
     border-width: .3rem;

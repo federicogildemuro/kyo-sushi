@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap&family=Raleway:wght@600');
 
 :root {
-    --primary-color: #ffcfcf;
-    --secondary-color: #f6592c;
-    --tertiary-color: #533786;
+    --light-color: #ffcfcf;
+    --accent-color: #f6592c;
+    --dark-color: #533786;
 }
 
 body {
@@ -28,33 +28,33 @@ li {
 .main-container {
     min-height: 100vh;
     width: 100%;
-    background-color: var(--primary-color);
-    color: var(--tertiary-color);
+    background-color: var(--light-color);
+    color: var(--dark-color);
     padding-top: 20vh;
 }
 
 .custom-btn {
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
+    color: var(--light-color);
+    background-color: var(--accent-color);
     transform: scale(1);
     transition: all .5s ease;
 }
 
 .custom-btn:hover,
 .custom-btn:focus {
-    color: var(--primary-color);
-    background-color: var(--tertiary-color);
+    color: var(--light-color);
+    background-color: var(--dark-color);
     transform: scale(1.05);
 }
 
 .form-control {
-    color: var(--tertiary-color) !important;
+    color: var(--dark-color) !important;
 }
 
 .form-control:focus,
 .form-check-input:focus {
-    border-color: var(--tertiary-color);
-    box-shadow: 0 0 0 .1rem var(--tertiary-color);
+    border-color: var(--dark-color);
+    box-shadow: 0 0 0 .1rem var(--dark-color);
 }
 
 .form-check-input:hover {
@@ -62,19 +62,19 @@ li {
 }
 
 .form-check-input:checked {
-    background-color: var(--tertiary-color);
+    background-color: var(--dark-color);
 }
 
 .custom-card {
-    color: var(--tertiary-color);
-    background-color: var(--primary-color);
-    border: .1rem solid var(--tertiary-color);
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    border: .1rem solid var(--dark-color);
     border-radius: .5rem;
 }
 
 .custom-table {
-    --bs-table-bg: var(--primary-color);
-    --bs-table-color: var(--tertiary-color);
+    --bs-table-bg: var(--light-color);
+    --bs-table-color: var(--dark-color);
 }
 
 .custom-table th,
@@ -84,8 +84,8 @@ li {
 }
 
 .custom-table tbody tr:hover td:not(:last-child) {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: var(--accent-color);
+    color: var(--light-color);
 }
 
 .custom-table tbody tr:hover td:first-child {

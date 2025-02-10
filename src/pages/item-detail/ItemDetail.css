@@ -3,18 +3,18 @@
     top: .5rem;
     right: .5rem;
     z-index: 10;
-    background-color: var(--primary-color);
-    border: .1rem solid var(--tertiary-color);
+    background-color: var(--light-color);
+    border: .1rem solid var(--dark-color);
     border-radius: .5rem;
     cursor: pointer;
 }
 
 .favorite-icon {
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 .favorite-icon.bi-heart-fill {
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 .input-small {
@@ -22,9 +22,9 @@
 }
 
 .btn-outline-secondary:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--accent-color);
 }
 
 .btn-outline-secondary:active {
-    background-color: var(--tertiary-color) !important;
+    background-color: var(--dark-color) !important;
 }

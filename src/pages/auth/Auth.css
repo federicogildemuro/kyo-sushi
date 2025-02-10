@@ -1,8 +1,8 @@
 .auth-link {
-    color: var(--tertiary-color);
+    color: var(--dark-color);
     text-decoration: none;
 }
 
 .auth-link:hover {
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }

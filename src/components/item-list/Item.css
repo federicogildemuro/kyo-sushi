@@ -1,9 +1,9 @@
 .item-container {
     position: relative;
     text-decoration: none;
-    color: var(--tertiary-color);
-    background-color: var(--primary-color);
-    border: .1rem solid var(--tertiary-color);
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    border: .1rem solid var(--dark-color);
     border-radius: .5rem;
     transform: scale(1);
     transition: all .5s ease;
@@ -18,16 +18,16 @@
     top: .5rem;
     right: .5rem;
     z-index: 10;
-    background-color: var(--primary-color);
-    border: .1rem solid var(--tertiary-color);
+    background-color: var(--light-color);
+    border: .1rem solid var(--dark-color);
     border-radius: .5rem;
     cursor: pointer;
 }
 
 .favorite-icon {
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
 
 .favorite-icon.bi-heart-fill {
-    color: var(--secondary-color);
+    color: var(--accent-color);
 }
