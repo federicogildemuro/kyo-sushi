@@ -1,13 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteProduct } from '../../../services/productsServices';
 import useAsync from '../../../hooks/useAsync';
 import useNotification from '../../../hooks/useNotification';
 import { scrollToTop } from '../../../utils/scrollUtils';
-import { useEffect } from 'react';
 
 function AdminProductsTableItem({ product, onDelete }) {
     const { title, description, category, price, stock } = product;
     const { error, execute: executeDeleteProduct } = useAsync(deleteProduct, [], false);
+    const [isConfirming, setIsConfirming] = useState(false);
     const { showNotification } = useNotification();
 
     useEffect(() => {
@@ -17,9 +18,23 @@ function AdminProductsTableItem({ product, onDelete }) {
     const handleDeleteProduct = async () => {
         const result = await executeDeleteProduct(product.id);
         if (result) {
-            showNotification('Producto eliminado correctamente', 'success');
+            showNotification('Producto eliminado exitosamente', 'success');
             onDelete(product.id);
         }
+    };
+
+    const handleConfirmDelete = () => {
+        setIsConfirming(true);
+        showNotification(`¿Eliminar producto "${title}"?`, 'confirm', true, handleConfirm, handleCancel);
+    };
+
+    const handleConfirm = () => {
+        setIsConfirming(false);
+        handleDeleteProduct();
+    };
+
+    const handleCancel = () => {
+        setIsConfirming(false);
     };
 
     if (!product) return null;
@@ -48,7 +63,8 @@ function AdminProductsTableItem({ product, onDelete }) {
 
                     <button
                         className="btn custom-btn btn-sm"
-                        onClick={handleDeleteProduct}
+                        onClick={handleConfirmDelete}
+                        disabled={isConfirming}
                     >
                         <i className="bi bi-trash" />
                     </button>
