@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import { authenticatedUserLinks as links } from './links';
 
-function AuthenticatedUserNavLinks() {
+function AuthenticatedUserLinks() {
+    const { user } = useAuth();
+
+    if (!user) return null;
+
     return (
         <>
             {links.map((link) => (
@@ -19,4 +24,4 @@ function AuthenticatedUserNavLinks() {
     );
 }
 
-export default AuthenticatedUserNavLinks;
+export default AuthenticatedUserLinks;

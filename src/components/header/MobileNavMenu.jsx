@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import useAuth from '../../hooks/useAuth';
-import AdminNavLinks from './AdminNavLinks';
-import UserNavLinks from './UserNavLinks';
+import AdminLinks from './AdminLinks';
+import UserLinks from './UserLinks';
 
 function MobileNavMenu({ isOpen, closeMenu }) {
     const { isAdmin } = useAuth();
@@ -39,7 +39,7 @@ function MobileNavMenu({ isOpen, closeMenu }) {
 
             <div className="offcanvas-body">
                 <div className="d-flex flex-column align-items-center gap-3">
-                    {isAdmin ? <AdminNavLinks isMenuOpen={true} /> : <UserNavLinks isMenuOpen={true} />}
+                    {isAdmin ? <AdminLinks isMenuOpen={true} /> : <UserLinks isMenuOpen={true} />}
                 </div>
             </div>
         </div>

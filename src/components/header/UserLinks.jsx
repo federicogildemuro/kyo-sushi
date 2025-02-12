@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import { adminLinks as links } from './links';
+import { userLinks as links } from './links';
+import CategoriesDropdownMenu from './CategoriesDropdownMenu';
+import AuthenticatedUserLinks from './AuthenticatedUserLinks';
 
-function AdminNavLinks({ isMenuOpen }) {
+function UserLinks({ isMenuOpen }) {
     return (
         <ul className={`d-flex align-items-center m-0 ${isMenuOpen ? 'flex-column gap-3' : 'gap-5'}`}>
             {links.map((link) => (
@@ -14,8 +16,12 @@ function AdminNavLinks({ isMenuOpen }) {
                     </NavLink>
                 </li>
             ))}
+
+            <CategoriesDropdownMenu />
+
+            <AuthenticatedUserLinks />
         </ul>
     );
 }
 
-export default AdminNavLinks;
+export default UserLinks;

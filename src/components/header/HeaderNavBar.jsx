@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
-import AdminNavLinks from './AdminNavLinks';
-import UserNavLinks from './UserNavLinks';
+import AdminLinks from './AdminLinks';
+import UserLinks from './UserLinks';
 import HamburgerButton from './HamburgerButton';
 import MobileNavMenu from './MobileNavMenu';
 import CartWidget from './CartWidget';
@@ -16,7 +16,7 @@ function HeaderNavBar() {
     return (
         <nav className="d-flex justify-content-around justify-content-lg-center align-items-center gap-3 gap-sm-5">
             <div className="d-none d-lg-flex">
-                {isAdmin ? <AdminNavLinks /> : <UserNavLinks />}
+                {isAdmin ? <AdminLinks /> : <UserLinks />}
             </div>
 
             <div className="d-lg-none">

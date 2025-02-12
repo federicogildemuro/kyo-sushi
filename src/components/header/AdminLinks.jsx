@@ -1,12 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import { userLinks as links } from './links';
-import CategoriesDropdownMenu from './CategoriesDropdownMenu';
-import AuthenticatedUserNavLinks from './AuthenticatedUserNavLinks';
+import { adminLinks as links } from './links';
 
-function UserNavLinks({ isMenuOpen }) {
-    const { user } = useAuth();
-
+function AdminLinks({ isMenuOpen }) {
     return (
         <ul className={`d-flex align-items-center m-0 ${isMenuOpen ? 'flex-column gap-3' : 'gap-5'}`}>
             {links.map((link) => (
@@ -19,12 +14,8 @@ function UserNavLinks({ isMenuOpen }) {
                     </NavLink>
                 </li>
             ))}
-
-            <CategoriesDropdownMenu />
-
-            {user && <AuthenticatedUserNavLinks />}
         </ul>
     );
 }
 
-export default UserNavLinks;
+export default AdminLinks;
