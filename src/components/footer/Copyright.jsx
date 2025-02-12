@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 
 function Copyright() {
     return (
-        <div className="d-flex flex-column text-center text-md-end gap-2">
+        <div className="d-flex flex-column text-center text-md-end gap-3">
             <h5>
-                <i className="bi bi-c-circle me-2" />
-                2025 Kyo Sushi
+                Kyo Sushi
             </h5>
 
             <Link
@@ -17,6 +16,10 @@ function Copyright() {
                 <i className="bi bi-code-slash me-2" />
                 Federico Gil de Muro
             </Link>
+
+            <p>
+                Proyecto final del curso de ReactJS de Coderhouse
+            </p>
 
         </div>
     );

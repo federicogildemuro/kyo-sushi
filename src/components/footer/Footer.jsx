@@ -10,7 +10,7 @@ function Footer() {
     if (isAdmin) return null;
 
     return (
-        <footer className="footer-container row w-100 p-5 m-0">
+        <footer className="footer-container row p-5 m-0 w-100">
             <div className="col-md-4 mb-5 mb-md-0">
                 <WebsiteLinks />
             </div>

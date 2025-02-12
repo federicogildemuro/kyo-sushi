@@ -3,12 +3,12 @@ import { socialLinks as links } from './links';
 
 function SocialLinks() {
     return (
-        <div className="d-flex flex-column align-items-center text-center gap-2">
+        <div className="d-flex flex-column align-items-center text-center gap-3">
             <h5>Síguenos en nuestras redes</h5>
 
             <ul className="d-flex gap-4 p-0">
-                {links.map((link, index) => (
-                    <li key={index}>
+                {links.map((link) => (
+                    <li key={link.title}>
                         <Link
                             to={link.to}
                             title={link.title}
