@@ -8,7 +8,6 @@
 
 .header-logo {
     width: 7.5rem;
-    height: 90%;
     transition: transform .5s ease;
 }
 
@@ -22,11 +21,11 @@
 
 .nav-link {
     color: var(--light-color);
+    transition: all .5s ease;
 }
 
 .nav-link:hover {
     color: var(--dark-color);
-    transition: color .5s ease;
 }
 
 .nav-link:focus {
@@ -38,10 +37,6 @@
     color: var(--dark-color);
 }
 
-.nav-link:focus {
-    color: var(--dark-color);
-}
-
 .dropdown-menu {
     left: 50%;
     transform: translateX(-50%);
@@ -50,7 +45,7 @@
 
 .dropdown-item {
     color: var(--accent-color);
-    transition: color .5s ease;
+    transition: all .5s ease;
 }
 
 .dropdown-item:hover {

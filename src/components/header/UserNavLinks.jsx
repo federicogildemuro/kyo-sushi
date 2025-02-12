@@ -1,17 +1,19 @@
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import { userLinks as links } from './links';
-import { scrollToTop } from '../../utils/scrollUtils';
 import CategoriesDropdownMenu from './CategoriesDropdownMenu';
+import AuthenticatedUserNavLinks from './AuthenticatedUserNavLinks';
 
 function UserNavLinks({ isMenuOpen }) {
+    const { user } = useAuth();
+
     return (
         <ul className={`d-flex align-items-center m-0 ${isMenuOpen ? 'flex-column gap-3' : 'gap-5'}`}>
-            {links.map((link, index) => (
-                <li key={index}>
+            {links.map((link) => (
+                <li key={link.label}>
                     <NavLink
                         to={link.to}
                         className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
-                        onClick={scrollToTop}
                     >
                         {link.label}
                     </NavLink>
@@ -19,6 +21,8 @@ function UserNavLinks({ isMenuOpen }) {
             ))}
 
             <CategoriesDropdownMenu />
+
+            {user && <AuthenticatedUserNavLinks />}
         </ul>
     );
 }

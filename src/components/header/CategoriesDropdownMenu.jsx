@@ -1,21 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import useAsync from '../../hooks/useAsync';
 import { fetchCategories } from '../../services/productsServices';
-import { scrollToTop } from '../../utils/scrollUtils';
+import useAsync from '../../hooks/useAsync';
 
 function CategoriesDropdownMenu() {
     const { data: categories, loading } = useAsync(fetchCategories);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isOpen, setisOpen] = useState(false);
     const dropdownRef = useRef(null);
 
-    const toggleDropdown = () => {
-        setIsDropdownOpen(prev => !prev);
-    };
+    const toggleDropdown = () => setisOpen(prev => !prev);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setIsDropdownOpen(false);
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setisOpen(false);
+            }
         };
 
         document.addEventListener('click', handleClickOutside);
@@ -49,10 +48,7 @@ function CategoriesDropdownMenu() {
                 <NavLink
                     to={`/tienda/${category}`}
                     className={({ isActive }) => (isActive ? 'dropdown-item active' : 'dropdown-item')}
-                    onClick={() => {
-                        scrollToTop();
-                        setIsDropdownOpen(false);
-                    }}
+                    onClick={toggleDropdown}
                 >
                     {category}
                 </NavLink>
@@ -69,13 +65,13 @@ function CategoriesDropdownMenu() {
                 className="nav-link"
                 type="button"
                 onClick={toggleDropdown}
-                aria-expanded={isDropdownOpen}
+                aria-expanded={isOpen}
             >
                 Menú
-                <i className={`bi ${isDropdownOpen ? 'bi-caret-up-fill' : 'bi-caret-down-fill'} ms-2`} />
+                <i className={`bi ${isOpen ? 'bi-caret-up-fill' : 'bi-caret-down-fill'} ms-2`} />
             </button>
 
-            {isDropdownOpen && (
+            {isOpen && (
                 <ul className="dropdown-menu d-flex flex-column align-items-center">
                     {renderCategories()}
                 </ul>
