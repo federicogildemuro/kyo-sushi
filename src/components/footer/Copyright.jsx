@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 function Copyright() {
     return (
         <div className="d-flex flex-column text-center text-md-end gap-3">
-            <h5>
-                Kyo Sushi
-            </h5>
+            <h5>Kyo Sushi</h5>
 
             <Link
                 to="https://www.linkedin.com/in/federicogildemuro/"
-                title="Ir a perfil de LinkedIn"
+                title="Perfil de LinkedIn del desarrollador"
                 className="footer-link"
                 target="_blank"
             >

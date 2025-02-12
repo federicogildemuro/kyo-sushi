@@ -3,7 +3,6 @@ import { websiteLinks as links } from './links';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function WebsiteLinks() {
-
     return (
         <div className="d-flex flex-column text-center text-md-start gap-3">
             <h5>Vínculos</h5>
