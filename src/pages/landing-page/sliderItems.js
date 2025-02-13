@@ -1,8 +1,8 @@
-import sliderImage1 from '../../assets/slider/combinados.jpg';
-import sliderImage2 from '../../assets/slider/rolls.jpg';
-import sliderImage3 from '../../assets/slider/hot-rolls.jpg';
-import sliderImage4 from '../../assets/slider/sin-alga-y-sin-arroz.jpg';
-import sliderImage5 from '../../assets/slider/veggies.jpg';
+import sliderImage1 from '../../assets/slider/combinados.webp';
+import sliderImage2 from '../../assets/slider/rolls.webp';
+import sliderImage3 from '../../assets/slider/hot-rolls.webp';
+import sliderImage4 from '../../assets/slider/sin-alga-sin-arroz.webp';
+import sliderImage5 from '../../assets/slider/veggies.webp';
 
 const sliderItems = [
     { title: 'Combinados', description: 'Combinados ideales para compartir.', image: sliderImage1 },
