@@ -36,15 +36,27 @@ li {
 .custom-btn {
     color: var(--light-color);
     background-color: var(--accent-color);
-    transform: scale(1);
-    transition: transform .5s ease;
 }
 
-.custom-btn:hover,
-.custom-btn:focus {
+.custom-btn:hover {
     color: var(--light-color);
     background-color: var(--dark-color);
-    transform: scale(1.05);
+}
+
+.custom-btn:focus,
+.custom-btn.focus {
+    color: var(--light-color);
+    background-color: var(--dark-color);
+    box-shadow: 0 0 0 .25rem rgba(83, 55, 134, .5);
+    outline: none;
+}
+
+.custom-btn:disabled,
+.custom-btn.disabled {
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    border-color: var(--dark-color);
+    cursor: not-allowed;
 }
 
 .form-control {
