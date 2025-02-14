@@ -6,13 +6,14 @@ This is a React-based ecommerce project developed as a final project for the Cod
 
 The project uses the following dependencies:
 
-- **@emailjs/browser**: A library to send emails from the frontend using EmailJS.
-- **AOS (Animate On Scroll)**: A library that enables animations triggered when scrolling.
-- **Firebase**: A platform for building web applications with backend services, including authentication, real-time databases, and more.
-- **normalize.css**: A CSS library to normalize and standardize styles across browsers.
 - **React**: The core library for building user interfaces.
-- **react-dom**: Provides the DOM-specific methods for React.
-- **react-router-dom**: A library for handling routing in React applications.
+- **React DOM**: Provides DOM-specific methods for React applications.
+- **React Router DOM**: A library for handling routing in React applications.
+- **Firebase**: A platform for building web applications with backend services, including authentication, real-time databases, and more.
+- **Normalize.css**: A CSS library to normalize and standardize styles across browsers.
+- **AOS (Animate On Scroll)**: A library that enables animations triggered when scrolling.
+- **Framer Motion**: A library for creating animations and transitions in React applications.
+- **EmailJS**: A library to send emails from the frontend using EmailJS.
 
 ## Prerequisites
 
