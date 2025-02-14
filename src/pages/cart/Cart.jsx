@@ -1,38 +1,26 @@
 import useCart from '../../hooks/useCart';
-import useAsync from '../../hooks/useAsync';
-import CartDetail from './CartDetail';
+import CartContent from './CartContent';
 import EmptyCart from './EmptyCart';
 import BackButton from '../../components/misc/BackButton';
 import Spinner from '../../components/spinner/Spinner';
+import './Cart.css';
 
 function Cart() {
-    const {
-        cart,
-        removeCartItem,
-        clearCartItems,
-        cartTotalAmount,
-        loading: loadingCart
-    } = useCart();
+    const { cart, loading, cartTotalAmount, removeCartItem, clearCartItems } = useCart();
 
-    const { loading: loadingRemove, execute: removeItem } = useAsync(removeCartItem, [], false);
-    const { loading: loadingClear, execute: clearCart } = useAsync(clearCartItems, [], false);
-    const loading = loadingRemove || loadingClear;
-
-    if (loadingCart) return <Spinner />;
+    if (loading) return <Spinner />;
 
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tu carrito</h1>
 
-                {loading ? (
-                    <Spinner />
-                ) : cart.length > 0 ? (
-                    <CartDetail
+                {cart.length > 0 ? (
+                    <CartContent
                         cart={cart}
-                        onRemoveFromCart={removeItem}
-                        totalAmount={cartTotalAmount}
-                        onClearCart={clearCart}
+                        total={cartTotalAmount}
+                        removeItem={removeCartItem}
+                        clearCart={clearCartItems}
                     />
                 ) : (
                     <EmptyCart />

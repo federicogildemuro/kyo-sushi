@@ -1,0 +1,13 @@
+.cart-item-container {
+    min-height: 5rem;
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    border: .1rem solid var(--dark-color);
+    border-radius: .5rem;
+}
+
+.cart-item-image {
+    width: 5rem;
+    object-fit: cover;
+    border-radius: .5rem;
+}

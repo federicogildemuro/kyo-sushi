@@ -1,39 +1,54 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
 
-function CartActions({ totalAmount, clearCart }) {
+function CartActions({ clearCart }) {
+    const { showNotification } = useNotification();
+
+    const [isConfirming, setIsConfirming] = useState(false);
+
+    const handleDelete = () => {
+        setIsConfirming(true);
+        showNotification('¿Estás seguro que deseas vaciar el carrito?', 'confirm', true, handleConfirm, handleCancel);
+    };
+
+    const handleConfirm = () => {
+        setIsConfirming(false);
+        clearCart();
+    };
+
+    const handleCancel = () => {
+        setIsConfirming(false);
+    };
+
     return (
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
-            <h3 className="text-center text-md-start mb-3 mb-md-0">
-                Total: ${totalAmount.toFixed(2)}
-            </h3>
+        <div className="d-flex flex-column flex-md-row align-items-center justify-content-md-end gap-3">
+            <Link
+                to="/tienda"
+                className="btn custom-btn"
+                onClick={scrollToTop}
+            >
+                Seguir comprando
+                <i className="bi bi-shop ms-2" />
+            </Link>
 
-            <div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-end">
-                <Link
-                    to="/tienda"
-                    className="btn custom-btn mb-2 mb-md-0 me-md-3"
-                    onClick={scrollToTop}
-                >
-                    Seguir comprando
-                    <i className="bi bi-shop ms-2" />
-                </Link>
+            <button
+                className="btn btn-danger"
+                onClick={handleDelete}
+                disabled={isConfirming}
+            >
+                Vaciar carrito
+                <i className="bi bi-cart-x ms-2" />
+            </button>
 
-                <button
-                    className="btn custom-btn mb-2 mb-md-0 me-md-3"
-                    onClick={clearCart}
-                >
-                    Vaciar carrito
-                    <i className="bi bi-cart-x ms-2" />
-                </button>
-
-                <Link to="/checkout"
-                    className="btn custom-btn"
-                    onClick={scrollToTop}
-                >
-                    Finalizar compra
-                    <i className="bi bi-cart-check ms-2" />
-                </Link>
-            </div>
+            <Link to="/checkout"
+                className="btn btn-success"
+                onClick={scrollToTop}
+            >
+                Finalizar compra
+                <i className="bi bi-cart-check ms-2" />
+            </Link>
         </div>
     );
 }
