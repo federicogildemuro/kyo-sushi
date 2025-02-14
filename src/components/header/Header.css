@@ -28,11 +28,6 @@
     color: var(--dark-color);
 }
 
-.nav-link:focus {
-    color: var(--dark-color);
-    box-shadow: none;
-}
-
 .nav-link.active {
     color: var(--dark-color);
 }
