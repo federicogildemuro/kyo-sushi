@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import SortButtons from '../../components/sort-buttons/SortButtons';
+import SortButtons from '../../components/misc/SortButtons';
 import FiltersMenu from '../../components/filters-menu/FiltersMenu';
 
 function StoreHeader({ category, items, filteredItems, handleFilterChange, handleSortChange }) {

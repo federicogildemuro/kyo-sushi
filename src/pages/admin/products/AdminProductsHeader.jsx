@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import FiltersMenu from '../../../components/filters-menu/FiltersMenu';
-import SortButtons from '../../../components/sort-buttons/SortButtons';
+import SortButtons from '../../../components/misc/SortButtons';
 import { Link } from 'react-router-dom';
 
 function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleSortChange }) {
