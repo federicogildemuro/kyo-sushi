@@ -1,46 +1,49 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { motion } from 'framer-motion';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function Hero() {
-    useEffect(() => {
-        AOS.init({
-            duration: 2000,
-            once: true,
-        });
-    }, []);
-
     return (
         <section className="hero d-flex align-items-center justify-content-center text-center">
-            <div
+            <motion.div
                 className="bg-dark bg-opacity-50 rounded p-4"
-                data-aos="zoom-in"
+                initial={{ opacity: 0, scale: .5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, ease: 'easeOut' }}
             >
-                <h1
+                <motion.h1
                     className="display-6 fw-bold mb-5"
-                    data-aos="fade-down"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: 'easeOut', type: 'spring', stiffness: 100, delay: .5 }}
                 >
                     ¡Bienvenido a Kyo Sushi!
-                </h1>
+                </motion.h1>
 
-                <p
+                <motion.p
                     className="lead mb-5"
-                    data-aos="fade-up"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: 'easeOut', type: 'spring', stiffness: 100, delay: .75 }}
                 >
                     Descubre los sabores más frescos y auténticos, listos para tu deleite.
-                </p>
+                </motion.p>
 
-                <Link
-                    to="/tienda"
-                    className="btn btn-lg custom-btn"
-                    onClick={scrollToTop}
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: 'easeOut', type: 'spring', stiffness: 100, delay: 1 }}
                 >
-                    Ir a la tienda
-                    <i className="bi bi-arrow-right ms-2" />
-                </Link>
-            </div>
+                    <Link
+                        to="/tienda"
+                        className="btn btn-lg custom-btn"
+                        onClick={scrollToTop}
+                    >
+                        Ir a la tienda
+                        <i className="bi bi-arrow-right ms-2" />
+                    </Link>
+                </motion.div>
+            </motion.div>
         </section>
     );
 }

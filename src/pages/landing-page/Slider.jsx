@@ -1,31 +1,25 @@
-import { useEffect } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import sliderItems from './sliderItems';
+import { motion, useInView } from 'framer-motion';
 import { scrollToTop } from '../../utils/scrollUtils';
+import sliderItems from './sliderItems';
 
 function Slider() {
-    useEffect(() => {
-        AOS.init({
-            duration: 2000,
-            once: true
-        });
-    }, []);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { triggerOnce: true, margin: '-25%' });
 
     return (
-        <section>
-            <h1
+        <section ref={ref}>
+            <motion.h1
                 className="display-6 fw-bold m-5 text-center"
-                data-aos="zoom-in"
+                initial={{ opacity: 0, y: 50 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 1, ease: 'easeOut', type: 'spring', stiffness: 100 }}
             >
                 Explora las distintas categorías de nuestro variado menú
-            </h1>
+            </motion.h1>
 
-            <div
-                id="carouselFade"
-                className="carousel slide carousel-fade"
-            >
+            <div id="carouselFade" className="carousel slide carousel-fade">
                 <div className="carousel-inner">
                     {sliderItems.map((item, index) => (
                         <div
@@ -33,10 +27,7 @@ function Slider() {
                             className={`carousel-item custom-carousel-item ${index === 0 ? 'active' : ''}`}
                             aria-current={index === 0 ? 'true' : 'false'}
                         >
-                            <Link
-                                to={`/tienda/${item.title}`}
-                                onClick={scrollToTop}
-                            >
+                            <Link to={`/tienda/${item.title}`} onClick={scrollToTop}>
                                 <img
                                     src={item.image}
                                     className="carousel-img"
