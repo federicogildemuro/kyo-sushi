@@ -9,8 +9,8 @@ function AuthenticatedUserLinks() {
 
     return (
         <>
-            {links.map((link) => (
-                <li key={link.label}>
+            {links.map((link, index) => (
+                <li key={index}>
                     <Link
                         to={link.to}
                         title={link.label}
