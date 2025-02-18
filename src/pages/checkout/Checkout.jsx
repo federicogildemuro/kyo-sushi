@@ -29,21 +29,23 @@ function Checkout() {
     const error = stockError || orderError || emailError;
 
     useEffect(() => {
-        if (error) showNotification(error.message, "danger");
+        if (error) showNotification(error.message, 'danger');
     }, [error, showNotification]);
 
     const handleConfirm = async () => {
         const stockResult = await checkStock(cart);
         if (stockResult?.success) {
-            clearCartItems();
             const order = await createNewOrder({ user: userData, cart, total: cartTotalAmount });
-            showNotification("Compra realizada exitosamente", "success");
-            await sendEmail(order);
-            navigate(`/order-confirmation/${order?.id}`);
+            if (order) {
+                showNotification('Compra realizada exitosamente', 'success');
+                await sendEmail(order);
+                clearCartItems();
+                navigate(`/order-confirmation/${order?.orderNumber}`);
+            }
         } else {
             const outOfStockItems = stockResult?.outOfStockProducts || [];
-            const productNames = outOfStockItems.map((item) => item.title).join(", ");
-            showNotification(`No hay stock suficiente de ${productNames}.`, "warning");
+            const productNames = outOfStockItems.map((item) => item.title).join(', ');
+            showNotification(`No hay stock suficiente de ${productNames}.`, 'warning');
         }
         scrollToTop();
     };
