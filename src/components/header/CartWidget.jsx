@@ -6,7 +6,7 @@ import useCart from '../../hooks/useCart';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function CartWidget() {
-    const { user } = useAuth();
+    const { user, isAdmin } = useAuth();
     const { cartTotalQuantity } = useCart();
     const [isAnimating, setIsAnimating] = useState(false);
 
@@ -18,7 +18,7 @@ function CartWidget() {
         return () => clearTimeout(timer);
     }, [cartTotalQuantity]);
 
-    if (!user) return null;
+    if (!user || isAdmin) return null;
 
     return (
         <div className="position-relative">
