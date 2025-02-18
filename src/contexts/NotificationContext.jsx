@@ -8,7 +8,7 @@ function NotificationProvider({ children }) {
 
     const iconMapping = {
         success: 'bi-check-circle',
-        error: 'bi-x-circle',
+        danger: 'bi-x-circle',
         info: 'bi-info-circle',
         warning: 'bi-exclamation-circle',
         confirm: 'bi-question-circle',
