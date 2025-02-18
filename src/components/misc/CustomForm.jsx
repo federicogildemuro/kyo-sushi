@@ -36,7 +36,7 @@ function CustomForm({ formConfig, formData, formErrors, handleInputChange, handl
 
             <button
                 type="submit"
-                className="btn custom-btn"
+                className="btn custom-btn mt-3"
             >
                 {submitText}
             </button>
