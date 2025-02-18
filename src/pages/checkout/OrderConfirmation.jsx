@@ -1,63 +1,57 @@
-import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { motion } from 'framer-motion';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function OrderConfirmation() {
     const orderId = useParams().orderId;
-
-    useEffect(() => {
-        AOS.init({
-            duration: 3000,
-            once: true,
-        });
-    }, []);
+    const confirmationMessages = [
+        { icon: "bi bi-cart-fill", text: `Se ha registrado con el número ${orderId}` },
+        { icon: "bi bi-envelope-check", text: "Le hemos enviado un correo electrónico con los detalles del mismo" },
+        { icon: "bi bi-clock", text: "Si tiene alguna consulta, no dude en contactarnos" },
+        { icon: "bi bi-heart", text: "¡Gracias por elegirnos!" },
+        { icon: "bi bi-star-fill", text: "Lo esperamos nuevamente en nuestra tienda" }
+    ];
 
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
-                <h1
+                <motion.h1
                     className="display-6 fw-bold mb-5"
-                    data-aos="zoom-in"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1 }}
                 >
                     <i className="bi bi-check-circle me-2" />
                     Pedido confirmado
-                </h1>
+                </motion.h1>
 
-                <p className="lead">
-                    <i className="bi bi-cart-fill me-2" />
-                    Se ha registrado con el número {orderId}
-                </p>
+                {confirmationMessages.map((item, index) => (
+                    <motion.p
+                        key={index}
+                        className="lead"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: .5, delay: index * 0.25 }}
+                    >
+                        <i className={`${item.icon} me-2`} />
+                        {item.text}
+                    </motion.p>
+                ))}
 
-                <p className="lead">
-                    <i className="bi bi-envelope-check me-2" />
-                    Le hemos enviado un correo electrónico con los detalles del mismo
-                </p>
-
-                <p className="lead">
-                    <i className="bi bi-clock me-2" />
-                    Si tiene alguna consulta, no dude en contactarnos
-                </p>
-
-                <p className="lead">
-                    <i className="bi bi-heart me-2" />
-                    ¡Gracias por elegirnos!
-                </p>
-
-                <p className="lead">
-                    <i className="bi bi-star-fill me-2" />
-                    Lo esperamos nuevamente en nuestra tienda
-                </p>
-
-                <Link
-                    to="/tienda"
-                    className="btn custom-btn my-3"
-                    onClick={scrollToTop}
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: .5, delay: 1.25 }}
                 >
-                    Ir a la tienda
-                    <i className="bi bi-shop ms-2" />
-                </Link>
+                    <Link
+                        to="/tienda"
+                        className="btn custom-btn my-3"
+                        onClick={scrollToTop}
+                    >
+                        Ir a la tienda
+                        <i className="bi bi-shop ms-2" />
+                    </Link>
+                </motion.div>
             </div>
         </section>
     );

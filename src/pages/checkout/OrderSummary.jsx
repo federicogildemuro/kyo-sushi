@@ -1,21 +1,16 @@
 function OrderSummary({ user, cart, total, onConfirm }) {
-    const firstName = user?.firstName || '';
-    const lastName = user?.lastName || '';
-    const address = user?.address || {};
+    const { firstName, lastName, address } = user;
+    const formattedAddress = `${address.street} ${address.number} ${address.apartment ? ` ${address.apartment}` : ''} - ${address.city} (${address.state}, ${address.country})`;
+    const formattedTotal = total.toFixed(2);
 
     return (
-        <div className="d-flex flex-column align-items-center justify-content-center">
-            <div className="custom-card mb-3 p-5">
-
+        <div className="d-flex flex-column align-items-center justify-content-center mx-auto my-5">
+            <div className="custom-border p-5">
                 <h2 className="mb-3">Datos de envío</h2>
                 <p className="lead">Nombre</p>
                 <p>{`${firstName} ${lastName}`}</p>
                 <p className="lead">Dirección</p>
-                <p>
-                    {address.street} {address.number}
-                    {address.apartment && ` ${address.apartment}`}
-                    {' - '} {address.city} ({address.state}, {address.country})
-                </p>
+                <p>{formattedAddress}</p>
 
                 <h2 className="mb-3">Detalle del pedido</h2>
                 <ul className="d-flex flex-column align-items-center justify-content-center p-0">
@@ -25,7 +20,7 @@ function OrderSummary({ user, cart, total, onConfirm }) {
                         </li>
                     ))}
                 </ul>
-                <p className="lead mb-3">Total ${total.toFixed(2)}</p>
+                <p className="lead mb-3">Total ${formattedTotal}</p>
 
                 <button
                     className="btn custom-btn my-3"

@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import useCart from '../../hooks/useCart';
 import { checkProductStockAndUpdate } from '../../services/productsServices';
 import { createOrder } from '../../services/ordersServices';
 import { sendOrderEmail } from '../../services/mailingServices';
-import useAuth from '../../hooks/useAuth';
-import useCart from '../../hooks/useCart';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
+import Spinner from '../../components/spinner/Spinner';
 import OrderSummary from './OrderSummary';
 import EmptyCart from '../cart/EmptyCart';
 import BackButton from '../../components/misc/BackButton';
-import Spinner from '../../components/spinner/Spinner';
 
 function Checkout() {
     const { user, loading: isUserLoading } = useAuth();
@@ -34,7 +34,6 @@ function Checkout() {
 
     const handleConfirm = async () => {
         const stockResult = await checkStock(cart);
-
         if (stockResult?.success) {
             clearCartItems();
             const order = await createNewOrder({ user: userData, cart, total: cartTotalAmount });
@@ -46,7 +45,6 @@ function Checkout() {
             const productNames = outOfStockItems.map((item) => item.title).join(", ");
             showNotification(`No hay stock suficiente de ${productNames}.`, "warning");
         }
-
         scrollToTop();
     };
 
@@ -55,7 +53,7 @@ function Checkout() {
     return (
         <section className="d-flex flex-column text-center">
             <div className="container">
-                <h1 className="display-6 fw-bold mb-5">Finalizar compra</h1>
+                <h1 className="display-6 fw-bold">Finalizar compra</h1>
 
                 {cart.length > 0 ? (
                     <OrderSummary
