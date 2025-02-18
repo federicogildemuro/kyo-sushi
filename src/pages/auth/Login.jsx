@@ -1,41 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useNotification from '../../hooks/useNotification';
 import LoginLinks from './LoginLinks';
-import BackButton from '../../components/misc/BackButton';
 import Spinner from '../../components/spinner/Spinner';
+import BackButton from '../../components/misc/BackButton';
 import './Auth.css';
 
 function Login() {
-    const { login, loading, error } = useAuth();
-    const { showNotification } = useNotification();
-    const navigate = useNavigate();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login, loading, error } = useAuth();
+    const { showNotification } = useNotification();
 
     useEffect(() => {
-        if (error) {
-            showNotification(error, 'danger');
-        }
+        if (error) showNotification(error, 'danger');
     }, [error, showNotification]);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-
         if (!email || !password) {
             showNotification('Por favor, complete todos los campos', 'warning');
             return;
         }
-
-        const result = await login(email, password);
-
-        if (result) {
-            showNotification('Sesión iniciada exitosamente', 'success');
-            navigate('/');
-
-        }
+        login(email, password);
     }
 
     return (
@@ -43,10 +30,10 @@ function Login() {
             {loading && <Spinner />}
 
             <div className="container">
-                <h1 className="display-6 fw-bold mb-5">Iniciar sesión</h1>
+                <h1 className="display-6 fw-bold">Iniciar sesión</h1>
 
                 <form
-                    className="mx-auto col-12 col-lg-6 mb-5"
+                    className="col-12 col-lg-6 mx-auto my-5"
                     onSubmit={handleSubmit}
                 >
                     <div className="d-flex flex-column align-items-start mb-3">
@@ -87,10 +74,9 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="btn custom-btn my-3"
-                        disabled={loading}
+                        className="btn custom-btn mt-3"
                     >
-                        Enviar
+                        Iniciar sesión
                     </button>
                 </form>
 

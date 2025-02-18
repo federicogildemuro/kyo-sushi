@@ -1,6 +1,7 @@
 .auth-link {
-    color: var(--dark-color);
     text-decoration: none;
+    color: var(--dark-color);
+    transition: color .5s ease;
 }
 
 .auth-link:hover {
