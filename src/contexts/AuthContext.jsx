@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../services/firebaseServices';
-import { getUserById } from '../services/userServices';
+import { fetchUserRole } from '../services/userServices';
 import { isSessionExpired, setLoginTime, clearLoginTime } from '../utils/sessionUtils';
 
 const AuthContext = createContext();
@@ -15,39 +15,26 @@ function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             setError(null);
-            try {
-                if (firebaseUser) {
-                    if (isSessionExpired()) {
-                        await signOut(auth);
-                        clearLoginTime();
-                        return;
-                    }
-
-                    await fetchAndSetUser(firebaseUser);
-                } else {
-                    setUser(null);
-                    setIsAdmin(false);
+            setLoading(true);
+            if (firebaseUser) {
+                if (isSessionExpired()) {
+                    signOut(auth);
                     clearLoginTime();
+                    return;
                 }
-            } catch (error) {
-                setError(error.message || 'Error verificando el cambio en el estado de autenticación');
-            } finally {
-                setLoading(false);
+                setUser(firebaseUser);
+                const role = await fetchUserRole(firebaseUser.uid);
+                setIsAdmin(role === 'admin');
+            } else {
+                setUser(null);
+                setIsAdmin(false);
+                clearLoginTime();
             }
+            setLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
-
-    const fetchAndSetUser = async (firebaseUser) => {
-        try {
-            const userData = await getUserById(firebaseUser.uid);
-            setUser({ ...firebaseUser, userData });
-            setIsAdmin(userData?.role === 'admin');
-        } catch (error) {
-            setError(error.message || 'Error obteniendo datos del usuario');
-        }
-    };
 
     const login = async (email, password) => {
         setLoading(true);
