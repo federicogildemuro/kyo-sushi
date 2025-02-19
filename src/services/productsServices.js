@@ -1,4 +1,4 @@
-import { query, collection, where, getDocs, doc, getDoc, updateDoc, addDoc, deleteDoc } from 'firebase/firestore';
+import { query, collection, where, getDocs, doc, getDoc, updateDoc, runTransaction, addDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebaseServices';
 import { parseProductFromFirebase, createProductAdapter } from '../adapters/productAdapters';
 
@@ -47,34 +47,43 @@ const fetchProductById = async (id) => {
 
 const checkProductStockAndUpdate = async (cart) => {
     try {
-        const outOfStockProducts = [];
+        return await runTransaction(db, async (transaction) => {
+            const outOfStockProducts = [];
+            const productDocs = [];
 
-        for (const item of cart) {
-            const docRef = doc(db, 'products', item.id);
-            const docSnap = await getDoc(docRef);
-            const product = docSnap.data();
+            // Leer todos los productos en una sola pasada
+            for (const item of cart) {
+                const docRef = doc(db, 'products', item.id);
+                const docSnap = await transaction.get(docRef);
+                const product = docSnap.data();
 
-            if (!product) throw new Error(`Producto ID ${item.id} no encontrado.`);
+                if (!product) throw new Error(`Producto ID ${item.id} no encontrado`);
+                if (product.stock < item.quantity) {
+                    outOfStockProducts.push(item);
+                } else {
+                    productDocs.push({ docRef, newStock: product.stock - item.quantity });
+                }
+            }
 
-            if (product.stock < item.quantity) outOfStockProducts.push(item);
-        }
+            // Si hay productos sin stock, abortar la transacción
+            if (outOfStockProducts.length > 0) return { success: false, outOfStockProducts };
 
-        if (outOfStockProducts.length > 0) return { success: false, outOfStockProducts: outOfStockProducts };
+            // Si todo está en stock, actualizar en una sola pasada
+            productDocs.forEach(({ docRef, newStock }) => {
+                transaction.update(docRef, { stock: newStock });
+            });
 
-        for (const item of cart) {
-            const docRef = doc(db, 'products', item.id);
-            const docSnap = await getDoc(docRef);
-            const product = docSnap.data();
-            const newStock = product.stock - item.quantity;
-            await updateDoc(docRef, { stock: newStock });
-        }
-
-        return { success: true, outOfStockProducts: [] };
+            return { success: true, outOfStockProducts: [] };
+        });
     } catch (error) {
         console.error('Error checking product stock and updating:', error);
+        if (error.message.includes('ya no tiene suficiente stock')) {
+            return { success: false, message: 'El stock ha cambiado. No hay suficiente stock para completar la compra.' };
+        }
         throw new Error(error.message || 'Error al verificar el stock de los productos y actualizarlo');
     }
 };
+
 
 const createProduct = async (product) => {
     try {
