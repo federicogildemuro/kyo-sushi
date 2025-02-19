@@ -13,7 +13,7 @@ function AuthenticatedUserLinks() {
                 <li key={index}>
                     <Link
                         to={link.to}
-                        title={link.label}
+                        title={link.title}
                         className="nav-link"
                     >
                         <i className={`nav-bar-icon bi ${link.icon}`} />
