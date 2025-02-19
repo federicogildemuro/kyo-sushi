@@ -2,7 +2,7 @@ const parseOrderFromFirebase = (doc) => {
     const data = doc.data();
     return {
         id: doc.id,
-        orderNumber: data.orderNumber,
+        orderId: data.orderId,
         date: data.date,
         userId: data.userId,
         buyer: data.buyer,
@@ -12,8 +12,8 @@ const parseOrderFromFirebase = (doc) => {
     };
 };
 
-const createOrderAdapter = (orderNumber, user, cart, total) => ({
-    orderNumber,
+const createOrderAdapter = (orderId, user, cart, total) => ({
+    orderId,
     date: new Date().toISOString(),
     userId: user.id,
     buyer: {
