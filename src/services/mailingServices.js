@@ -2,8 +2,9 @@ import emailjs from '@emailjs/browser';
 
 const sendOrderEmail = async (order) => {
     try {
-        const formattedOrderNumber = order.orderNumber.toString().padStart(4, '0');
+        const formattedOrderId = order.orderId.toString().padStart(4, '0');
         const formattedOrderItems = order.items.map(item => `${item.quantity}x ${item.title}`).join(', ');
+        const formattedTotal = order.total.toFixed(2);
 
         const result = await emailjs.send(
             import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -11,9 +12,9 @@ const sendOrderEmail = async (order) => {
             {
                 buyer_email: order.buyer.email,
                 buyer_name: order.buyer.name,
-                order_number: formattedOrderNumber,
+                order_number: formattedOrderId,
                 items: formattedOrderItems,
-                total: order.total
+                total: formattedTotal
             },
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         );
