@@ -1,4 +1,4 @@
-function CustomForm({ formConfig, formData, formErrors, handleInputChange, handleBlur, handleSubmit, submitText }) {
+function CustomForm({ formConfig, formData, formErrors, handleInputChange, handleBlur, handleSubmit, submitText, submitDisabled = false }) {
     return (
         <form
             className="col-12 col-lg-6 mx-auto my-5"
@@ -37,6 +37,7 @@ function CustomForm({ formConfig, formData, formErrors, handleInputChange, handl
             <button
                 type="submit"
                 className="btn custom-btn mt-3"
+                disabled={submitDisabled}
             >
                 {submitText}
             </button>
