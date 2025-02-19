@@ -1,7 +1,7 @@
 import { doc, setDoc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth';
 import { auth, db } from './firebaseServices';
-import { createUserAdapter } from '../adapters/userAdapters';
+import { createUserAdapter, updateUserAdapter } from '../adapters/userAdapters';
 
 const createUser = async (email, password, userData) => {
     try {
@@ -18,7 +18,21 @@ const createUser = async (email, password, userData) => {
     }
 };
 
-const getUserById = async (id) => {
+const fetchUserRole = async (userId) => {
+    try {
+        const docRef = doc(db, 'users', userId);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) return null;
+
+        return docSnap.data().role;
+    } catch (error) {
+        console.error('Error getting user role:', error);
+        throw new Error(error.message || 'Error al obtener el rol del usuario');
+    }
+}
+
+const fetchUserById = async (id) => {
     try {
         const docRef = doc(db, 'users', id);
         const docSnap = await getDoc(docRef);
@@ -32,7 +46,7 @@ const getUserById = async (id) => {
     }
 };
 
-const getUserByEmail = async (email) => {
+const fetchUserByEmail = async (email) => {
     try {
         const docsRef = collection(db, 'users');
         const querySnapshot = await getDocs(query(docsRef, where('email', '==', email)));
@@ -49,7 +63,7 @@ const getUserByEmail = async (email) => {
 
 const resetPassword = async (email) => {
     try {
-        const userData = await getUserByEmail(email);
+        const userData = await fetchUserByEmail(email);
 
         if (!userData) throw new Error('No existe un usuario registrado con el correo electrónico ingresado');
 
@@ -71,4 +85,16 @@ const updatePassword = async (oobCode, newPassword) => {
     }
 };
 
-export { createUser, getUserById, getUserByEmail, resetPassword, updatePassword };
+const updateUser = async (id, userData) => {
+    try {
+        const adaptedUserData = updateUserAdapter({ ...userData });
+        const docRef = doc(db, 'users', id);
+        await setDoc(docRef, adaptedUserData, { merge: true });
+        return true;
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw new Error(error.message || 'Error al actualizar el usuario');
+    }
+};
+
+export { createUser, fetchUserRole, fetchUserById, resetPassword, updatePassword, updateUser };
