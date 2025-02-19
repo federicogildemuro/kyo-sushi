@@ -1,13 +1,17 @@
+/* Normalize CSS */
 @import url('normalize.css');
 
+/* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap&family=Raleway:wght@600');
 
+/* Colors */
 :root {
     --light-color: #ffcfcf;
     --accent-color: #f6592c;
     --dark-color: #533786;
 }
 
+/* Global Styles */
 body {
     font-family: 'Roboto', sans-serif;
 }
@@ -25,6 +29,7 @@ li {
     list-style-type: none;
 }
 
+/* Main */
 .main-container {
     min-height: 100vh;
     width: 100%;
@@ -33,9 +38,11 @@ li {
     padding-top: 20vh;
 }
 
+/* Buttons */
 .custom-btn {
     color: var(--light-color);
     background-color: var(--accent-color);
+    transition: all .5s ease;
 }
 
 .custom-btn:hover {
@@ -59,6 +66,7 @@ li {
     cursor: not-allowed;
 }
 
+/* Forms */
 .form-control {
     color: var(--dark-color) !important;
 }
@@ -77,6 +85,7 @@ li {
     background-color: var(--dark-color);
 }
 
+/* Cards */
 .custom-card {
     color: var(--dark-color);
     background-color: var(--light-color);
@@ -84,6 +93,15 @@ li {
     border-radius: .5rem;
 }
 
+/* Borders */
+.custom-border {
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    border: .1rem solid var(--dark-color);
+    border-radius: .5rem;
+}
+
+/* Tables */
 .custom-table {
     --bs-table-bg: var(--light-color);
     --bs-table-color: var(--dark-color);
@@ -95,21 +113,7 @@ li {
     vertical-align: middle;
 }
 
-.custom-table tbody tr:hover td:not(:last-child) {
-    background-color: var(--accent-color);
-    color: var(--light-color);
-}
-
-.custom-table tbody tr:hover td:first-child {
-    border-top-left-radius: .5rem;
-    border-bottom-left-radius: .5rem;
-}
-
-.custom-table tbody tr:hover td:nth-last-child(2) {
-    border-top-right-radius: .5rem;
-    border-bottom-right-radius: .5rem;
-}
-
+/* Filters */
 .filters-container {
     visibility: hidden;
     height: 0;
@@ -120,6 +124,7 @@ li {
     height: auto;
 }
 
+/* Sort */
 .sort-container {
     visibility: hidden;
     height: 0;
