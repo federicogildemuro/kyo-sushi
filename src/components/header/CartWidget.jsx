@@ -28,7 +28,7 @@ function CartWidget() {
             >
                 <Link
                     to="/cart"
-                    title="Carrito de compras"
+                    title="Carrito"
                     className="nav-link"
                     onClick={scrollToTop}
                 >
