@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function OrderConfirmation() {
-    const { orderNumber } = useParams();
-    const formattedOrderNumber = orderNumber.padStart(4, '0');
+    const { orderId } = useParams();
+    const formattedorderId = orderId.padStart(4, '0');
 
     const confirmationMessages = [
-        { icon: "bi bi-cart-fill", text: `Se ha registrado con el número #${formattedOrderNumber}` },
+        { icon: "bi bi-cart-fill", text: `Se ha registrado con el número #${formattedorderId}` },
         { icon: "bi bi-envelope-check", text: "Le hemos enviado un correo electrónico con los detalles del mismo" },
         { icon: "bi bi-clock", text: "Si tiene alguna consulta, no dude en contactarnos" },
         { icon: "bi bi-heart", text: "¡Gracias por elegirnos!" },
