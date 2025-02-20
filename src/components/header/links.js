@@ -10,10 +10,10 @@ const authenticatedUserLinks = [
 ];
 
 const adminLinks = [
-    { to: '/admin/products', label: 'Productos' },
-    { to: '/admin/categories', label: 'Categorías' },
-    { to: '/admin/orders', label: 'Órdenes' },
-    { to: '/admin/users', label: 'Usuarios' }
+    { to: '/admin/productos', label: 'Productos' },
+    { to: '/admin/categorias', label: 'Categorías' },
+    { to: '/admin/pedidos', label: 'Pedidos' },
+    { to: '/admin/usuarios', label: 'Usuarios' }
 ];
 
 export { userLinks, authenticatedUserLinks, adminLinks };

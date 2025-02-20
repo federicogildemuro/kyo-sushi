@@ -10,11 +10,11 @@ function AdminProductsTable({ products, onDeleteProduct }) {
 
                         <th className="text-center d-none d-md-table-cell">Descripción</th>
 
-                        <th className="text-center">Categoría</th>
+                        <th className="text-center d-none d-md-table-cell">Categoría</th>
 
-                        <th className="text-end d-none d-sm-table-cell">Precio</th>
+                        <th className="text-center d-none d-sm-table-cell">Precio</th>
 
-                        <th className="text-end d-none d-sm-table-cell">Stock</th>
+                        <th className="text-center d-none d-sm-table-cell">Stock</th>
                     </tr>
                 </thead>
 

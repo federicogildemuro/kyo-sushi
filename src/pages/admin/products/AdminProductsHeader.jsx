@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import FiltersMenu from '../../../components/filters-menu/FiltersMenu';
-import SortButtons from '../../../components/misc/SortButtons';
 import { Link } from 'react-router-dom';
+import ProductsFilterMenu from '../../../components/products-filters-menu/ProductsFiltersMenu';
+import SortButtons from '../../../components/misc/SortButtons';
 
-function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleSortChange }) {
+function AdminProductsHeader({ products, filteredProducts, handleFilterChange, handleSortChange }) {
+    /* Handle menu visibility toggle */
     const [visibleMenu, setVisibleMenu] = useState(null);
-
     const toggleMenu = (menu) => {
         setVisibleMenu(prevMenu => (prevMenu === menu ? null : menu));
     };
 
+    /* Define the available sorting fields for products */
     const sortFields = [
         { name: 'Nombre', key: 'title' },
         { name: 'Categoría', key: 'category' },
@@ -21,11 +22,11 @@ function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleS
         <>
             <div className="d-flex justify-content-center mt-5">
                 <Link
-                    to="/admin/products/new"
+                    to="/admin/productos/nuevo"
                     className="btn custom-btn"
                 >
-                    <i className="bi bi-plus me-2" />
                     Crear producto
+                    <i className="bi bi-plus ms-2" />
                 </Link>
             </div>
 
@@ -49,10 +50,11 @@ function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleS
             </div>
 
             <div className="d-flex justify-content-center mt-5">
+                {/* Show selected menu, but not both at the same time */}
                 {visibleMenu === 'filters' && (
                     <div className="filters-container visible">
-                        <FiltersMenu
-                            items={items}
+                        <ProductsFilterMenu
+                            products={products}
                             onChange={handleFilterChange}
                         />
                     </div>
@@ -61,7 +63,7 @@ function AdminProductsHeader({ items, filteredItems, handleFilterChange, handleS
                 {visibleMenu === 'sort' && (
                     <div className="sort-container visible">
                         <SortButtons
-                            items={filteredItems}
+                            items={filteredProducts}
                             onChange={handleSortChange}
                             fields={sortFields}
                         />
