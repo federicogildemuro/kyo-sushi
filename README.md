@@ -1,24 +1,26 @@
-# React Ecommerce for Coderhouse React.js Course
+# Kyo Sushi - From Course Project to Enhanced Ecommerce
 
-This is a React-based ecommerce project developed as a final project for the Coderhouse React.js course. It utilizes several libraries to enhance the functionality and user experience.
+This React-based ecommerce project was originally developed as the final project for the Coderhouse React.js course. Since then, it has been expanded with numerous additional features and improvements, incorporating various libraries to enhance functionality and user experience.
 
 ## Features
 
-- **Styling**: The project's styles are mostly handled using Bootstrap, implemented via its CDN for simplicity.
-- **Responsive Design**: The application is fully responsive and optimized for mobile, tablet, and desktop.
-- **Lazy Loading**: Components are lazily loaded to improve performance, ensuring that only the necessary parts of the application are loaded initially.
-- **Routing**: The project uses `react-router-dom` for navigation between different pages such as Home, Products and Cart.
-- **User Authentication with Firebase**: Firebase authentication is used to manage user accounts, allowing for sign-up, login, and session management.
-- **Admin Panel**: An admin panel allows authorized users to manage products, orders, and users within the application.
-- **Protected Routes**: Certain routes, like the admin panel, are protected to ensure only authorized users can access them.
-- **Product Search, Filters, and Sorting**: The project allows users to search products by name, apply filters based on category or price range, and sort products in ascending or descending order by name or price.
-- **Pagination**: The product list is paginated to improve performance and user experience, displaying a limited number of products per page.
-- **Shopping Cart**: Users can easily add, remove, and update the quantity of items in their cart. The cart automatically reflects changes in real-time, ensuring a seamless shopping experience.
-- **Favorites**: Users can add products to their favorites, creating a personalized shopping experience.
-- **Real-time Stock Management**: The application updates product stock in real-time, preventing users from purchasing more items than available in stock.
-- **Email Functionality**: EmailJS is used to send contact form messages and order details, including products and total price, directly to the user's email.
-- **Animations**: Scroll-based animations are powered by AOS.
-- **SEO Optimization**: The app is optimized for search engines with proper metadata, dynamic content for better indexing, and route-based SEO improvements.
+- **Routing**: Utilizes `react-router-dom` for seamless navigation between pages.
+- **Protected Routes**: Restricts access to certain routes, ensuring only authorized users can access them.
+- **Lazy Loading**: Components are lazily loaded to improve performance, ensuring that only the necessary parts of the application are initially loaded.
+- **User Authentication with Firebase**: Manages user accounts, allowing sign-up, login, and session management.
+- **Firestore Integration**: Serves as the database to store and manage products, orders, and user information in real time.
+- **Product Search, Filters, and Sorting**: Enables users to search products by name, filter them by category or price range, and sort them in ascending or descending order by name or price.
+- **Pagination**: Implements pagination to enhance performance and user experience, displaying a limited number of products per page.
+- **Shopping Cart**: Allows users to add, remove, and update item quantities in their cart, with real-time updates for a seamless shopping experience.
+- **Favorites**: Users can save products to their favorites for a more personalized shopping experience.
+- **Real-time Stock Management**: Automatically updates product stock to prevent users from purchasing more items than are available.
+- **Admin Panel**: Includes an admin panel that enables authorized users to manage products within the application.
+- **Styling**: The project’s styles are primarily handled using Bootstrap, implemented via its CDN for simplicity.
+- **Responsive Design**: Fully responsive and optimized for mobile, tablet, and desktop.
+- **Animations**: Powered by Framer Motion for smoother and more dynamic user interactions.
+- **Accessibility**: Adheres to accessibility best practices, including semantic HTML, proper ARIA attributes, and keyboard navigation support.
+- **SEO Optimization**: Optimized for search engines with proper metadata, dynamic content for better indexing, and route-based SEO improvements
+- **Email Functionality**: Uses EmailJS to send contact form messages and order details, including products and total price, directly to the user's email.
 
 ## Dependencies
 
@@ -44,13 +46,13 @@ Before starting, make sure you have:
 1. Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/federicogildemuro/react-coderhouse.git
+git clone https://github.com/federicogildemuro/kyo-sushi.git
 ```
 
 2. Navigate into the project directory:
 
 ```bash
-cd react-coderhouse
+cd kyo-sushi
 ```
 
 3. Install the dependencies using npm:
