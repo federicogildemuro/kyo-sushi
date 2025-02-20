@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAsync from '../../../hooks/useAsync';
 import useFormValidation from '../../../hooks/useFormValidation';
 import useNotification from '../../../hooks/useNotification';
@@ -30,14 +31,15 @@ function CreateProduct() {
 
     /* Show notifications on success or error */
     const { showNotification } = useNotification();
+    const navigate = useNavigate();
     useEffect(() => {
         if (result) {
             showNotification('Producto creado exitosamente', 'success');
             scrollToTop();
+            navigate('/admin/productos');
         }
         if (error) showNotification(error.message, 'danger');
-    }, [result, error, showNotification]);
-
+    }, [result, error, showNotification, navigate]);
 
     /* Handle form submission */
     const handleSubmit = (event) => {
