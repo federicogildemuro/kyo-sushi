@@ -4,21 +4,21 @@ import SearchBar from './SearchBar';
 import CategoryCheckboxes from './CategoryCheckboxes';
 import PriceRange from './PriceRange';
 
-function FiltersMenu({ items, onChange }) {
-    const customFilterFunction = useCallback((item, filter) => {
+function ProductsFilterMenu({ products, onChange }) {
+    const customFilterFunction = useCallback((product, filter) => {
         const { selectedCategories = [], priceRange = {} } = filter;
 
         const matchesCategory =
-            selectedCategories.length === 0 || selectedCategories.includes(item.category);
+            selectedCategories.length === 0 || selectedCategories.includes(product.category);
 
         const matchesPrice =
-            (!priceRange.min || item.price >= parseFloat(priceRange.min)) &&
-            (!priceRange.max || item.price <= parseFloat(priceRange.max));
+            (!priceRange.min || product.price >= parseFloat(priceRange.min)) &&
+            (!priceRange.max || product.price <= parseFloat(priceRange.max));
 
         return matchesCategory && matchesPrice;
     }, []);
 
-    const { filteredData, setFilter } = useDataFilter(items, ['title'], customFilterFunction);
+    const { filteredData, setFilter } = useDataFilter(products, ['title'], customFilterFunction);
 
     useEffect(() => {
         onChange(filteredData);
@@ -30,7 +30,7 @@ function FiltersMenu({ items, onChange }) {
         setFilter({ search: value });
     }, [setFilter]);
 
-    const categories = Array.from(new Set(items.map((item) => item.category)));
+    const categories = Array.from(new Set(products.map((product) => product.category)));
     const [selectedCategories, setSelectedCategories] = useState([]);
     const handleCategoryChange = useCallback((categories) => {
         setSelectedCategories(categories);
@@ -78,4 +78,4 @@ function FiltersMenu({ items, onChange }) {
     );
 }
 
-export default FiltersMenu;
+export default ProductsFilterMenu;

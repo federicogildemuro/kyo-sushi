@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SortButtons from '../../components/misc/SortButtons';
-import FiltersMenu from '../../components/filters-menu/FiltersMenu';
+import ProductsFilterMenu from '../../components/products-filters-menu/ProductsFiltersMenu';
 
 function StoreHeader({ category, items, filteredItems, handleFilterChange, handleSortChange }) {
     const [visibleMenu, setVisibleMenu] = useState(null);
@@ -50,8 +50,8 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
                     <div className="d-flex justify-content-center mt-5">
                         {visibleMenu === 'filters' && (
                             <div className="filters-container visible">
-                                <FiltersMenu
-                                    items={items}
+                                <ProductsFilterMenu
+                                    products={items}
                                     onChange={handleFilterChange}
                                 />
                             </div>
