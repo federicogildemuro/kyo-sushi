@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 
 function PriceRange({ onChange, priceRange }) {
+    // States to store the min and max price values
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
 
+    // Update the min and max price values when the priceRange prop changes
     useEffect(() => {
         setMinPrice(priceRange.min);
         setMaxPrice(priceRange.max);
     }, [priceRange]);
 
+    // Handle the change of the min price input
     const handleMinPriceChange = (event) => {
         let value = event.target.value;
         if (/^\d*$/.test(value)) {
@@ -18,6 +21,7 @@ function PriceRange({ onChange, priceRange }) {
         }
     };
 
+    // Handle the change of the max price input
     const handleMaxPriceChange = (event) => {
         let value = event.target.value;
         if (/^\d*$/.test(value)) {
@@ -27,8 +31,10 @@ function PriceRange({ onChange, priceRange }) {
         }
     };
 
+    // Prevent the user from typing non-numeric characters except some keys to allow keyboard navigation
     const preventKeyboardInput = (event) => {
-        if (!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete') {
+        if (!/[0-9]/.test(event.key) &&
+            !['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(event.key)) {
             event.preventDefault();
         }
     };

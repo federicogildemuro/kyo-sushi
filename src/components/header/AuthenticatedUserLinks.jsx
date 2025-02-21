@@ -3,8 +3,10 @@ import useAuth from '../../hooks/useAuth';
 import { authenticatedUserLinks as links } from './links';
 
 function AuthenticatedUserLinks() {
+    // Get the user from the useAuth hook
     const { user } = useAuth();
 
+    // Don't render the links if the user is not authenticated
     if (!user) return null;
 
     return (

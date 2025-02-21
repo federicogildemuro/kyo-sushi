@@ -4,9 +4,11 @@ import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function AuthWidget() {
+    // Get the user object and logout function from the useAuth hook
     const { user, logout } = useAuth();
-    const { showNotification } = useNotification();
 
+    // Handle logout and show a notification if the user is logged out
+    const { showNotification } = useNotification();
     const handleLogout = async () => {
         const result = await logout();
 

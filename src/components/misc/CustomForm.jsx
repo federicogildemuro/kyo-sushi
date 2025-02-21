@@ -4,6 +4,7 @@ function CustomForm({ formConfig, formData, formErrors, handleInputChange, handl
             className="col-12 col-lg-6 mx-auto my-5"
             onSubmit={handleSubmit}
         >
+            {/* Map over the form configuration object */}
             {Object.entries(formConfig).map(([field, config]) => {
                 const errorId = `${field}-error`;
                 return (
@@ -29,6 +30,7 @@ function CustomForm({ formConfig, formData, formErrors, handleInputChange, handl
                             aria-describedby={formErrors[field] ? errorId : undefined}
                         />
 
+                        {/* Show the error message if there is one */}
                         {formErrors[field] && (
                             <div
                                 id={errorId}
@@ -47,7 +49,6 @@ function CustomForm({ formConfig, formData, formErrors, handleInputChange, handl
                 type="submit"
                 className="btn custom-btn mt-3"
                 disabled={submitDisabled}
-                style={{ minHeight: "44px", minWidth: "100px" }}
             >
                 {submitText}
             </button>

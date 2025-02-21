@@ -8,14 +8,20 @@ import CartWidget from './CartWidget';
 import AuthWidget from './AuthWidget';
 
 function HeaderNavBar() {
+    // Get the isAdmin value from the useAuth hook
     const { isAdmin } = useAuth();
+    // State to manage the mobile menu
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const toggleMenu = () => setIsMenuOpen(prev => !prev);
+    // Handle the mobile menu toggle
+    const toggleMenu = () => {
+        setIsMenuOpen(prev => !prev);
+    };
 
     return (
         <nav className="d-flex justify-content-around justify-content-lg-center align-items-center gap-3 gap-sm-5">
             <div className="d-none d-lg-flex">
+                {/* Render the AdminLinks component if the user is an admin, otherwise render the UserLinks component */}
                 {isAdmin ? <AdminLinks /> : <UserLinks />}
             </div>
 

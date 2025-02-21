@@ -3,8 +3,7 @@ import Item from './Item';
 import './ItemList.css';
 
 function ItemList({ items }) {
-    if (!items) return null;
-
+    // Variants for the item list animation
     const itemVariants = {
         hidden: { opacity: 0, y: 25 },
         visible: {
@@ -13,6 +12,9 @@ function ItemList({ items }) {
             transition: { duration: .5, ease: 'easeInOut' }
         },
     };
+
+    // If there are no items, return null
+    if (!items) return null;
 
     return (
         <motion.ul

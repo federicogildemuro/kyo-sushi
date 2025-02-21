@@ -1,5 +1,7 @@
 function CategoryCheckboxes({ categories, selectedCategories = [], onChange }) {
+    // Function to handle the change of the selected categories
     const handleChange = (category) => {
+        // If the category is already selected, remove it from the list, otherwise add it
         if (selectedCategories.includes(category)) {
             onChange(selectedCategories.filter((cat) => cat !== category));
         } else {

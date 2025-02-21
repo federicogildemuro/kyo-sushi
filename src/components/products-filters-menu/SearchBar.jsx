@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 
 function SearchBar({ searchValue, onChange }) {
+    // State to store the debounced value
     const [debouncedValue, setDebouncedValue] = useState(searchValue);
 
+    // Debounce the search value
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedValue(searchValue);
@@ -11,10 +13,12 @@ function SearchBar({ searchValue, onChange }) {
         return () => clearTimeout(handler);
     }, [searchValue]);
 
+    // Call the onChange callback with the debounced value
     useEffect(() => {
         onChange(debouncedValue);
     }, [debouncedValue, onChange]);
 
+    // Handle the input change
     const handleChange = (event) => {
         onChange(event.target.value);
     };

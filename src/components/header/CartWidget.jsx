@@ -6,10 +6,14 @@ import useCart from '../../hooks/useCart';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function CartWidget() {
+    // Get the user object and isAdmin value from the useAuth hook
     const { user, isAdmin } = useAuth();
+    // Get the cartTotalQuantity value from the useCart hook
     const { cartTotalQuantity } = useCart();
+    // State to handle the animation of the cart widget
     const [isAnimating, setIsAnimating] = useState(false);
 
+    // Animate the cart widget when the cartTotalQuantity changes
     useEffect(() => {
         setIsAnimating(true);
         const timer = setTimeout(() => {
@@ -18,6 +22,10 @@ function CartWidget() {
         return () => clearTimeout(timer);
     }, [cartTotalQuantity]);
 
+    // Check if the cart has items
+    const hasItems = cartTotalQuantity > 0;
+
+    // Don't render the cart widget if the user is not authenticated or is admin
     if (!user || isAdmin) return null;
 
     return (
@@ -37,7 +45,8 @@ function CartWidget() {
                         aria-hidden="true"
                     />
 
-                    {cartTotalQuantity > 0 && (
+                    {/* Render the cartTotalQuantity value as a badge if the cart has items */}
+                    {hasItems && (
                         <span
                             className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                             aria-label={`Cantidad de productos en el carrito: ${cartTotalQuantity}`}

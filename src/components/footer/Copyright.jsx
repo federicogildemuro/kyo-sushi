@@ -19,7 +19,7 @@ function Copyright() {
             </Link>
 
             <p>
-                Proyecto final del curso de ReactJS de Coderhouse
+                Proyecto final del curso React JS de Coderhouse
             </p>
 
         </div>

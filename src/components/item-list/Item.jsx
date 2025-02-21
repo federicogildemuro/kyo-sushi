@@ -6,14 +6,16 @@ import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function Item({ item }) {
+    // Get the user from the useAuth hook
     const { user } = useAuth();
+    // Get the toggleFavorite and isItemFavorite functions from the useFavorites hook
     const { toggleFavorite, isItemFavorite } = useFavorites();
-    const { showNotification } = useNotification();
-
+    // State to handle the favorite status of the item
     const [isFavorite, setIsFavorite] = useState(false);
-
+    // Ref to handle the favorite icon    
     const favoriteIconRef = useRef(null);
 
+    // Check if the item is a favorite when the component mounts
     useEffect(() => {
         const checkIfFavorite = async () => {
             if (user) {
@@ -24,23 +26,25 @@ function Item({ item }) {
         checkIfFavorite();
     }, [user, item.id, isItemFavorite]);
 
+    // Handle the link click
     const handleLinkClick = (event) => {
         if (favoriteIconRef.current && favoriteIconRef.current.contains(event.target)) return;
         scrollToTop();
     };
 
+    // Handle the favorite toggle
+    const { showNotification } = useNotification();
     const handleFavoriteToggle = async (event) => {
         event.preventDefault();
-
         if (!user) {
             showNotification('Debes iniciar sesión para añadir productos a tus favoritos', 'warning');
             return;
         }
-
         const updatedFavoriteStatus = await toggleFavorite(item);
         setIsFavorite(updatedFavoriteStatus);
     };
 
+    // If there is no item, return null
     if (!item) return null;
 
     return (
@@ -53,7 +57,13 @@ function Item({ item }) {
                 <i
                     className={`favorite-icon fs-5 p-1 bi bi-heart${isFavorite ? '-fill' : ''}`}
                     onClick={handleFavoriteToggle}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            handleFavoriteToggle(event);
+                        }
+                    }}
                     role="button"
+                    tabIndex="0"
                     aria-pressed={isFavorite}
                     aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
                 />

@@ -4,14 +4,22 @@ import { fetchCategories } from '../../services/productsServices';
 import useAsync from '../../hooks/useAsync';
 
 function CategoriesDropdownMenu() {
+    // Fetch the categories using the useAsync hook
     const { data: categories, loading } = useAsync(fetchCategories);
+    // State to handle the dropdown menu
     const [isOpen, setisOpen] = useState(false);
+    // State to handle the focused index of the dropdown items
     const [focusedIndex, setFocusedIndex] = useState(null);
+    // Refs to handle the dropdown menu and items
     const dropdownRef = useRef(null);
     const dropdownItemsRef = useRef([]);
 
-    const toggleDropdown = () => setisOpen(prev => !prev);
+    // Handle the toggle of the dropdown menu
+    const toggleDropdown = () => {
+        setisOpen(prev => !prev);
+    };
 
+    // Close the dropdown menu when clicking outside of it
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -25,6 +33,7 @@ function CategoriesDropdownMenu() {
         };
     }, []);
 
+    // Handle the keyboard navigation of the dropdown menu
     const handleKeyDown = (event) => {
         if (!isOpen) return;
 
@@ -37,7 +46,9 @@ function CategoriesDropdownMenu() {
         }
     };
 
-    const renderCategories = () => {
+    // Render the categories
+    const renderDropdownMenu = () => {
+        // If the data is loading, show a loading message
         if (loading) {
             return (
                 <li className="text-center">
@@ -46,6 +57,7 @@ function CategoriesDropdownMenu() {
             );
         }
 
+        // If there are no categories, show a message
         if (!categories || categories.length === 0) {
             return (
                 <li className="text-center">
@@ -54,6 +66,7 @@ function CategoriesDropdownMenu() {
             );
         }
 
+        // Map the categories to create the dropdown items
         return categories.map((category, index) => (
             <li
                 key={category}
@@ -88,12 +101,17 @@ function CategoriesDropdownMenu() {
                 aria-haspopup="true"
             >
                 Menú
-                <i className={`bi ${isOpen ? 'bi-caret-up-fill' : 'bi-caret-down-fill'} ms-2`} />
+                <i
+                    className={`bi ${isOpen ? 'bi-caret-up-fill' : 'bi-caret-down-fill'} ms-2`}
+                    aria-hidden="true"
+                    aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+                />
             </button>
 
+            {/* Render the dropdown menu if it is open */}
             {isOpen && (
                 <ul className="dropdown-menu d-flex flex-column align-items-center">
-                    {renderCategories()}
+                    {renderDropdownMenu()}
                 </ul>
             )}
         </li>
