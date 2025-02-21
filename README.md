@@ -1,13 +1,13 @@
 # Kyo Sushi - From Course Project to Enhanced Ecommerce
 
-This React-based ecommerce project was originally developed as the final project for the Coderhouse React.js course. Since then, it has been expanded with numerous additional features and improvements, incorporating various libraries to enhance functionality and user experience.
+This React-based ecommerce project was originally developed as the final project for the Coderhouse React Js course. Since then, it has been expanded with numerous additional features and improvements, incorporating various libraries to enhance functionality and user experience.
 
 ## Features
 
-- **Routing**: Utilizes `react-router-dom` for seamless navigation between pages.
+- **Routing**: Utilizes react-router-dom for seamless navigation between pages.
 - **Protected Routes**: Restricts access to certain routes, ensuring only authorized users can access them.
 - **Lazy Loading**: Components are lazily loaded to improve performance, ensuring that only the necessary parts of the application are initially loaded.
-- **User Authentication with Firebase**: Manages user accounts, allowing sign-up, login, and session management.
+- **User Authentication with Firebase**: Manages user accounts, allowing sign-up, login, session management with a set duration, and password reset in case of forgotten credentials.
 - **Firestore Integration**: Serves as the database to store and manage products, orders, and user information in real time.
 - **Product Search, Filters, and Sorting**: Enables users to search products by name, filter them by category or price range, and sort them in ascending or descending order by name or price.
 - **Pagination**: Implements pagination to enhance performance and user experience, displaying a limited number of products per page.
