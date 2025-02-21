@@ -1,11 +1,11 @@
 function OrdersTableItem({ order }) {
-    /* Destructure order properties */
+    // Destructure order data
     const { orderId, date, items, total, status } = order;
 
-    /* Format order number */
+    // Format order number
     const formattedNumber = orderId.toString().padStart(4, '0');
 
-    /* Format order date */
+    // Format order date
     const orderDate = new Date(date);
     const formattedDate = orderDate.toLocaleDateString('es-ES', {
         day: '2-digit',
@@ -13,17 +13,17 @@ function OrdersTableItem({ order }) {
         year: 'numeric'
     });
 
-    /* Format order items */
+    // Format order items
     const formattedItems = items.map((item, index) => (
         <div key={index}>
             {item.title} x {item.quantity}
         </div>
     ));
 
-    /* Format order total */
+    // Format order total
     const formattedTotal = total.toFixed(2);
 
-    /* Format order status */
+    // Format order status
     const getStatusText = (status) => {
         switch (status) {
             case 'pending':

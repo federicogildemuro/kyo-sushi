@@ -7,17 +7,17 @@ import ProfileLinks from './ProfileLinks';
 import BackButton from '../../components/misc/BackButton';
 
 function Profile() {
-    /* Get user from useAuth hook */
+    // Get user from the custom hook
     const { user } = useAuth();
 
-    /* Fetch user by id when user is available */
+    // Fetch user by id when user is available
     const { data: userData, loading } = useAsync(() => {
         if (user?.uid) {
             return fetchUserById(user.uid);
         }
     }, [user?.uid]);
 
-    /* Render spinner while fetching user */
+    // Show spinner while loading
     if (loading) return <Spinner />;
 
     return (

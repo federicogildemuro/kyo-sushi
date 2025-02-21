@@ -3,9 +3,9 @@ import Pagination from '../../../components/pagination/Pagination';
 import ItemsNotFound from '../misc/ItemsNotFound';
 
 function AdminProductsContent({ products, totalPages, currentPage, setCurrentPage, onDeleteProduct }) {
-    /* Check if there are products to display in the table */
+    // Check if there are products to display in the table
     const hasProducts = products.length > 0;
-    /* Render ItemsNotFound component if there are no products */
+    // Render ItemsNotFound component if there are no products
     if (!hasProducts) return <ItemsNotFound />;
 
     return (

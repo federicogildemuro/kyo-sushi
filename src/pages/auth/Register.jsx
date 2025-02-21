@@ -11,19 +11,23 @@ import BackButton from '../../components/misc/BackButton';
 import './Auth.css';
 
 function Register() {
+    // Handle user registration
     const { data: result, loading, error, execute: register } = useAsync(createUser, [], false);
-    const { showNotification } = useNotification();
 
+    // Show notification on success or error
+    const { showNotification } = useNotification();
     useEffect(() => {
         if (result) showNotification('Usuario registrado exitosamente', 'success');
         if (error) showNotification(error.message, 'danger');
     }, [result, error, showNotification]);
 
+    // Set initial form data based on form config
     const initialFormData = Object.keys(formConfig).reduce((data, field) => {
         data[field] = formConfig[field].initialValue;
         return data;
     }, {});
 
+    // Handle form input and validation
     const {
         formData,
         formErrors,
@@ -32,17 +36,21 @@ function Register() {
         validateFormData
     } = useFormValidation(initialFormData);
 
+    // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
+        // Validate form data before 
         if (!validateFormData()) {
             showNotification('Por favor, complete los campos correctamente', 'warning');
             return;
         }
+        // Register user if form data is valid
         register(formData.email, formData.password, formData);
     };
 
     return (
         <section className="d-flex flex-column text-center">
+            {/* Show spinner while loading */}
             {loading && <Spinner />}
 
             <div className="container">

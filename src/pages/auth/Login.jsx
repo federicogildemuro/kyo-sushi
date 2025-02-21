@@ -7,26 +7,33 @@ import BackButton from '../../components/misc/BackButton';
 import './Auth.css';
 
 function Login() {
+    // State to store the email and password
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    // Get login, loading, and error from useAuth
     const { login, loading, error } = useAuth();
-    const { showNotification } = useNotification();
 
+    // Show notification on error
+    const { showNotification } = useNotification();
     useEffect(() => {
         if (error) showNotification(error, 'danger');
     }, [error, showNotification]);
 
+    // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
+        // Validate email and password
         if (!email || !password) {
             showNotification('Por favor, complete todos los campos', 'warning');
             return;
         }
+        // Call login with email and password
         login(email, password);
     }
 
     return (
         <section className="d-flex flex-column text-center">
+            {/* Show spinner while loading */}
             {loading && <Spinner />}
 
             <div className="container">

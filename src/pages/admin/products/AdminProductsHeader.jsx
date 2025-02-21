@@ -4,13 +4,13 @@ import ProductsFilterMenu from '../../../components/products-filters-menu/Produc
 import SortButtons from '../../../components/misc/SortButtons';
 
 function AdminProductsHeader({ products, filteredProducts, handleFilterChange, handleSortChange }) {
-    /* Handle menu visibility toggle */
+    // Handle menu visibility toggle
     const [visibleMenu, setVisibleMenu] = useState(null);
     const toggleMenu = (menu) => {
         setVisibleMenu(prevMenu => (prevMenu === menu ? null : menu));
     };
 
-    /* Define the available sorting fields for products */
+    // Define the available sorting fields for products
     const sortFields = [
         { name: 'Nombre', key: 'title' },
         { name: 'Categoría', key: 'category' },

@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 
 function CartItem({ item, removeItem }) {
+    // Destructure and format item data
     const { id, title, quantity, price, pictureUrl } = item;
     const formattedPrice = price.toFixed(2);
     const formattedTotal = (price * quantity).toFixed(2);
 
+    // Handle item removal
     const handleRemove = () => {
         removeItem(id);
     };

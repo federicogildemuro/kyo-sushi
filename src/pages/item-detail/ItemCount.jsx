@@ -9,17 +9,7 @@ function ItemCount({ item, addToCart }) {
     const { count, increment, decrement } = useCount(initial, 1, stock);
 
     return (
-        <div
-            className="d-flex align-items-center mb-3 mb-lg-0 order-lg-2"
-            aria-labelledby="item-count-label"
-        >
-            <h2
-                id="item-count-label"
-                className="sr-only"
-            >
-                Contador de productos
-            </h2>
-
+        <div className="d-flex align-items-center mb-3 mb-lg-0 order-lg-2">
             <button
                 className="btn btn-outline-secondary me-2"
                 onClick={decrement}

@@ -11,16 +11,16 @@ import Spinner from '../../../components/spinner/Spinner';
 import BackButton from '../../../components/misc/BackButton';
 
 function CreateProduct() {
-    /* Handle product creation */
+    // Handle product creation
     const { data: result, loading: creating, error, execute: createNewProduct } = useAsync(createProduct, [], false);
 
-    /* Set initial form data based on form config */
+    // Set initial form data based on form config
     const initialFormData = Object.keys(formConfig).reduce((data, field) => {
         data[field] = formConfig[field].initialValue;
         return data;
     }, {});
 
-    /* Handle form input and validation */
+    // Handle form input and validation
     const {
         formData,
         formErrors,
@@ -29,7 +29,7 @@ function CreateProduct() {
         validateFormData
     } = useFormValidation(initialFormData);
 
-    /* Show notifications on success or error */
+    // Show notifications on success or error
     const { showNotification } = useNotification();
     const navigate = useNavigate();
     useEffect(() => {
@@ -41,15 +41,15 @@ function CreateProduct() {
         if (error) showNotification(error.message, 'danger');
     }, [result, error, showNotification, navigate]);
 
-    /* Handle form submission */
+    // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
-        /* Validate form data before submitting */
+        // Validate form data before submitting
         if (!validateFormData()) {
             showNotification('Por favor, complete los campos correctamente', 'warning');
             return;
         }
-        /* Create product if form data is valid */
+        // Create product if form data is valid
         createNewProduct(formData);
     };
 

@@ -1,11 +1,7 @@
 function ProfileInfo({ user }) {
-    /* Destructure user properties */
+    // Destructure and format user data
     const { firstName = '', lastName = '', email = '', phone = '', address = '' } = user || {};
-
-    /* Format user name */
     const formattedName = firstName || lastName ? `${firstName} ${lastName}` : '';
-
-    /* Format user address */
     const formattedAddress = address ? `${address.street || ''} ${address.number || ''}${address.apartment ? ` ${address.apartment}` : ''} - ${address.city || ''} (${address.state || ''}, ${address.country || ''})` : '';
 
     return (

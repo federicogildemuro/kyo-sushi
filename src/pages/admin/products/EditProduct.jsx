@@ -11,16 +11,16 @@ import Spinner from '../../../components/spinner/Spinner';
 import BackButton from '../../../components/misc/BackButton';
 
 function EditProduct() {
-    /* Get product ID from URL params */
+    // Get product ID from URL params
     const { id: productId } = useParams();
-    /* Fetch product by ID on mount or whenever the product ID changes */
+    // Fetch product by ID on mount or whenever the product ID changes
     const {
         data: productData,
         loading: fetching,
         error: errorFetching
     } = useAsync(() => productId ? fetchProductById(productId) : Promise.resolve(null), [productId]);
 
-    /* Set initial form data based on form config or fetched product data */
+    // Set initial form data based on form config or fetched product data
     const initialFormData = useMemo(() => {
         if (!productData) {
             return Object.fromEntries(
@@ -37,7 +37,7 @@ function EditProduct() {
         };
     }, [productData]);
 
-    /* Handle form input and validation */
+    // Handle form input and validation
     const {
         formData,
         setFormData,
@@ -47,24 +47,24 @@ function EditProduct() {
         validateFormData
     } = useFormValidation(initialFormData);
 
-    /* Update form data when product data changes */
+    // Update form data when product data changes
     useEffect(() => {
         if (productData) {
             setFormData(initialFormData);
         }
     }, [productData, initialFormData, setFormData]);
 
-    /* Check if form data has changed */
+    // Check if form data has changed
     const isFormUnchanged = useMemo(() => {
         return Object.keys(initialFormData).every(
             (key) => formData[key] === initialFormData[key]
         );
     }, [formData, initialFormData]);
 
-    /* Handle product update */
+    // Handle product update
     const { data: result, loading: updating, error: errorUpdating, execute: updateProductById } = useAsync(updateProduct, [], false);
 
-    /* Show notifications on success or error */
+    // Show notifications on success or error
     const { showNotification } = useNotification();
     const error = errorFetching || errorUpdating;
     const navigate = useNavigate();
@@ -77,19 +77,19 @@ function EditProduct() {
         if (error) showNotification(error.message, 'danger');
     }, [result, error, showNotification, navigate]);
 
-    /* Handle form submission */
+    // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
-        /* Validate form data before submitting */
+        // Validate form data before submitting
         if (!validateFormData()) {
             showNotification('Por favor, complete los campos correctamente', 'warning');
             return;
         }
-        /* Update product if form data is valid */
+        // Update product if form data is valid
         updateProductById(productId, formData);
     };
 
-    /* Show spinner while fetching product */
+    // Show spinner while fetching product
     if (fetching) return <Spinner />;
 
     return (

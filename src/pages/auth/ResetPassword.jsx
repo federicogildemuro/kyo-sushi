@@ -8,11 +8,14 @@ import Spinner from '../../components/spinner/Spinner';
 import BackButton from '../../components/misc/BackButton';
 
 function ResetPassword() {
+    // State to store the email
     const [email, setEmail] = useState('');
+    // Handle password reset
     const { data: result, loading, error, execute: reset } = useAsync(resetPassword, [], false);
+
+    // Show notification on success or error
     const { showNotification } = useNotification();
     const navigate = useNavigate();
-
     useEffect(() => {
         if (result) {
             showNotification('Se le ha enviado un correo electrónico para restablecer su contraseña', 'success');
@@ -22,17 +25,21 @@ function ResetPassword() {
         if (error) showNotification(error.message, 'danger')
     }, [result, error, showNotification, navigate]);
 
+    // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
+        // Validate email
         if (!email) {
             showNotification('Por favor, ingrese su correo electrónico', 'warning');
             return;
         }
+        // Reset password when email is valid
         reset(email);
     };
 
     return (
         <section className="d-flex flex-column text-center">
+            {/* Show spinner while loading */}
             {loading && <Spinner />}
 
             <div className="container">

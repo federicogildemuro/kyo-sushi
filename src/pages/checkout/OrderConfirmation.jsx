@@ -3,9 +3,12 @@ import { motion } from 'framer-motion';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function OrderConfirmation() {
+    // Get orderId from URL params
     const { orderId } = useParams();
+    // Format orderId with leading zeros
     const formattedorderId = orderId.padStart(4, '0');
 
+    // Confirmation messages to display
     const confirmationMessages = [
         { icon: "bi bi-cart-fill", text: `Se ha registrado con el número #${formattedorderId}` },
         { icon: "bi bi-envelope-check", text: "Le hemos enviado un correo electrónico con los detalles del mismo" },

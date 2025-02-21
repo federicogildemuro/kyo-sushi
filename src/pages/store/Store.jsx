@@ -9,45 +9,53 @@ import StoreContent from './StoreContent';
 import Spinner from '../../components/spinner/Spinner';
 
 function Store() {
+    // Get the category from the URL params
     const { category } = useParams();
-
+    // Fetch products on mount and whenever the category changes
     const { data, loading } = useAsync(() => fetchProducts(category), [category]);
-    const items = useMemo(() => Array.isArray(data) ? data : [], [data]);
+    // Memoize the product list, ensuring it is always an array
+    const products = useMemo(() => Array.isArray(data) ? data : [], [data]);
+    // Update filtered and sorted products whenever the product list changes
     useEffect(() => {
-        if (items.length > 0) {
-            setFilteredItems(items);
-            setSortedItems(items);
+        if (products.length > 0) {
+            setFilteredProducts(products);
+            setSortedProducts(products);
         }
-    }, [items]);
+    }, [products]);
 
-    const [filteredItems, setFilteredItems] = useState([]);
+    // Handle products filtering
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const handleFilterChange = (filtered) => {
-        setFilteredItems(filtered);
-        setSortedItems(filtered);
+        setFilteredProducts(filtered);
+        setSortedProducts(filtered);
     };
 
-    const [sortedItems, setSortedItems] = useState([]);
+    // Handle products sorting
+    const [sortedProducts, setSortedProducts] = useState([]);
     const handleSortChange = (sorted) => {
-        setSortedItems(sorted);
+        setSortedProducts(sorted);
     };
 
-    const { itemsPerPage } = useItemsPerPage();
-    const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(sortedItems, itemsPerPage);
+    // Get items per page according to the screen size using a custom hook
+    const { itemsPerPage: productsPerPage } = useItemsPerPage();
+    // Paginate sorted products
+    const { currentItems: currentProducts, currentPage, totalPages, setCurrentPage } = usePagination(sortedProducts, productsPerPage);
 
+    // Show spinner while fetching products
     if (loading) return <Spinner />;
 
     return (
         <section className="d-flex flex-column text-center">
             <StoreHeader
                 category={category}
-                items={items}
-                filteredItems={filteredItems}
+                products={products}
+                filteredProducts={filteredProducts}
                 handleFilterChange={handleFilterChange}
                 handleSortChange={handleSortChange}
             />
 
             <StoreContent
-                currentItems={currentItems}
+                products={currentProducts}
                 totalPages={totalPages}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}

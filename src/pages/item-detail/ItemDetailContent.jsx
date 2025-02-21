@@ -62,7 +62,7 @@ function ItemDetailContent({ item }) {
 
     return (
         <div className="container my-5">
-            <div className="card custom-card">
+            <div className="card custom-border">
                 <div className="row g-0 h-100">
                     <ItemDetailPicture
                         item={item}

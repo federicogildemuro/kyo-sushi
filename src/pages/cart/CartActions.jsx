@@ -4,20 +4,19 @@ import useNotification from '../../hooks/useNotification';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function CartActions({ clearCart }) {
-    const { showNotification } = useNotification();
-
+    // State to handle the confirmation dialog
     const [isConfirming, setIsConfirming] = useState(false);
 
+    // Handle cart clearing confirmation
+    const { showNotification } = useNotification();
     const handleDelete = () => {
         setIsConfirming(true);
         showNotification('¿Estás seguro que deseas vaciar el carrito?', 'confirm', true, handleConfirm, handleCancel);
     };
-
     const handleConfirm = () => {
         setIsConfirming(false);
         clearCart();
     };
-
     const handleCancel = () => {
         setIsConfirming(false);
     };

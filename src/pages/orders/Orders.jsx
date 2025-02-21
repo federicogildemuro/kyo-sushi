@@ -10,42 +10,41 @@ import OrdersContent from './OrdersContent';
 import BackButton from '../../components/misc/BackButton';
 
 function Orders() {
-    /* Get user from useAuth hook */
+    // Get user from the custom hook
     const { user } = useAuth();
 
-    /* Fetch orders by user when user is available */
+    // Fetch orders by user when user is available
     const { data, loading } = useAsync(() => {
         if (user?.uid) {
             return fetchOrdersByUser(user.uid);
         }
     }, [user?.uid]);
 
-    /* Memoize orders when data changes */
+    // Memoize orders when data changes
     const orders = useMemo(() => {
         return Array.isArray(data) ? data : [];
     }, [data]);
 
-    /* Sorting */
+    // Handle sorting
     const [sortedOrders, setSortedOrders] = useState([]);
-
     useEffect(() => {
         if (orders.length > 0) {
             setSortedOrders(orders);
         }
     }, [orders]);
-
     const handleSortChange = (sorted) => {
         setSortedOrders(sorted);
     };
 
-    /* Pagination */
+    // Set items per page
     const itemsPerPage = 10;
+    // Paginate orders
     const { currentItems, currentPage, totalPages, setCurrentPage } = usePagination(sortedOrders, itemsPerPage);
 
-    /* Check if user has orders */
+    // Check if there are orders
     const hasOrders = sortedOrders.length > 0;
 
-    /* Render spinner while fetching orders */
+    // Show spinner while orders are loading
     if (loading) return <Spinner />;
 
     return (
@@ -53,6 +52,7 @@ function Orders() {
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tus pedidos</h1>
 
+                {/* Show orders if there are items, otherwise show an empty orders message */}
                 {hasOrders ? (
                     <>
                         <OrdersHeader

@@ -8,21 +8,34 @@ import Spinner from '../../components/spinner/Spinner';
 import BackButton from '../../components/misc/BackButton';
 
 function Contact() {
-    const { data, loading, error, execute: sendEmail } = useAsync(sendContactEmail, [], false);
-    const { showNotification } = useNotification();
+    // Handle sending contact email
+    const { data: result, loading, error, execute: sendEmail } = useAsync(sendContactEmail, [], false);
 
+    // Show notification on success or error
+    const { showNotification } = useNotification();
+    useEffect(() => {
+        if (result) {
+            showNotification('Mensaje enviado exitosamente', 'success');
+            setFormData(initialFormData);
+        }
+        if (error) showNotification(error, 'danger');
+    }, [result, error, showNotification, setFormData, initialFormData]);
+
+    // Labels for form fields
     const labels = {
         name: 'Nombre',
         email: 'Correo electrónico',
         message: 'Mensaje',
     };
 
+    // Set initial form data
     const initialFormData = useMemo(() => ({
         name: '',
         email: '',
         message: '',
     }), []);
 
+    // Handle form input and validation
     const {
         formData,
         setFormData,
@@ -32,31 +45,22 @@ function Contact() {
         validateFormData
     } = useFormValidation(initialFormData);
 
-    useEffect(() => {
-        if (data) {
-            showNotification('Mensaje enviado exitosamente', 'success');
-            setFormData(initialFormData);
-        }
-    }, [data, showNotification, setFormData, initialFormData]);
-
-    useEffect(() => {
-        if (error) showNotification(error, 'danger');
-    }, [error, showNotification]);
-
+    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        // Validate form data before sending email
         if (!validateFormData()) {
             showNotification('Por favor, complete los campos correctamente', 'warning');
             return;
         }
-
+        // Send email if form data is valid
         await sendEmail(formData);
         scrollToTop();
     };
 
     return (
         <section className="d-flex flex-column text-center">
+            {/* Show spinner while loading */}
             {loading && <Spinner />}
 
             <div className="container">
@@ -71,6 +75,7 @@ function Contact() {
                             key={field}
                             className="d-flex flex-column align-items-start mb-3"
                         >
+                            {/* Render textarea for message field, input for other fields */}
                             {field === 'message' ? (
                                 <>
                                     <label
@@ -111,6 +116,7 @@ function Contact() {
                                 </>
                             )}
 
+                            {/* Show error message if field has one */}
                             {formErrors[field] && (
                                 <div className="text-danger small text-start mt-1">
                                     {formErrors[field]}
@@ -122,7 +128,6 @@ function Contact() {
                     <button
                         type="submit"
                         className="btn custom-btn my-3"
-                        disabled={loading}
                     >
                         Enviar
                     </button>

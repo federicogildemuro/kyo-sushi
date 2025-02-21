@@ -4,11 +4,11 @@ import useNotification from '../../../hooks/useNotification';
 import { scrollToTop } from '../../../utils/scrollUtils';
 
 function AdminProductsTableItem({ product, onDelete }) {
-    /* Destructure and format product data */
+    // Destructure and format product data
     const { title, description, category, price, stock } = product;
     const formattedPrice = price.toFixed(2);
 
-    /* Handle delete confirmation */
+    // Handle delete confirmation
     const [isConfirming, setIsConfirming] = useState(false);
     const { showNotification } = useNotification();
     const handleConfirmDelete = () => {

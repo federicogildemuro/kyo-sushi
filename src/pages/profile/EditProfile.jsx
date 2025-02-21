@@ -12,17 +12,29 @@ import CustomForm from '../../components/misc/CustomForm';
 import BackButton from '../../components/misc/BackButton';
 
 function EditProfile() {
-    /* Get user from useAuth hook */
+    // Get user from the custom hook
     const { user } = useAuth();
 
-    /* Fetch user by id when user is available */
-    const { data: userData, loading: loadingUser } = useAsync(() => {
+    // Fetch user by id when user is available
+    const { data: userData, loading: fetching } = useAsync(() => {
         if (user?.uid) {
             return fetchUserById(user.uid);
         }
     }, [user?.uid]);
 
-    /* Create initial form data from user */
+    // Show notifications on success or error
+    const { showNotification } = useNotification();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (result) {
+            showNotification('Usuario actualizado exitosamente', 'success');
+            scrollToTop();
+            navigate('/profile');
+        }
+        if (error) showNotification(error.message, 'danger');
+    }, [result, error, showNotification, navigate]);
+
+    // Set initial form data based on form config or fetched user data
     const initialFormData = useMemo(() => {
         if (!userData) {
             return Object.fromEntries(
@@ -43,7 +55,7 @@ function EditProfile() {
         };
     }, [userData]);
 
-    /* Use form validation hook */
+    // Handle form input and validation
     const {
         formData,
         setFormData,
@@ -53,54 +65,43 @@ function EditProfile() {
         validateFormData
     } = useFormValidation(initialFormData);
 
+    // Update form data when user data changes
     useEffect(() => {
         if (userData) {
             setFormData(initialFormData);
         }
     }, [userData, initialFormData, setFormData]);
 
-    /* Check if form data has changed */
+    // Check if form data has changed
     const isFormUnchanged = useMemo(() => {
         return Object.keys(initialFormData).every(
             (key) => formData[key] === initialFormData[key]
         );
     }, [formData, initialFormData]);
 
-    /* Use async hook to update user */
-    const { data: result, loading: loadingUpdate, error, execute: updateProfile } = useAsync(updateUser, [], false);
+    // Handle updating user data
+    const { data: result, loading: updating, error, execute: updateProfile } = useAsync(updateUser, [], false);
 
-    /* Use notification hook to show messages */
-    const { showNotification } = useNotification();
-
-    /* Use navigate hook to redirect */
-    const navigate = useNavigate();
-
-    /* Handle form submit */
+    // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
+        // Validate form data before submitting
         if (!validateFormData()) {
             showNotification('Por favor, complete los campos correctamente', 'warning');
             return;
         }
+        // Update user if form data is valid
         updateProfile(user.uid, formData);
     };
 
-    /* Show notification on result or error */
-    useEffect(() => {
-        if (result) {
-            showNotification('Usuario actualizado exitosamente', 'success');
-            scrollToTop();
-            navigate('/profile');
-        }
-        if (error) showNotification(error.message, 'danger');
-    }, [result, error, showNotification, navigate]);
-
-    /* Render spinner while fetching or updating user */
-    const loading = loadingUser || loadingUpdate;
-    if (loading) return <Spinner />;
+    // Show spinner while fetching user
+    if (fetching) return <Spinner />
 
     return (
         <section className="d-flex flex-column text-center">
+            {/* Show spinner while updating user */}
+            {updating && <Spinner />}
+
             <div className="container">
                 <h1 className="display-6 fw-bold">Editar perfil</h1>
 

@@ -1,16 +1,16 @@
 function OrderSummary({ user, cart, total, onConfirm }) {
-    /* Destructure user properties */
+    // Destructure user data
     const { firstName = '', lastName = '', address = '' } = user || {};
-    /* Format user name */
+    // Format user name
     const formattedName = firstName || lastName ? `${firstName} ${lastName}` : '';
-    /* Format user address */
+    // Format address
     const formattedAddress = address ? `${address.street || ''} ${address.number || ''}${address.apartment ? ` ${address.apartment}` : ''} - ${address.city || ''} (${address.state || ''}, ${address.country || ''})` : '';
-    /* Format cart items */
+    // Format cart items
     const formattedCartItems = cart.map((item) => ({
         id: item.id,
         text: `${item.title} x ${item.quantity} $${(item.price * item.quantity).toFixed(2)}`
     }));
-    /* Format total amount */
+    // Format total
     const formattedTotal = total.toFixed(2);
 
     return (

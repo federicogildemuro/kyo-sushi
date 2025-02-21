@@ -85,14 +85,6 @@ li {
     background-color: var(--dark-color);
 }
 
-/* Cards */
-.custom-card {
-    color: var(--dark-color);
-    background-color: var(--light-color);
-    border: .1rem solid var(--dark-color);
-    border-radius: .5rem;
-}
-
 /* Borders */
 .custom-border {
     color: var(--dark-color);
