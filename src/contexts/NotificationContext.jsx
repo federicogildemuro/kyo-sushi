@@ -1,11 +1,14 @@
 import { createContext, useCallback, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Create context to manage notifications state throughout the app
 const NotificationContext = createContext();
 
 function NotificationProvider({ children }) {
+    // State variable to store the notification data
     const [notification, setNotification] = useState(null);
 
+    // Function to show a notification with a specific message, type, and options
     const showNotification = useCallback((message, type, isConfirmation = false, onConfirm = null, onCancel = null) => {
         const iconMapping = {
             success: 'bi-check-circle',
@@ -17,6 +20,8 @@ function NotificationProvider({ children }) {
         };
         const icon = iconMapping[type] || iconMapping.default;
         setNotification({ message, type, icon, isConfirmation, onConfirm, onCancel });
+
+        // Automatically hide the notification after 5 seconds if it's not a confirmation
         if (!isConfirmation) {
             setTimeout(() => {
                 setNotification(null);
@@ -24,21 +29,28 @@ function NotificationProvider({ children }) {
         }
     }, []);
 
+    // Function to handle the confirm action of a notification
     const handleConfirm = () => {
         if (notification.onConfirm) notification.onConfirm();
         setNotification(null);
     };
 
+    // Function to handle the cancel action of a notification
     const handleCancel = () => {
         if (notification.onCancel) notification.onCancel();
         setNotification(null);
     };
 
+    // Context value to be provided to children
+    const value = { showNotification };
+
     return (
-        <NotificationContext.Provider value={{ showNotification }}>
+        // Provide context to the app components
+        <NotificationContext.Provider value={value}>
             {children}
 
             <AnimatePresence>
+                {/* Show the notification if it exists */}
                 {notification && (
                     <motion.div
                         key="notification"
@@ -65,6 +77,7 @@ function NotificationProvider({ children }) {
                                 <span>{notification.message}</span>
                             </div>
 
+                            {/* Show confirmation buttons if it's a confirmation notification */}
                             {notification.isConfirmation && (
                                 <div className="d-flex gap-3">
                                     <button
