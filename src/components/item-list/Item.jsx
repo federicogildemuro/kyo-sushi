@@ -52,8 +52,10 @@ function Item({ item }) {
             <div className="favorite-icon-container">
                 <i
                     className={`favorite-icon fs-5 p-1 bi bi-heart${isFavorite ? '-fill' : ''}`}
-                    ref={favoriteIconRef}
                     onClick={handleFavoriteToggle}
+                    role="button"
+                    aria-pressed={isFavorite}
+                    aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
                 />
             </div>
 

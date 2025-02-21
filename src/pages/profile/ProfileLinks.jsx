@@ -13,7 +13,10 @@ function ProfileLinks() {
                     onClick={scrollToTop}
                 >
                     {link.text}
-                    <i className={`bi ${link.icon} ms-2`} />
+                    <i
+                        className={`bi ${link.icon} ms-2`}
+                        aria-hidden="true"
+                    />
                 </Link>
             ))}
         </div>

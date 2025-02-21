@@ -23,7 +23,10 @@ function OrderConfirmation() {
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1 }}
                 >
-                    <i className="bi bi-check-circle me-2" />
+                    <i
+                        className="bi bi-check-circle me-2"
+                        aria-hidden="true"
+                    />
                     Pedido confirmado
                 </motion.h1>
 
@@ -35,7 +38,10 @@ function OrderConfirmation() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: .5, delay: index * 0.25 }}
                     >
-                        <i className={`${item.icon} me-2`} />
+                        <i
+                            className={`${item.icon} me-2`}
+                            aria-hidden="true"
+                        />
                         {item.text}
                     </motion.p>
                 ))}
@@ -51,7 +57,10 @@ function OrderConfirmation() {
                         onClick={scrollToTop}
                     >
                         Ir a la tienda
-                        <i className="bi bi-shop ms-2" />
+                        <i
+                            className="bi bi-shop ms-2"
+                            aria-hidden="true"
+                        />
                     </Link>
                 </motion.div>
             </div>

@@ -27,12 +27,26 @@ function CartItem({ item, removeItem }) {
                     </div>
 
                     <div className="d-flex gap-2">
-                        <Link to={`/item/${id}`} className="btn custom-btn">
-                            <i className="bi bi-eye" />
+                        <Link
+                            to={`/item/${id}`}
+                            className="btn custom-btn"
+                            aria-label={`Ver detalles de ${title}`}
+                        >
+                            <i
+                                className="bi bi-eye"
+                                aria-hidden="true"
+                            />
                         </Link>
 
-                        <button className="btn btn-danger" onClick={handleRemove}>
-                            <i className="bi bi-trash" />
+                        <button
+                            className="btn btn-danger"
+                            onClick={handleRemove}
+                            aria-label={`Eliminar ${title} del carrito`}
+                        >
+                            <i
+                                className="bi bi-trash"
+                                aria-hidden="true"
+                            />
                         </button>
                     </div>
                 </div>

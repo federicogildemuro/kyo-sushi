@@ -20,7 +20,10 @@ function ItemDetailActions({ item, addToCart }) {
                 disabled={!user}
             >
                 Ver carrito
-                <i className="bi bi-cart ms-2" />
+                <i
+                    className="bi bi-cart ms-2"
+                    aria-hidden="true"
+                />
             </Link>
 
             <Link
@@ -29,7 +32,10 @@ function ItemDetailActions({ item, addToCart }) {
                 onClick={scrollToTop}
             >
                 Seguir comprando
-                <i className="bi bi-shop ms-2" />
+                <i
+                    className="bi bi-shop ms-2"
+                    aria-hidden="true"
+                />
             </Link>
         </div>
     );

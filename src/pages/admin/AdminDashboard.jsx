@@ -26,7 +26,10 @@ function AdminDashboard() {
                                         onClick={scrollToTop}
                                     >
                                         {card.linkText}
-                                        <i className={`bi ${card.linkIcon} ms-2`} />
+                                        <i
+                                            className={`bi ${card.linkIcon} ms-2`}
+                                            aria-hidden="true"
+                                        />
                                     </Link>
                                 </div>
                             </div>

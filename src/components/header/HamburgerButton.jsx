@@ -3,10 +3,13 @@ function HamburgerButton({ isOpen, toggleMenu }) {
         <button
             className="navbar-toggler"
             type="button"
-            aria-expanded={isOpen}
             onClick={toggleMenu}
+            aria-expanded={isOpen}
         >
-            <i className="nav-bar-icon bi bi-list" />
+            <i
+                className="nav-bar-icon bi bi-list"
+                aria-hidden="true"
+            />
         </button>
     );
 }

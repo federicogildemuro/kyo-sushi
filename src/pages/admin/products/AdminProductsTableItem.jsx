@@ -41,16 +41,25 @@ function AdminProductsTableItem({ product, onDelete }) {
                         to={`/admin/productos/editar/${product.id}`}
                         className="btn btn-sm custom-btn"
                         onClick={scrollToTop}
+                        aria-label={`Editar producto ${title}`}
                     >
-                        <i className="bi bi-pencil" />
+                        <i
+                            className="bi bi-pencil"
+                            aria-hidden="true"
+                        />
                     </Link>
 
                     <button
                         className="btn btn-sm custom-btn"
                         onClick={handleConfirmDelete}
                         disabled={isConfirming}
+                        aria-disabled={isConfirming}
+                        aria-label={`Eliminar producto ${title}`}
                     >
-                        <i className="bi bi-trash" />
+                        <i
+                            className="bi bi-trash"
+                            aria-hidden="true"
+                        />
                     </button>
                 </div>
             </td>

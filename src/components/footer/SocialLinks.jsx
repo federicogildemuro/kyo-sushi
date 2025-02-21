@@ -15,7 +15,10 @@ function SocialLinks() {
                             className="footer-link"
                             target="_blank"
                         >
-                            <i className={`bi ${link.icon}`} />
+                            <i
+                                className={`bi ${link.icon}`}
+                                aria-hidden="true"
+                            />
                         </Link>
                     </li>
                 ))}

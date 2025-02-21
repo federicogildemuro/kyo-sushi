@@ -30,7 +30,10 @@ function CartActions({ clearCart }) {
                 onClick={scrollToTop}
             >
                 Seguir comprando
-                <i className="bi bi-shop ms-2" />
+                <i
+                    className="bi bi-shop ms-2"
+                    aria-hidden="true"
+                />
             </Link>
 
             <button
@@ -39,7 +42,10 @@ function CartActions({ clearCart }) {
                 disabled={isConfirming}
             >
                 Vaciar carrito
-                <i className="bi bi-cart-x ms-2" />
+                <i
+                    className="bi bi-cart-x ms-2"
+                    aria-hidden="true"
+                />
             </button>
 
             <Link to="/checkout"
@@ -47,7 +53,10 @@ function CartActions({ clearCart }) {
                 onClick={scrollToTop}
             >
                 Finalizar compra
-                <i className="bi bi-cart-check ms-2" />
+                <i
+                    className="bi bi-cart-check ms-2"
+                    aria-hidden="true"
+                />
             </Link>
         </div>
     );

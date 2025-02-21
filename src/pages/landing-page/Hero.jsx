@@ -40,7 +40,10 @@ function Hero() {
                         onClick={scrollToTop}
                     >
                         Ir a la tienda
-                        <i className="bi bi-arrow-right ms-2" />
+                        <i
+                            className="bi bi-arrow-right ms-2"
+                            aria-hidden="true"
+                        />
                     </Link>
                 </motion.div>
             </motion.div>

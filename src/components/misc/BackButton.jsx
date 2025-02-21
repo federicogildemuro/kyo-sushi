@@ -14,8 +14,12 @@ function BackButton() {
             <button
                 className="btn custom-btn"
                 onClick={handleBack}
+                aria-label="Volver a la página anterior"
             >
-                <i className="bi bi-arrow-left me-2" />
+                <i
+                    className="bi bi-arrow-left me-2"
+                    aria-hidden="true"
+                />
                 Atrás
             </button>
         </div>

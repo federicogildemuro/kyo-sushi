@@ -34,6 +34,7 @@ function MobileNavMenu({ isOpen, closeMenu }) {
                 <button
                     className="btn-close"
                     onClick={closeMenu}
+                    aria-label="Cerrar menú"
                 />
             </div>
 

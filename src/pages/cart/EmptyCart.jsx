@@ -5,7 +5,10 @@ function EmptyCart() {
     return (
         <div className="text-center">
             <p className="fs-5 mb-5">
-                <i className="bi bi-cart-x me-2" />
+                <i
+                    className="bi bi-cart-x me-2"
+                    aria-hidden="true"
+                />
                 No tienes productos en tu carrito
             </p>
 
@@ -15,7 +18,10 @@ function EmptyCart() {
                 onClick={scrollToTop}
             >
                 Ir a la tienda
-                <i className="bi bi-shop ms-2" />
+                <i
+                    className="bi bi-shop ms-2"
+                    aria-hidden="true"
+                />
             </Link>
         </div>
     );

@@ -23,7 +23,10 @@ function AuthWidget() {
             className="nav-link"
             onClick={user ? handleLogout : scrollToTop}
         >
-            <i className={`nav-bar-icon bi ${user ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`} />
+            <i
+                className={`nav-bar-icon bi ${user ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`}
+                aria-hidden="true"
+            />
         </Link>
     );
 }

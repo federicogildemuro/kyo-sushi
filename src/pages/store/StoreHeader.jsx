@@ -23,7 +23,10 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
 
                     <Link to="/tienda" className="btn custom-btn">
                         Ver todos
-                        <i className="bi bi-grid ms-2" />
+                        <i
+                            className="bi bi-grid ms-2"
+                            aria-hidden="true"
+                        />
                     </Link>
                 </div>
             ) : (
@@ -32,18 +35,37 @@ function StoreHeader({ category, items, filteredItems, handleFilterChange, handl
                         <button
                             className="btn custom-btn"
                             onClick={() => toggleMenu('filters')}
+                            aria-expanded={visibleMenu === 'filters'}
+                            aria-controls="filters-container"
                         >
-                            <i className="bi bi-search me-2" />
-                            <i className="bi bi-filter me-2" />
-                            <i className={`bi bi-${visibleMenu === 'filters' ? 'caret-up-fill' : 'caret-down-fill'}`} />
+                            <i
+                                className="bi bi-search me-2"
+                                aria-hidden="true"
+                            />
+                            <i
+                                className="bi bi-filter me-2"
+                                aria-hidden="true"
+                            />
+                            <i
+                                className={`bi bi-${visibleMenu === 'filters' ? 'caret-up-fill' : 'caret-down-fill'}`}
+                                aria-hidden="true"
+                            />
                         </button>
 
                         <button
                             className="btn custom-btn"
                             onClick={() => toggleMenu('sort')}
+                            aria-expanded={visibleMenu === 'sort'}
+                            aria-controls="sort-container"
                         >
-                            <i className="bi bi-funnel me-2" />
-                            <i className={`bi bi-${visibleMenu === 'sort' ? 'caret-up-fill' : 'caret-down-fill'}`} />
+                            <i
+                                className="bi bi-funnel me-2"
+                                aria-hidden="true"
+                            />
+                            <i
+                                className={`bi bi-${visibleMenu === 'sort' ? 'caret-up-fill' : 'caret-down-fill'}`}
+                                aria-hidden="true"
+                            />
                         </button>
                     </div>
 

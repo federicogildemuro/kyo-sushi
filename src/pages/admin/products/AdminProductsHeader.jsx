@@ -26,7 +26,10 @@ function AdminProductsHeader({ products, filteredProducts, handleFilterChange, h
                     className="btn custom-btn"
                 >
                     Crear producto
-                    <i className="bi bi-plus ms-2" />
+                    <i
+                        className="bi bi-plus ms-2"
+                        aria-hidden="true"
+                    />
                 </Link>
             </div>
 
@@ -34,25 +37,47 @@ function AdminProductsHeader({ products, filteredProducts, handleFilterChange, h
                 <button
                     className="btn custom-btn"
                     onClick={() => toggleMenu('filters')}
+                    aria-expanded={visibleMenu === 'filters'}
+                    aria-controls="filters-container"
                 >
-                    <i className="bi bi-search me-2" />
-                    <i className="bi bi-filter me-2" />
-                    <i className={`bi bi-${visibleMenu === 'filters' ? 'caret-up-fill' : 'caret-down-fill'}`} />
+                    <i
+                        className="bi bi-search me-2"
+                        aria-hidden="true"
+                    />
+                    <i
+                        className="bi bi-filter me-2"
+                        aria-hidden="true"
+                    />
+                    <i
+                        className={`bi bi-${visibleMenu === 'filters' ? 'caret-up-fill' : 'caret-down-fill'}`}
+                        aria-hidden="true"
+                    />
                 </button>
 
                 <button
                     className="btn custom-btn"
                     onClick={() => toggleMenu('sort')}
+                    aria-expanded={visibleMenu === 'sort'}
+                    aria-controls="sort-container"
                 >
-                    <i className="bi bi-funnel me-2" />
-                    <i className={`bi bi-${visibleMenu === 'sort' ? 'caret-up-fill' : 'caret-down-fill'}`} />
+                    <i
+                        className="bi bi-funnel me-2"
+                        aria-hidden="true"
+                    />
+                    <i
+                        className={`bi bi-${visibleMenu === 'sort' ? 'caret-up-fill' : 'caret-down-fill'}`}
+                        aria-hidden="true"
+                    />
                 </button>
             </div>
 
             <div className="d-flex justify-content-center mt-5">
                 {/* Show selected menu, but not both at the same time */}
                 {visibleMenu === 'filters' && (
-                    <div className="filters-container visible">
+                    <div
+                        id="filters-container"
+                        className="filters-container visible"
+                    >
                         <ProductsFilterMenu
                             products={products}
                             onChange={handleFilterChange}
@@ -61,7 +86,10 @@ function AdminProductsHeader({ products, filteredProducts, handleFilterChange, h
                 )}
 
                 {visibleMenu === 'sort' && (
-                    <div className="sort-container visible">
+                    <div
+                        id="sort-container"
+                        className="sort-container visible"
+                    >
                         <SortButtons
                             items={filteredProducts}
                             onChange={handleSortChange}

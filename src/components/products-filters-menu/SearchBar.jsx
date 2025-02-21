@@ -20,8 +20,8 @@ function SearchBar({ searchValue, onChange }) {
     };
 
     return (
-        <div className="d-flex flex-column align-items-center gap-3 w-50">
-            <h5>Filtrar por nombre</h5>
+        <div className="d-flex flex-column align-items-center gap-3 w-50" role="search">
+            <h5 id="search-label">Filtrar por nombre</h5>
 
             <input
                 type="text"
@@ -29,6 +29,7 @@ function SearchBar({ searchValue, onChange }) {
                 className="form-control"
                 value={searchValue}
                 onChange={handleChange}
+                aria-labelledby="search-label"
             />
         </div>
     );

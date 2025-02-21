@@ -32,10 +32,16 @@ function CartWidget() {
                     className="nav-link"
                     onClick={scrollToTop}
                 >
-                    <i className="nav-bar-icon bi bi-cart" />
+                    <i
+                        className="nav-bar-icon bi bi-cart"
+                        aria-hidden="true"
+                    />
 
                     {cartTotalQuantity > 0 && (
-                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <span
+                            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            aria-label={`Cantidad de productos en el carrito: ${cartTotalQuantity}`}
+                        >
                             {cartTotalQuantity}
                         </span>
                     )}

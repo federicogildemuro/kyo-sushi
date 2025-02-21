@@ -6,16 +6,15 @@ const NotificationContext = createContext();
 function NotificationProvider({ children }) {
     const [notification, setNotification] = useState(null);
 
-    const iconMapping = {
-        success: 'bi-check-circle',
-        danger: 'bi-x-circle',
-        info: 'bi-info-circle',
-        warning: 'bi-exclamation-circle',
-        confirm: 'bi-question-circle',
-        default: 'bi-bell'
-    };
-
     const showNotification = useCallback((message, type, isConfirmation = false, onConfirm = null, onCancel = null) => {
+        const iconMapping = {
+            success: 'bi-check-circle',
+            danger: 'bi-x-circle',
+            info: 'bi-info-circle',
+            warning: 'bi-exclamation-circle',
+            confirm: 'bi-question-circle',
+            default: 'bi-bell'
+        };
         const icon = iconMapping[type] || iconMapping.default;
         setNotification({ message, type, icon, isConfirmation, onConfirm, onCancel });
         if (!isConfirmation) {
@@ -55,11 +54,15 @@ function NotificationProvider({ children }) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1 }}
+                        aria-live={notification.type === 'danger' || notification.isConfirmation ? "assertive" : "polite"}
                     >
                         <div className="toast-body text-white text-center d-flex flex-column align-items-center justify-content-center gap-3">
                             <div>
-                                <i className={`bi ${notification.icon} me-2`} />
-                                {notification.message}
+                                <i
+                                    className={`bi ${notification.icon} me-2`}
+                                    aria-hidden="true"
+                                />
+                                <span>{notification.message}</span>
                             </div>
 
                             {notification.isConfirmation && (
@@ -68,7 +71,10 @@ function NotificationProvider({ children }) {
                                         className="btn btn-success btn-sm"
                                         onClick={handleConfirm}
                                     >
-                                        <i className="bi bi-check-circle me-2" />
+                                        <i
+                                            className="bi bi-check-circle me-2"
+                                            aria-hidden="true"
+                                        />
                                         Confirmar
                                     </button>
 
@@ -76,7 +82,10 @@ function NotificationProvider({ children }) {
                                         className="btn btn-danger btn-sm"
                                         onClick={handleCancel}
                                     >
-                                        <i className="bi bi-x-circle me-2" />
+                                        <i
+                                            className="bi bi-x-circle me-2"
+                                            aria-hidden="true"
+                                        />
                                         Cancelar
                                     </button>
                                 </div>

@@ -16,7 +16,10 @@ function AuthenticatedUserLinks() {
                         title={link.title}
                         className="nav-link"
                     >
-                        <i className={`nav-bar-icon bi ${link.icon}`} />
+                        <i
+                            className={`nav-bar-icon bi ${link.icon}`}
+                            aria-hidden="true"
+                        />
                     </Link>
                 </li>
             ))}

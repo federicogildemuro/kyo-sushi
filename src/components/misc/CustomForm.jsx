@@ -4,40 +4,50 @@ function CustomForm({ formConfig, formData, formErrors, handleInputChange, handl
             className="col-12 col-lg-6 mx-auto my-5"
             onSubmit={handleSubmit}
         >
-            {Object.entries(formConfig).map(([field, config]) => (
-                <div
-                    key={field}
-                    className="d-flex flex-column align-items-start mb-3"
-                >
-                    <label
-                        htmlFor={field}
-                        className="form-label"
+            {Object.entries(formConfig).map(([field, config]) => {
+                const errorId = `${field}-error`;
+                return (
+                    <div
+                        key={field}
+                        className="d-flex flex-column align-items-start mb-3"
                     >
-                        {config.label}
-                    </label>
+                        <label
+                            htmlFor={field}
+                            className="form-label"
+                        >
+                            {config.label}
+                        </label>
 
-                    <input
-                        type={config.type}
-                        id={field}
-                        className="form-control"
-                        name={field}
-                        value={formData[field]}
-                        onChange={handleInputChange}
-                        onBlur={handleBlur}
-                    />
+                        <input
+                            type={config.type}
+                            id={field}
+                            className="form-control"
+                            name={field}
+                            value={formData[field]}
+                            onChange={handleInputChange}
+                            onBlur={handleBlur}
+                            aria-describedby={formErrors[field] ? errorId : undefined}
+                        />
 
-                    {formErrors[field] &&
-                        <div className="small text-danger text-start mt-1">
-                            {formErrors[field]}
-                        </div>
-                    }
-                </div>
-            ))}
+                        {formErrors[field] && (
+                            <div
+                                id={errorId}
+                                className="small text-danger text-start mt-1"
+                                aria-live="polite"
+                                tabIndex="0"
+                            >
+                                {formErrors[field]}
+                            </div>
+                        )}
+                    </div>
+                );
+            })}
 
             <button
                 type="submit"
                 className="btn custom-btn mt-3"
                 disabled={submitDisabled}
+                style={{ minHeight: "44px", minWidth: "100px" }}
             >
                 {submitText}
             </button>

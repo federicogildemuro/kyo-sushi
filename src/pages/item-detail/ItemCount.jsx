@@ -9,11 +9,22 @@ function ItemCount({ item, addToCart }) {
     const { count, increment, decrement } = useCount(initial, 1, stock);
 
     return (
-        <div className="d-flex align-items-center mb-3 mb-lg-0 order-lg-2">
+        <div
+            className="d-flex align-items-center mb-3 mb-lg-0 order-lg-2"
+            aria-labelledby="item-count-label"
+        >
+            <h2
+                id="item-count-label"
+                className="sr-only"
+            >
+                Contador de productos
+            </h2>
+
             <button
                 className="btn btn-outline-secondary me-2"
                 onClick={decrement}
                 disabled={count <= 1}
+                aria-label="Disminuir cantidad"
             >
                 -
             </button>
@@ -29,6 +40,7 @@ function ItemCount({ item, addToCart }) {
                 className="btn btn-outline-secondary ms-2"
                 onClick={increment}
                 disabled={count >= stock}
+                aria-label="Aumentar cantidad"
             >
                 +
             </button>
@@ -37,9 +49,13 @@ function ItemCount({ item, addToCart }) {
                 className="btn custom-btn ms-2"
                 onClick={() => addToCart(count)}
                 disabled={stock === 0}
+                aria-label="Agregar al carrito"
             >
                 Agregar
-                <i className="bi bi-cart-plus ms-2" />
+                <i
+                    className="bi bi-cart-plus ms-2"
+                    aria-hidden="true"
+                />
             </button>
         </div>
     );

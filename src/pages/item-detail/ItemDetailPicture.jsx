@@ -6,6 +6,9 @@ function ItemDetailPicture({ item, isFavorite, toggleFavorite }) {
                     <i
                         className={`favorite-icon fs-4 p-2 bi bi-heart${isFavorite ? '-fill' : ''}`}
                         onClick={toggleFavorite}
+                        role="button"
+                        aria-pressed={isFavorite}
+                        aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
                     />
                 </div>
 

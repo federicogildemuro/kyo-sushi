@@ -9,7 +9,10 @@ function LoginLinks() {
                 className="auth-link"
                 onClick={scrollToTop}
             >
-                <i className="bi bi-key me-2" />
+                <i
+                    className="bi bi-key me-2"
+                    aria-hidden="true"
+                />
                 No recuerdas tu contraseña?
             </Link>
 
@@ -18,7 +21,10 @@ function LoginLinks() {
                 className="auth-link"
                 onClick={scrollToTop}
             >
-                <i className="bi bi-person-plus me-2" />
+                <i
+                    className="bi bi-person-plus me-2"
+                    aria-hidden="true"
+                />
                 No tienes una cuenta?
             </Link>
         </div>

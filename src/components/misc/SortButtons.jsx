@@ -11,12 +11,21 @@ function SortButtons({ items, onChange, fields }) {
     const getArrowIcon = (field) => {
         if (sortOrder.field === field) {
             return sortOrder.direction === 'asc' ? (
-                <i className="bi bi-arrow-up" />
+                <i
+                    className="bi bi-arrow-up"
+                    aria-hidden="true"
+                />
             ) : (
-                <i className="bi bi-arrow-down" />
+                <i
+                    className="bi bi-arrow-down"
+                    aria-hidden="true"
+                />
             );
         }
-        return <i className="bi bi-arrow-down-up" />;
+        return <i
+            className="bi bi-arrow-down-up"
+            aria-hidden="true"
+        />;
     };
 
     return (
@@ -26,6 +35,8 @@ function SortButtons({ items, onChange, fields }) {
                     key={field.key}
                     className="btn custom-btn"
                     onClick={() => handleSort(field.key)}
+                    aria-label={`Ordenar por ${field.name}`}
+                    aria-pressed={sortOrder.field === field.key}
                 >
                     {field.name} {getArrowIcon(field.key)}
                 </button>

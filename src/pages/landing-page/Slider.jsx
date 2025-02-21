@@ -19,7 +19,11 @@ function Slider() {
                 Explora las distintas categorías de nuestro variado menú
             </motion.h1>
 
-            <div id="carouselFade" className="carousel slide carousel-fade">
+            <div
+                id="carouselFade"
+                className="carousel slide carousel-fade"
+                aria-live="polite"
+            >
                 <div className="carousel-inner">
                     {sliderItems.map((item, index) => (
                         <div
@@ -30,8 +34,8 @@ function Slider() {
                             <Link to={`/tienda/${item.title}`} onClick={scrollToTop}>
                                 <img
                                     src={item.image}
-                                    className="carousel-img"
                                     alt={`Imagen de la categoría ${item.title}`}
+                                    className="carousel-img"
                                 />
 
                                 <div className="carousel-caption d-flex align-items-center justify-content-center text-center w-100 h-100 p-5">
@@ -50,8 +54,12 @@ function Slider() {
                     type="button"
                     data-bs-target="#carouselFade"
                     data-bs-slide="prev"
+                    aria-label="Anterior"
                 >
-                    <i className="carousel-icon bi bi-chevron-left bg-dark bg-opacity-50 rounded" />
+                    <i
+                        className="carousel-icon bi bi-chevron-left bg-dark bg-opacity-50 rounded"
+                        aria-hidden="true"
+                    />
                 </button>
 
                 <button
@@ -59,8 +67,12 @@ function Slider() {
                     type="button"
                     data-bs-target="#carouselFade"
                     data-bs-slide="next"
+                    aria-label="Siguiente"
                 >
-                    <i className="carousel-icon bi bi-chevron-right bg-dark bg-opacity-50 rounded" />
+                    <i
+                        className="carousel-icon bi bi-chevron-right bg-dark bg-opacity-50 rounded"
+                        aria-hidden="true"
+                    />
                 </button>
             </div>
         </section>

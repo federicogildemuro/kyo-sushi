@@ -5,7 +5,10 @@ function OrdersNotFound() {
     return (
         <div className="text-center m-5">
             <p className="fs-5 mb-5">
-                <i className="bi bi-box me-2" />
+                <i
+                    className="bi bi-box me-2"
+                    aria-hidden="true"
+                />
                 No tienes pedidos realizados
             </p>
 
@@ -15,7 +18,10 @@ function OrdersNotFound() {
                 onClick={scrollToTop}
             >
                 Ir a la tienda
-                <i className="bi bi-shop ms-2" />
+                <i
+                    className="bi bi-shop ms-2"
+                    aria-hidden="true"
+                />
             </Link>
         </div>
     );

@@ -11,7 +11,10 @@ function Copyright() {
                 className="footer-link"
                 target="_blank"
             >
-                <i className="bi bi-code-slash me-2" />
+                <i
+                    className="bi bi-code-slash me-2"
+                    aria-hidden="true"
+                />
                 Federico Gil de Muro
             </Link>
 

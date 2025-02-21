@@ -63,7 +63,10 @@ function Register() {
                     className="auth-link"
                     target="_blank"
                 >
-                    <i className="bi bi-file-earmark-text me-2" />
+                    <i
+                        className="bi bi-file-earmark-text me-2"
+                        aria-hidden="true"
+                    />
                     El registro implica la aceptación de los términos y condiciones
                 </Link>
 

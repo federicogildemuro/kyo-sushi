@@ -5,7 +5,10 @@ function UnderConstruction() {
         <section className="d-flex flex-column text-center">
             <div className="container">
                 <p className="fs-5 m-5">
-                    <i className="bi bi-exclamation-triangle-fill me-2" />
+                    <i
+                        className="bi bi-exclamation-triangle-fill me-2"
+                        aria-hidden="true"
+                    />
                     Página en construcción
                 </p>
 
