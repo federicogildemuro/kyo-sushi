@@ -2,16 +2,25 @@ import { query, collection, where, getDocs, doc, getDoc, updateDoc, runTransacti
 import { db } from './firebaseServices';
 import { parseProductFromFirebase, createProductAdapter } from '../adapters/productAdapters';
 
+// Function to fetch all products from Firestore
 const fetchProducts = async (category) => {
     try {
+        // Fetch products by category if provided
         if (category) {
+            // Create a query to fetch products by category
             const q = query(collection(db, 'products'), where('category', '==', category));
+            // Fetch products by category
             const querySnapshot = await getDocs(q);
+            // Parse products
             const products = querySnapshot.docs.map(doc => parseProductFromFirebase(doc));
+            // Return parsed products
             return products;
         }
+        // Fetch all products if no category is provided
         const querySnapshot = await getDocs(collection(db, 'products'));
+        // Parse products
         const products = querySnapshot.docs.map(doc => parseProductFromFirebase(doc));
+        // Return parsed products
         return products;
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -19,10 +28,14 @@ const fetchProducts = async (category) => {
     }
 };
 
+// Function to fetch all categories from Firestore
 const fetchCategories = async () => {
     try {
+        // Fetch all products from Firestore
         const querySnapshot = await getDocs(collection(db, 'products'));
+        // Extract categories from products as a Set to avoid duplicates
         const categories = new Set(querySnapshot.docs.map(doc => doc.data().category));
+        // Return categories as an array
         return Array.from(categories);
     } catch (error) {
         console.error('Error fetching categories:', error);
@@ -30,14 +43,18 @@ const fetchCategories = async () => {
     }
 };
 
+// Function to fetch a product by its ID from Firestore
 const fetchProductById = async (id) => {
     try {
+        // Create a reference to the product document
         const docRef = doc(db, 'products', id);
+        // Fetch the product document
         const docSnap = await getDoc(docRef);
-
+        // Return null if the product does not exist
         if (!docSnap.exists()) return null;
-
+        // Parse product
         const product = parseProductFromFirebase(docSnap);
+        // Return the parsed product
         return product;
     } catch (error) {
         console.error('Error fetching product by id:', error);
@@ -45,34 +62,42 @@ const fetchProductById = async (id) => {
     }
 };
 
+// Function to check product stock and update it in a transaction
 const checkProductStockAndUpdate = async (cart) => {
     try {
         return await runTransaction(db, async (transaction) => {
+            // Arrays to track out-of-stock products and product documents to update
             const outOfStockProducts = [];
             const productDocs = [];
 
-            // Leer todos los productos en una sola pasada
+            // Fetch all product data in a single pass
             for (const item of cart) {
                 const docRef = doc(db, 'products', item.id);
+                // Fetch product inside the transaction
                 const docSnap = await transaction.get(docRef);
                 const product = docSnap.data();
-
+                // Error if product is not found
                 if (!product) throw new Error(`Producto ID ${item.id} no encontrado`);
+                // Add product to out-of-stock list if there is not enough stock
                 if (product.stock < item.quantity) {
                     outOfStockProducts.push(item);
                 } else {
+                    // Add product to update list if there is enough stock
                     productDocs.push({ docRef, newStock: product.stock - item.quantity });
                 }
             }
 
-            // Si hay productos sin stock, abortar la transacción
+            // If any product is out of stock, abort the transaction
+            // Return the list of out-of-stock products
             if (outOfStockProducts.length > 0) return { success: false, outOfStockProducts };
 
-            // Si todo está en stock, actualizar en una sola pasada
+            // If all products are in stock, update them in a single pass
             productDocs.forEach(({ docRef, newStock }) => {
+                // Update product stock
                 transaction.update(docRef, { stock: newStock });
             });
 
+            // Return success if all products were updated
             return { success: true, outOfStockProducts: [] };
         });
     } catch (error) {
@@ -84,12 +109,16 @@ const checkProductStockAndUpdate = async (cart) => {
     }
 };
 
-
+// Function to create a new product in Firestore
 const createProduct = async (product) => {
     try {
+        // Adapt product data to Firestore schema
         const adaptedProduct = createProductAdapter(product);
+        // Add the product to Firestore
         const docRef = await addDoc(collection(db, 'products'), adaptedProduct);
+        // Get the product data from Firestore
         const docSnapshot = await getDoc(docRef);
+        // Return the product with ID
         return { id: docRef.id, ...docSnapshot.data() };
     } catch (error) {
         console.error('Error creating product:', error);
@@ -97,10 +126,14 @@ const createProduct = async (product) => {
     }
 };
 
+// Function to update a product in Firestore
 const updateProduct = async (id, product) => {
     try {
+        // Create a reference to the product document
         const docRef = doc(db, 'products', id);
+        // Update the product in Firestore
         await updateDoc(docRef, product);
+        // Return true if the update was successful
         return true;
     } catch (error) {
         console.error('Error updating product:', error);
@@ -108,10 +141,14 @@ const updateProduct = async (id, product) => {
     }
 };
 
+// Function to delete a product from Firestore
 const deleteProduct = async (id) => {
     try {
+        // Create a reference to the product document
         const docRef = doc(db, 'products', id);
+        // Delete the product from Firestore
         await deleteDoc(docRef);
+        // Return true if the deletion was successful
         return true;
     } catch (error) {
         console.error('Error deleting product:', error);
