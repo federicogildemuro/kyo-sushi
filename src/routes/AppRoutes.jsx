@@ -5,13 +5,15 @@ import userRoutes from './userRoutes';
 import publicRoutes from './publicRoutes';
 import authenticatedRoutes from './authenticatedRoutes';
 import adminRoutes from './adminRoutes';
-import NotFound from '../pages/misc/NotFound';
 import Spinner from '../components/spinner/Spinner';
+import NotFound from '../pages/misc/NotFound';
 
 function AppRoutes() {
     return (
+        // Suspense wrapper to show a loading spinner while waiting for lazy-loaded components
         <Suspense fallback={<Spinner />}>
             <Routes>
+                {/* User-specific routes with UserRoute guard */}
                 {userRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -24,6 +26,7 @@ function AppRoutes() {
                     />
                 ))}
 
+                {/* Public routes that should be available to non-authenticated users */}
                 {publicRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -36,6 +39,7 @@ function AppRoutes() {
                     />
                 ))}
 
+                {/* Authenticated-only routes for logged-in users */}
                 {authenticatedRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -48,6 +52,7 @@ function AppRoutes() {
                     />
                 ))}
 
+                {/* Admin-only routes for users with admin role */}
                 {adminRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -60,6 +65,7 @@ function AppRoutes() {
                     />
                 ))}
 
+                {/* Catch-all route to handle 404 Not Found */}
                 <Route
                     path="*"
                     element={<NotFound />}
