@@ -12,8 +12,8 @@ const validateField = (name, value, formData) => {
     switch (name) {
         case 'email':
             // Check if the email field is not empty and matches the email regex
-            if (!value) return 'El correo es obligatorio';
-            if (!emailRegex.test(value)) return 'El correo no es válido';
+            if (!value) return 'El correo electrónico es obligatorio';
+            if (!emailRegex.test(value)) return 'El correo electrónico no es válido';
             return '';
         case 'password':
             // Check if the password field is not empty and matches the password regex
