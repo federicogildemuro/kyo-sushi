@@ -55,9 +55,9 @@ function AuthProvider({ children }) {
         } catch (error) {
             console.error(error);
             if (error.code === 'auth/invalid-credential') {
-                setError('Incorrect email or password.');
+                setError('Correo electrónico o contraseña incorrectos');
             } else if (error.code === 'auth/too-many-requests') {
-                setError('Too many failed attempts, please wait and try again.');
+                setError('Demasiados intentos fallidos. Intente más tarde');
             } else {
                 setError(error.message || 'Error logging in');
             }
