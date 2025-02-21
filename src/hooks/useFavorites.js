@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { FavoritesContext } from '../contexts/FavoritesContext';
 
+// Custom hook to access the favorites context
 function useFavorites() {
     const context = useContext(FavoritesContext);
 

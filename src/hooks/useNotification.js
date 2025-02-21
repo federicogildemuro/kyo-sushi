@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { NotificationContext } from '../contexts/NotificationContext';
 
+// Custom hook to access the notification context
 function useNotification() {
     const context = useContext(NotificationContext);
 
