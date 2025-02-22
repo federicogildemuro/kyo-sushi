@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from './firebaseServices';
 
-// Function to fetch the user's cart from the Firestore
+// Function to fetch the user's cart from Firestore
 const fetchCart = async (userId) => {
     try {
         // Create a reference to the 'carts' collection and the specific user's cart document
@@ -17,12 +17,12 @@ const fetchCart = async (userId) => {
     }
 };
 
-// Function to update the user's cart in the Firestore
+// Function to update the user's cart in Firestore
 const updateCart = async (userId, cart) => {
     try {
-        // Create a reference to the 'carts' collection and the specific user's cart document
+        // Create a reference to the cart document for the specific user
         const docRef = doc(db, 'carts', userId);
-        // Update the user's cart in Firestore, merging the cart data with the existing document
+        // Update the user's cart merging the data with the existing document
         await setDoc(docRef, { items: cart }, { merge: true });
         // Return true if the update was successful
         return true;

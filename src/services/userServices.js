@@ -8,12 +8,12 @@ const createUser = async (email, password, userData) => {
     try {
         // Create a new user in Firebase Authentication
         const firebaseUser = await createUserWithEmailAndPassword(auth, email, password);
-        // Create a reference to the user document in Firestore
-        const userId = firebaseUser.user.uid;
-        // Create a new user document in Firestore
-        const docRef = doc(db, 'users', userId);
         // Adapt user data to Firestore schema
         const adaptedUserData = createUserAdapter({ ...userData });
+        // Get the ID of the new user
+        const userId = firebaseUser.user.uid;
+        // Create a reference to the user document in Firestore
+        const docRef = doc(db, 'users', userId);
         // Set the user document in Firestore
         await setDoc(docRef, adaptedUserData);
         // Return true if the user was created successfully
@@ -30,7 +30,7 @@ const fetchUserRole = async (userId) => {
     try {
         // Create a reference to the user document
         const docRef = doc(db, 'users', userId);
-        // Fetch the user document
+        // Get the user document
         const docSnap = await getDoc(docRef);
         // Return null if the user doesn't exist
         if (!docSnap.exists()) return null;
@@ -42,12 +42,12 @@ const fetchUserRole = async (userId) => {
     }
 }
 
-// Function to fetch a user by its ID from Firestore
+// Function to fetch a user by ID from Firestore
 const fetchUserById = async (id) => {
     try {
         // Create a reference to the user document
         const docRef = doc(db, 'users', id);
-        // Fetch the user document
+        // Get the user document
         const docSnap = await getDoc(docRef);
         // Return null if the user doesn't exist
         if (!docSnap.exists()) return null;
@@ -59,7 +59,7 @@ const fetchUserById = async (id) => {
     }
 };
 
-// Function to fetch a user by its email from Firestore
+// Function to fetch a user by email from Firestore
 const fetchUserByEmail = async (email) => {
     try {
         // Create a reference to the users collection
@@ -78,7 +78,7 @@ const fetchUserByEmail = async (email) => {
     }
 };
 
-// Function to send a password reset email to a user
+// Function to send a password reset email to a user using Firebase Authentication
 const resetPassword = async (email) => {
     try {
         // Fetch the user data by email
@@ -95,7 +95,7 @@ const resetPassword = async (email) => {
     }
 };
 
-// Function to update the password of a user
+// Function to update the password of a user using Firebase Authentication
 const updatePassword = async (oobCode, newPassword) => {
     try {
         // Confirm the password reset

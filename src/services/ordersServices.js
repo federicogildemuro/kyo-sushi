@@ -5,7 +5,7 @@ import { parseOrderFromFirebase, createOrderAdapter } from '../adapters/orderAda
 // Function to fetch all orders from Firestore
 const fetchOrders = async () => {
     try {
-        // Fetch all orders from Firestore
+        // Get the orders collection
         const querySnapshot = await getDocs(collection(db, 'orders'));
         // Parse orders
         const orders = querySnapshot.docs.map(doc => parseOrderFromFirebase(doc));
@@ -17,14 +17,14 @@ const fetchOrders = async () => {
     }
 };
 
-// Function to fetch orders by user ID
+// Function to fetch orders by user ID from Firestore
 const fetchOrdersByUser = async (userId) => {
     try {
         // Create a reference to the 'orders' collection
         const ordersRef = collection(db, 'orders');
         // Create a query to fetch orders by user ID
         const q = query(ordersRef, where('userId', '==', userId));
-        // Fetch orders by user ID
+        // Get the orders by user ID
         const querySnapshot = await getDocs(q);
         // Parse orders
         const orders = querySnapshot.docs.map(doc => parseOrderFromFirebase(doc));
@@ -36,23 +36,20 @@ const fetchOrdersByUser = async (userId) => {
     }
 };
 
-// Function to get the next order ID using a transaction
+// Function to get the next order ID using a transaction in Firestore
 const getNextorderId = async () => {
     // Create a reference to the 'counters' collection and the 'orders' document
     const counterRef = doc(db, 'counters', 'orders');
-
     // Run a transaction to get the next order ID
     return await runTransaction(db, async (transaction) => {
         // Get the last order ID from Firestore
         const counterDoc = await transaction.get(counterRef);
+        // If the document exists, increment the last order ID; otherwise, use 1
         let orderId = 1;
-
-        // If the document exists, increment the last order ID
         if (counterDoc.exists()) {
             orderId = counterDoc.data().lastorderId + 1;
         }
-
-        // Update the last order ID in Firestore
+        // Update the last order ID
         transaction.update(counterRef, { lastorderId: orderId });
         // Return the new order ID
         return orderId;
@@ -68,9 +65,9 @@ const createOrder = async (order) => {
         const orderId = await getNextorderId();
         // Adapt order data to Firestore schema
         const adaptedOrder = createOrderAdapter(orderId, user, cart, total);
-        // Add order to Firestore
+        // Add order to the collection
         const docRef = await addDoc(collection(db, 'orders'), adaptedOrder);
-        // Get the order data from Firestore
+        // Get the order data
         const docSnapshot = await getDoc(docRef);
         // Return order data with ID
         return { id: docRef.id, ...docSnapshot.data() };

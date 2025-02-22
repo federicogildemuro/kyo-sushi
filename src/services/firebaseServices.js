@@ -2,8 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// Firebase configuration object containing API keys and project details
-// These values are stored in the .env file
+// Firebase configuration object (values stored in .env file)
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
@@ -15,11 +14,9 @@ const firebaseConfig = {
 
 // Initialize Firebase with the configuration object
 const app = initializeApp(firebaseConfig);
-
 // Get the Firebase Authentication instance for handling user authentication
 const auth = getAuth(app);
-
-// Get the Firestore database instance for accessing Firebase Firestore
+// Get the Firestore instance for accessing database
 const db = getFirestore(app);
 
 export { auth, db };

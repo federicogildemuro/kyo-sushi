@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from './firebaseServices';
 
-// Function to fetch the user's favorite items from the Firestore
+// Function to fetch the user's favorite items from Firestore
 const fetchFavorites = async (userId) => {
     try {
         // Create a reference to the 'favorites' collection and the specific user's favorites document
@@ -17,12 +17,12 @@ const fetchFavorites = async (userId) => {
     }
 };
 
-// Function to update the user's favorite items in the Firestore
+// Function to update the user's favorite items in Firestore
 const updateFavorites = async (userId, favorites) => {
     try {
-        // Create a reference to the 'favorites' collection and the specific user's favorites document
+        // Create a reference to the favorites document for the specific user
         const docRef = doc(db, 'favorites', userId);
-        // Update the user's favorites in Firestore, merging the favorites data with the existing document
+        // Update the user's favorites, merging the favorites data with the existing document
         await setDoc(docRef, { items: favorites }, { merge: true });
         // Return true if the update was successful
         return true;
@@ -33,5 +33,4 @@ const updateFavorites = async (userId, favorites) => {
     }
 };
 
-// Export the functions to use in other parts of the application
 export { fetchFavorites, updateFavorites };
