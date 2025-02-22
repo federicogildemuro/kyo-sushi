@@ -5,7 +5,7 @@ const validateField = (name, value, formData) => {
     // Regular expression for validating password strength (at least 6 characters, one uppercase, one lowercase, one number, one special character)
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/;
 
-    // Trim the value if it's a string to remove any leading or trailing spaces
+    // Trim the value if it's a string
     if (typeof value === 'string') value = value.trim();
 
     // Switch statement to validate different fields based on their name
@@ -25,22 +25,22 @@ const validateField = (name, value, formData) => {
             if (!value) return 'Debe repetir la contraseña';
             if (value !== formData.password) return 'Las contraseñas no coinciden';
             return '';
-        // Check if the price is a number and greater than 0
         case 'price':
+            // Check if the price is a number and greater than 0
             if (isNaN(value)) return 'El precio debe ser un número';
             if (parseFloat(value) <= 0) return 'El precio debe ser mayor a 0';
             return '';
-        // Check if stock is a valid number and an integer, and is not negative
         case 'stock':
+            // Check if stock is a valid number and an integer, and is not negative
             if (isNaN(value)) return 'El stock debe ser un número';
             if (!Number.isInteger(parseFloat(value))) return 'El stock debe ser un número entero';
             if (parseInt(value, 10) < 0) return 'El stock no puede ser negativo';
             return '';
-        // Apartment field is not required, other optional fields can be added here
         case 'apartment':
+            // Apartment field is not required, other optional fields can be added here
             return '';
-        // All other fields are considered required
         default:
+            // All other fields are considered required
             if (!value) return 'Campo obligatorio';
             return '';
     }
