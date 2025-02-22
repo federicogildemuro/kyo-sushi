@@ -1,7 +1,7 @@
 import { createContext, useCallback, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Create context to manage notifications state throughout the app
+// Create context to manage notifications throughout the app
 const NotificationContext = createContext();
 
 function NotificationProvider({ children }) {
@@ -10,6 +10,7 @@ function NotificationProvider({ children }) {
 
     // Function to show a notification with a specific message, type, and options
     const showNotification = useCallback((message, type, isConfirmation = false, onConfirm = null, onCancel = null) => {
+        // Mapping of notification types to icons
         const iconMapping = {
             success: 'bi-check-circle',
             danger: 'bi-x-circle',
@@ -18,9 +19,10 @@ function NotificationProvider({ children }) {
             confirm: 'bi-question-circle',
             default: 'bi-bell'
         };
+        // Get the icon for the notification type
         const icon = iconMapping[type] || iconMapping.default;
+        // Set the notification state with the provided data
         setNotification({ message, type, icon, isConfirmation, onConfirm, onCancel });
-
         // Automatically hide the notification after 5 seconds if it's not a confirmation
         if (!isConfirmation) {
             setTimeout(() => {
@@ -74,6 +76,7 @@ function NotificationProvider({ children }) {
                                     className={`bi ${notification.icon} me-2`}
                                     aria-hidden="true"
                                 />
+
                                 <span>{notification.message}</span>
                             </div>
 

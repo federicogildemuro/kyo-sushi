@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { fetchCart, updateCart } from '../services/cartServices';
 
-// Create context to manage the cart state throughout the app
+// Create context to manage the cart throughout the app
 const CartContext = createContext();
 
 function CartProvider({ children }) {
@@ -10,15 +10,16 @@ function CartProvider({ children }) {
     const { user } = useAuth();
     const userId = user?.uid;
 
-    // State variables to store the cart data and loading state
+    // States to store cart data and loading state
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Function to load cart data from Firebase for the current user
+    // Function to load cart data for the current user
     const loadCartFromFirebase = useCallback(async () => {
+        // If there's no user, don't load the cart
         if (!userId) return;
-
         try {
+            // Get the cart data and set the state
             const cartData = await fetchCart(userId);
             setCart(cartData);
         } catch (error) {
@@ -36,8 +37,9 @@ function CartProvider({ children }) {
 
     // Function to add an item to the cart
     const addCartItem = useCallback(async (item) => {
+        // If there's no user, don't add the item to the cart
         if (!userId) return false;
-
+        // Update the cart state with the new item
         setCart((prevCart) => {
             const newCart = [...prevCart];
             const itemIndex = newCart.findIndex(cartItem => cartItem.id === item.id);
@@ -47,31 +49,33 @@ function CartProvider({ children }) {
             } else {
                 newCart[itemIndex].quantity = item.quantity;
             }
-            // Update the cart in Firebase
+            // Update the cart and return the new cart
             updateCart(userId, newCart);
             return newCart;
         });
-
+        // Return true to indicate success
         return true;
     }, [userId]);
 
     // Function to remove an item from the cart
     const removeCartItem = useCallback(async (itemId) => {
+        // If there's no user, don't remove the item from the cart
         if (!userId) return false;
-
+        // Update the cart state by removing the item
         setCart((prevCart) => {
             const updatedCart = prevCart.filter(item => item.id !== itemId);
             updateCart(userId, updatedCart);
             return updatedCart;
         });
-
+        // Return true to indicate success
         return true;
     }, [userId]);
 
     // Function to clear all items in the cart
     const clearCartItems = useCallback(async () => {
+        // If there's no user, don't clear the cart
         if (!userId) return false;
-
+        // Set the cart state to an empty array and update the cart
         setCart([]);
         return updateCart(userId, []);
     }, [userId]);

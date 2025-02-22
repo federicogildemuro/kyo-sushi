@@ -4,11 +4,11 @@ import { auth } from '../services/firebaseServices';
 import { fetchUserRole } from '../services/userServices';
 import { isSessionExpired, setLoginTime, clearLoginTime } from '../utils/sessionUtils';
 
-// Create context to provide authentication state throughout the app
+// Create context to manage authentication throughout the app
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-    // State to store user, admin status, loading state, and any errors
+    // States to store user data, admin status, loading state, and errors
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ function AuthProvider({ children }) {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             setError(null);
             setLoading(true);
-
+            // If a user is authenticated, otherwise clear state
             if (firebaseUser) {
                 // Check if the session has expired
                 if (isSessionExpired()) {
@@ -27,19 +27,18 @@ function AuthProvider({ children }) {
                     clearLoginTime();
                     return;
                 }
+                // Set the user state
                 setUser(firebaseUser);
                 // Fetch user role and set admin status
                 const role = await fetchUserRole(firebaseUser.uid);
                 setIsAdmin(role === 'admin');
             } else {
-                // If no user is authenticated, clear state
                 setUser(null);
                 setIsAdmin(false);
                 clearLoginTime();
             }
             setLoading(false);
         });
-
         // Cleanup on unmount
         return () => unsubscribe();
     }, []);

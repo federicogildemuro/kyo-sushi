@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 import { fetchFavorites, updateFavorites } from '../services/favoritesServices';
 import useAuth from '../hooks/useAuth';
 
-// Create context to manage the favorites state throughout the app
+// Create context to manage the favorites throughout the app
 const FavoritesContext = createContext();
 
 function FavoritesProvider({ children }) {
@@ -10,15 +10,17 @@ function FavoritesProvider({ children }) {
     const { user } = useAuth();
     const userId = user?.uid;
 
-    // State variables to store the favorites data and loading state
+    // States to store favorites data and loading state
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Function to load favorites data from Firebase for the current user
+    // Function to load favorites data for the current user
     const loadFavoritesFromFirebase = useCallback(async () => {
+        // If there's no user, don't load the favorites
         if (!userId) return;
 
         try {
+            // Get the favorites data and set the state
             const favoritesData = await fetchFavorites(userId);
             setFavorites(favoritesData);
         } catch (error) {
@@ -36,8 +38,9 @@ function FavoritesProvider({ children }) {
 
     // Function to toggle the favorite status of an item
     const toggleFavorite = useCallback(async (item) => {
+        // If there's no user, don't toggle the favorite status
         if (!userId) return false;
-
+        // Update the favorites state with the new item
         setFavorites((prevFavorites) => {
             const newFavorites = [...prevFavorites];
             const itemIndex = newFavorites.findIndex(favItem => favItem.id === item.id);
@@ -47,15 +50,15 @@ function FavoritesProvider({ children }) {
             } else {
                 newFavorites.splice(itemIndex, 1);
             }
-            // Update the favorites in Firebase
+            // Update the favorites and return the new favorites
             updateFavorites(userId, newFavorites);
             return newFavorites;
         });
-
+        // Return true to indicate success
         return true;
     }, [userId]);
 
-    // Function to check if an item is in the favorites list
+    // Function to check if an item is in the favorites
     const isItemFavorite = useCallback((itemId) => {
         return favorites.some(favItem => favItem.id === itemId);
     }, [favorites]);
