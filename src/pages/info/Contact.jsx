@@ -11,16 +11,6 @@ function Contact() {
     // Handle sending contact email
     const { data: result, loading, error, execute: sendEmail } = useAsync(sendContactEmail, [], false);
 
-    // Show notification on success or error
-    const { showNotification } = useNotification();
-    useEffect(() => {
-        if (result) {
-            showNotification('Mensaje enviado exitosamente', 'success');
-            setFormData(initialFormData);
-        }
-        if (error) showNotification(error, 'danger');
-    }, [result, error, showNotification, setFormData, initialFormData]);
-
     // Labels for form fields
     const labels = {
         name: 'Nombre',
@@ -44,6 +34,16 @@ function Contact() {
         handleBlur,
         validateFormData
     } = useFormValidation(initialFormData);
+
+    // Show notification on success or error
+    const { showNotification } = useNotification();
+    useEffect(() => {
+        if (result) {
+            showNotification('Mensaje enviado exitosamente', 'success');
+            setFormData(initialFormData);
+        }
+        if (error) showNotification(error, 'danger');
+    }, [result, error, showNotification, setFormData, initialFormData]);
 
     // Handle form submission
     const handleSubmit = async (event) => {
