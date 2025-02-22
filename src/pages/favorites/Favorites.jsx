@@ -10,8 +10,6 @@ function Favorites() {
 
     // Check if there are items in the favorites
     const hasItems = favorites.length > 0;
-    // Render EmptyFavorites component if there are no items
-    if (!hasItems) return <EmptyFavorites />;
 
     // Show spinner while the favorites are loading
     if (loading) return <Spinner />;
@@ -21,7 +19,8 @@ function Favorites() {
             <div className="container mb-5">
                 <h1 className="display-6 fw-bold mb-5">Tus favoritos</h1>
 
-                <ItemList items={favorites} />
+                {/* Show favorites if there are any, otherwise show the empty state */}
+                {hasItems ? <ItemList items={favorites} /> : <EmptyFavorites />}
 
                 <BackButton />
             </div>
