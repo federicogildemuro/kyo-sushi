@@ -31,14 +31,14 @@ li {
 
 /* Main */
 .main-container {
-    min-height: 100vh;
-    width: 100%;
-    background-color: var(--light-color);
     color: var(--dark-color);
+    background-color: var(--light-color);
+    width: 100%;
+    min-height: 100vh;
     padding-top: 20vh;
 }
 
-/* Buttons */
+/* Button */
 .custom-btn {
     color: var(--light-color);
     background-color: var(--accent-color);
@@ -66,7 +66,7 @@ li {
     cursor: not-allowed;
 }
 
-/* Forms */
+/* Form */
 .form-control {
     color: var(--dark-color) !important;
 }
@@ -85,7 +85,7 @@ li {
     background-color: var(--dark-color);
 }
 
-/* Borders */
+/* Border */
 .custom-border {
     color: var(--dark-color);
     background-color: var(--light-color);
@@ -93,7 +93,7 @@ li {
     border-radius: .5rem;
 }
 
-/* Tables */
+/* Table */
 .custom-table {
     --bs-table-bg: var(--light-color);
     --bs-table-color: var(--dark-color);
