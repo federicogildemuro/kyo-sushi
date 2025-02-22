@@ -9,6 +9,11 @@ function Cart() {
     // Get the cart, loading state, total amount, and functions to remove and clear items from the custom hook
     const { cart, loading, cartTotalAmount, removeCartItem, clearCartItems } = useCart();
 
+    // Check if there are items in the cart
+    const hasItems = cart.length > 0;
+    // Render EmptyCart component if there are no items
+    if (!hasItems) return <EmptyCart />;
+
     // Show spinner while the cart is loading
     if (loading) return <Spinner />;
 
@@ -17,17 +22,12 @@ function Cart() {
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tu carrito</h1>
 
-                {/* Show cart content if there are items, otherwise show an empty cart message */}
-                {cart.length > 0 ? (
-                    <CartContent
-                        cart={cart}
-                        total={cartTotalAmount}
-                        removeItem={removeCartItem}
-                        clearCart={clearCartItems}
-                    />
-                ) : (
-                    <EmptyCart />
-                )}
+                <CartContent
+                    cart={cart}
+                    total={cartTotalAmount}
+                    removeItem={removeCartItem}
+                    clearCart={clearCartItems}
+                />
 
                 <BackButton />
             </div>

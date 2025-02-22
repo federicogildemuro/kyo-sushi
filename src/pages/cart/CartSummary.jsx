@@ -1,4 +1,5 @@
 function CartSummary({ total }) {
+    // Format the total amount
     const formattedTotal = total.toFixed(2);
 
     return (

@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resetPassword } from '../../services/userServices';
 import useAsync from '../../hooks/useAsync';
 import useNotification from '../../hooks/useNotification';
+import { resetPassword } from '../../services/userServices';
 import { scrollToTop } from '../../utils/scrollUtils';
 import Spinner from '../../components/spinner/Spinner';
 import BackButton from '../../components/misc/BackButton';
 
 function ResetPassword() {
-    // State to store the email
-    const [email, setEmail] = useState('');
     // Handle password reset
     const { data: result, loading, error, execute: reset } = useAsync(resetPassword, [], false);
+
+    // State to store the email
+    const [email, setEmail] = useState('');
 
     // Show notification on success or error
     const { showNotification } = useNotification();

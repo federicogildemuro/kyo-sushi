@@ -12,6 +12,7 @@ function ItemDetailPicture({ item, isFavorite, toggleFavorite }) {
                     />
                 </div>
 
+                {/* The image is displayed in large screens */}
                 <img
                     src={item.pictureUrl}
                     className="img-fluid d-none d-lg-block rounded-start w-100 h-100"
@@ -19,6 +20,7 @@ function ItemDetailPicture({ item, isFavorite, toggleFavorite }) {
                     style={{ objectFit: "cover" }}
                 />
 
+                {/* The image is displayed in small screens */}
                 <img
                     src={item.pictureUrl}
                     className="img-fluid d-block d-lg-none rounded-top w-100"

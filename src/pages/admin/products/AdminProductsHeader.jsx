@@ -4,7 +4,7 @@ import ProductsFilterMenu from '../../../components/products-filters-menu/Produc
 import SortButtons from '../../../components/misc/SortButtons';
 
 function AdminProductsHeader({ products, filteredProducts, handleFilterChange, handleSortChange }) {
-    // Handle menu visibility toggle
+    // Handle menu visibility
     const [visibleMenu, setVisibleMenu] = useState(null);
     const toggleMenu = (menu) => {
         setVisibleMenu(prevMenu => (prevMenu === menu ? null : menu));

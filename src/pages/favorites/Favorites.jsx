@@ -8,6 +8,11 @@ function Favorites() {
     // Get favorites and loading state from the custom hook
     const { favorites, loading } = useFavorites();
 
+    // Check if there are items in the favorites
+    const hasItems = favorites.length > 0;
+    // Render EmptyFavorites component if there are no items
+    if (!hasItems) return <EmptyFavorites />;
+
     // Show spinner while the favorites are loading
     if (loading) return <Spinner />;
 
@@ -16,12 +21,7 @@ function Favorites() {
             <div className="container mb-5">
                 <h1 className="display-6 fw-bold mb-5">Tus favoritos</h1>
 
-                {/* Show favorites if there are items, otherwise show an empty favorites message */}
-                {favorites.length > 0 ? (
-                    <ItemList items={favorites} />
-                ) : (
-                    <EmptyFavorites />
-                )}
+                <ItemList items={favorites} />
 
                 <BackButton />
             </div>

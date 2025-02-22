@@ -1,13 +1,13 @@
 import useAuth from '../../hooks/useAuth';
-import { fetchUserById } from '../../services/userServices';
 import useAsync from '../../hooks/useAsync';
+import { fetchUserById } from '../../services/userServices';
 import Spinner from '../../components/spinner/Spinner';
 import ProfileInfo from './ProfileInfo';
 import ProfileLinks from './ProfileLinks';
 import BackButton from '../../components/misc/BackButton';
 
 function Profile() {
-    // Get user from the custom hook
+    // Get the current user from the useAuth hook
     const { user } = useAuth();
 
     // Fetch user by id when user is available

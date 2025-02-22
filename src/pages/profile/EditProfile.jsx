@@ -1,18 +1,18 @@
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import { fetchUserById, updateUser } from '../../services/userServices';
 import useAsync from '../../hooks/useAsync';
-import { editProfileForm as formConfig } from './formConfig';
 import useFormValidation from '../../hooks/useFormValidation';
 import useNotification from '../../hooks/useNotification';
+import { fetchUserById, updateUser } from '../../services/userServices';
+import { editProfileForm as formConfig } from './formConfig';
 import { scrollToTop } from '../../utils/scrollUtils';
 import Spinner from '../../components/spinner/Spinner';
 import CustomForm from '../../components/misc/CustomForm';
 import BackButton from '../../components/misc/BackButton';
 
 function EditProfile() {
-    // Get user from the custom hook
+    // Get the current user from the useAuth hook
     const { user } = useAuth();
 
     // Fetch user by id when user is available

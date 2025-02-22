@@ -15,7 +15,7 @@ import EmptyCart from '../cart/EmptyCart';
 import BackButton from '../../components/misc/BackButton';
 
 function Checkout() {
-    // Get user from the custom hook
+    // Get the current user from the custom hook
     const { user } = useAuth();
 
     // Fetch user by id when user is available
@@ -23,7 +23,7 @@ function Checkout() {
         if (user?.uid) return fetchUserById(user.uid);
     }, [user?.uid]);
 
-    // Get cart data from the custom hook
+    // Get cart data, total amount, and functions to clear the cart from the custom hook
     const { cart, cartTotalAmount, clearCartItems, loading: cartLoading } = useCart();
 
     // Handle check stock, create order and send email
@@ -38,18 +38,15 @@ function Checkout() {
         if (error) showNotification(error.message, 'danger');
     }, [error, showNotification]);
 
-
     // Handle order confirmation
     const navigate = useNavigate();
     const handleConfirm = async () => {
         // Check stock before creating the order
         const stockResult = await checkStock(cart);
-
-        // If there is enough stock, create the order
+        // If there is enough stock, create the order, otherwise show a notification
         if (stockResult?.success) {
             const order = await createNewOrder({ user: userData, cart, total: cartTotalAmount });
             // If the order was created successfully, send the email, clear the cart and navigate to the order confirmation page
-            // Otherwise, show a notification with the error message
             if (order) {
                 showNotification('Compra realizada exitosamente', 'success');
                 await sendEmail(order);
@@ -66,6 +63,8 @@ function Checkout() {
 
     // Check if there are items in the cart
     const hasItems = cart.length > 0;
+    // Render EmptyCart component if there are no items
+    if (!hasItems) return <EmptyCart />;
 
     // Show spinner while loading
     const loading = userLoading || cartLoading || checkStockLoading || createOrderLoading || sendEmailLoading;
@@ -76,17 +75,12 @@ function Checkout() {
             <div className="container">
                 <h1 className="display-6 fw-bold">Finalizar compra</h1>
 
-                {/* Show order summary if there are items in the cart, otherwise render an empty cart message */}
-                {hasItems ? (
-                    <OrderSummary
-                        user={userData}
-                        cart={cart}
-                        total={cartTotalAmount}
-                        onConfirm={handleConfirm}
-                    />
-                ) : (
-                    <EmptyCart />
-                )}
+                <OrderSummary
+                    user={userData}
+                    cart={cart}
+                    total={cartTotalAmount}
+                    onConfirm={handleConfirm}
+                />
 
                 <BackButton />
             </div>

@@ -7,11 +7,12 @@ import BackButton from '../../components/misc/BackButton';
 import './Auth.css';
 
 function Login() {
-    // State to store the email and password
+    // Handle login using useAuth custom hook
+    const { login, loading, error } = useAuth();
+
+    // States to store the email and password
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // Get login, loading, and error from useAuth
-    const { login, loading, error } = useAuth();
 
     // Show notification on error
     const { showNotification } = useNotification();
@@ -27,7 +28,7 @@ function Login() {
             showNotification('Por favor, complete todos los campos', 'warning');
             return;
         }
-        // Call login with email and password
+        // Login when email and password are valid
         login(email, password);
     }
 

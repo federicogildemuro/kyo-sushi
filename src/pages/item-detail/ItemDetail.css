@@ -1,9 +1,9 @@
 .favorite-icon-container {
+    background-color: var(--light-color);
     position: absolute;
     top: .5rem;
     right: .5rem;
     z-index: 10;
-    background-color: var(--light-color);
     border: .1rem solid var(--dark-color);
     border-radius: .5rem;
     cursor: pointer;

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
-import { fetchOrdersByUser } from '../../services/ordersServices';
 import useAsync from '../../hooks/useAsync';
 import usePagination from '../../hooks/usePagination';
+import { fetchOrdersByUser } from '../../services/ordersServices';
 import Spinner from '../../components/spinner/Spinner';
 import OrdersNotFound from './OrdersNotFound';
 import OrdersHeader from './OrdersHeader';
@@ -10,7 +10,7 @@ import OrdersContent from './OrdersContent';
 import BackButton from '../../components/misc/BackButton';
 
 function Orders() {
-    // Get user from the custom hook
+    // Get the current user from the useAuth hook
     const { user } = useAuth();
 
     // Fetch orders by user when user is available
@@ -43,6 +43,8 @@ function Orders() {
 
     // Check if there are orders
     const hasOrders = sortedOrders.length > 0;
+    // Render OrdersNotFound component if there are no orders
+    if (!hasOrders) return <OrdersNotFound />;
 
     // Show spinner while orders are loading
     if (loading) return <Spinner />;
@@ -52,24 +54,17 @@ function Orders() {
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tus pedidos</h1>
 
-                {/* Show orders if there are items, otherwise show an empty orders message */}
-                {hasOrders ? (
-                    <>
-                        <OrdersHeader
-                            orders={orders}
-                            handleSortChange={handleSortChange}
-                        />
+                <OrdersHeader
+                    orders={orders}
+                    handleSortChange={handleSortChange}
+                />
 
-                        <OrdersContent
-                            orders={currentItems}
-                            totalPages={totalPages}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </>
-                ) : (
-                    <OrdersNotFound />
-                )}
+                <OrdersContent
+                    orders={currentItems}
+                    totalPages={totalPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
 
                 <BackButton />
             </div>

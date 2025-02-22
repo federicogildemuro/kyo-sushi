@@ -4,7 +4,7 @@ import SortButtons from '../../components/misc/SortButtons';
 import ProductsFilterMenu from '../../components/products-filters-menu/ProductsFiltersMenu';
 
 function StoreHeader({ category, products, filteredProducts, handleFilterChange, handleSortChange }) {
-    // Handle menu visibility toggle
+    // Handle menu visibility
     const [visibleMenu, setVisibleMenu] = useState(null);
     const toggleMenu = (menu) => {
         setVisibleMenu(prevMenu => (prevMenu === menu ? null : menu));
@@ -18,7 +18,7 @@ function StoreHeader({ category, products, filteredProducts, handleFilterChange,
 
     return (
         <>
-            {/* Show category and show all button if category is defined */}
+            {/* Show category and show all button if category is defined; otherwise, show filters and sort buttons */}
             {category ? (
                 <div className="d-flex flex-column align-items-center gap-3 mb-5">
                     <h1 className="display-6 fw-bold">{category}</h1>

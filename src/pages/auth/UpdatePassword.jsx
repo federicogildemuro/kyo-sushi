@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { updatePassword } from '../../services/userServices';
 import useAsync from '../../hooks/useAsync';
-import { updatePasswordForm as formConfig } from './formConfig';
 import useFormValidation from '../../hooks/useFormValidation';
 import useNotification from '../../hooks/useNotification';
+import { updatePassword } from '../../services/userServices';
+import { updatePasswordForm as formConfig } from './formConfig';
 import { scrollToTop } from '../../utils/scrollUtils';
 import Spinner from '../../components/spinner/Spinner';
 import CustomForm from '../../components/misc/CustomForm';
