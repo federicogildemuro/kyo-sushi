@@ -22,18 +22,6 @@ function EditProfile() {
         }
     }, [user?.uid]);
 
-    // Show notifications on success or error
-    const { showNotification } = useNotification();
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (result) {
-            showNotification('Usuario actualizado exitosamente', 'success');
-            scrollToTop();
-            navigate('/profile');
-        }
-        if (error) showNotification(error.message, 'danger');
-    }, [result, error, showNotification, navigate]);
-
     // Set initial form data based on form config or fetched user data
     const initialFormData = useMemo(() => {
         if (!userData) {
@@ -81,6 +69,19 @@ function EditProfile() {
 
     // Handle updating user data
     const { data: result, loading: updating, error, execute: updateProfile } = useAsync(updateUser, [], false);
+
+    // Show notifications on success or error
+    const { showNotification } = useNotification();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (result) {
+            showNotification('Usuario actualizado exitosamente', 'success');
+            scrollToTop();
+            navigate('/profile');
+        }
+        if (error) showNotification(error.message, 'danger');
+    }, [result, error, showNotification, navigate]);
+
 
     // Handle form submission
     const handleSubmit = (event) => {
