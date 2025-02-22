@@ -11,8 +11,6 @@ function Cart() {
 
     // Check if there are items in the cart
     const hasItems = cart.length > 0;
-    // Render EmptyCart component if there are no items
-    if (!hasItems) return <EmptyCart />;
 
     // Show spinner while the cart is loading
     if (loading) return <Spinner />;
@@ -22,12 +20,17 @@ function Cart() {
             <div className="container">
                 <h1 className="display-6 fw-bold mb-5">Tu carrito</h1>
 
-                <CartContent
-                    cart={cart}
-                    total={cartTotalAmount}
-                    removeItem={removeCartItem}
-                    clearCart={clearCartItems}
-                />
+                {/* Show cart items if there are any, otherwise show the empty state */}
+                {hasItems ? (
+                    <CartContent
+                        cart={cart}
+                        total={cartTotalAmount}
+                        removeItem={removeCartItem}
+                        clearCart={clearCartItems}
+                    />
+                ) : (
+                    <EmptyCart />
+                )}
 
                 <BackButton />
             </div>
