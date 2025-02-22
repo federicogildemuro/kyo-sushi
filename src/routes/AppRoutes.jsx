@@ -13,7 +13,7 @@ function AppRoutes() {
         // Suspense wrapper to show a loading spinner while waiting for lazy-loaded components
         <Suspense fallback={<Spinner />}>
             <Routes>
-                {/* User-specific routes with UserRoute guard */}
+                {/* Routes for non-admin users */}
                 {userRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -26,7 +26,7 @@ function AppRoutes() {
                     />
                 ))}
 
-                {/* Public routes that should be available to non-authenticated users */}
+                {/* Routes for non-authenticated users */}
                 {publicRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -39,7 +39,7 @@ function AppRoutes() {
                     />
                 ))}
 
-                {/* Authenticated-only routes for logged-in users */}
+                {/* Routes for authenticated users (non-admin) */}
                 {authenticatedRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -52,7 +52,7 @@ function AppRoutes() {
                     />
                 ))}
 
-                {/* Admin-only routes for users with admin role */}
+                {/* Routes for admin users only */}
                 {adminRoutes.map((route, index) => (
                     <Route
                         key={index}
@@ -65,7 +65,7 @@ function AppRoutes() {
                     />
                 ))}
 
-                {/* Catch-all route to handle 404 Not Found */}
+                {/* Render NotFound component for unmatched routes */}
                 <Route
                     path="*"
                     element={<NotFound />}
