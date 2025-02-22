@@ -2,11 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 // Custom hook to handle async operations in a React component
 function useAsync(asyncFunction, dependencies = [], autoExecute = true) {
-    // State to store the result of the async operation
+    // States to store the result, loading state and error of the async operation
     const [data, setData] = useState(null);
-    // State to track if the async operation is in progress
     const [loading, setLoading] = useState(false);
-    // State to store any errors that may occur during the async operation
     const [error, setError] = useState(null);
 
     // Function to execute the async operation and manage the states
@@ -15,9 +13,8 @@ function useAsync(asyncFunction, dependencies = [], autoExecute = true) {
         setData(null);
         setLoading(true);
         setError(null);
-
         try {
-            // Call the async function and store the result in the data state
+            // Call the async function and set the result in the data state
             const result = await asyncFunction(...args);
             setData(result);
             return result;

@@ -31,7 +31,6 @@ function useSorting() {
         return sortData(data, sortOrder.field, sortOrder.direction);
     }, [sortOrder]);
 
-    // Return the sorting state, handleSort function, and applySorting function
     return { sortOrder, handleSort, applySorting };
 }
 
