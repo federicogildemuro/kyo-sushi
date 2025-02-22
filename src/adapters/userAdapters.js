@@ -1,6 +1,4 @@
-// Function to create an user object with the provided data
-// Receives form data
-// Returns an object with the user data in the required format to be stored in Firebase
+// Function to generate an object for creating a new user in Firebase
 const createUserAdapter = (formData) => ({
     firstName: formData.firstName,
     lastName: formData.lastName,
@@ -17,9 +15,7 @@ const createUserAdapter = (formData) => ({
     role: 'user'
 });
 
-// Function to update an user object with the provided data
-// Receives form data
-// Returns an object with the user data in the required format to be stored in Firebase
+// Function to generate an object for updating a user in Firebase
 const updateUserAdapter = (formData) => ({
     firstName: formData.firstName,
     lastName: formData.lastName,
