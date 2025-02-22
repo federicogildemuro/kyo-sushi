@@ -28,33 +28,29 @@ function ProductsFilterMenu({ products, onChange }) {
         onChange(filteredData);
     }, [filteredData, onChange]);
 
-    // State to store search value
+    // Handle search input change
     const [searchValue, setSearchValue] = useState('');
-    // Function to handle search input change
     const handleSearchChange = useCallback((value) => {
         setSearchValue(value);
         setFilter({ search: value });
     }, [setFilter]);
 
-    // Get unique categories from products
+    // Handle category selection change
     const categories = Array.from(new Set(products.map((product) => product.category)));
-    // State to store selected categories
     const [selectedCategories, setSelectedCategories] = useState([]);
-    // Function to handle category selection change
     const handleCategoryChange = useCallback((categories) => {
         setSelectedCategories(categories);
         setFilter({ selectedCategories: categories });
     }, [setFilter]);
 
-    // State to store price range
+    // Handle price range change
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
-    // Function to handle price range change
     const handlePriceRangeChange = useCallback((priceRange) => {
         setPriceRange(priceRange);
         setFilter({ priceRange });
     }, [setFilter]);
 
-    // Function to clear all filters
+    // Handle clear filters button click
     const handleClearFilters = () => {
         setSearchValue('');
         setSelectedCategories([]);

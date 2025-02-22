@@ -13,7 +13,7 @@ function ItemList({ items }) {
         },
     };
 
-    // If there are no items, return null
+    // Don't render if there are no items
     if (!items) return null;
 
     return (

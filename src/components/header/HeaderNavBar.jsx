@@ -10,10 +10,9 @@ import AuthWidget from './AuthWidget';
 function HeaderNavBar() {
     // Get the isAdmin value from the useAuth hook
     const { isAdmin } = useAuth();
-    // State to manage the mobile menu
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Handle the mobile menu toggle
+    // Handle the mobile menu opening and closing
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = () => {
         setIsMenuOpen(prev => !prev);
     };

@@ -1,20 +1,16 @@
 import './Pagination.css';
 
 function Pagination({ totalPages, currentPage, onPageChange }) {
-    // If there is only one page, don't show pagination
+    // Don't render pagination if there is only one page
     if (totalPages <= 1) return null;
 
-    // Handle previous page button click
+    // Handle pagination buttons clicks
     const handlePreviousPage = () => {
         if (currentPage > 1) onPageChange(currentPage - 1);
     };
-
-    // Handle next page button click
     const handleNextPage = () => {
         if (currentPage < totalPages) onPageChange(currentPage + 1);
     };
-
-    // Handle page number button click
     const handlePageClick = (pageNumber) => {
         if (pageNumber !== currentPage) onPageChange(pageNumber);
     };
@@ -60,7 +56,7 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
                     </li>
                 )}
 
-                {/* Show dots if not on the first page */}
+                {/* Show dots if the start page is not the first page */}
                 {startPage > 1 && (
                     <li className="page-item">
                         <span
@@ -88,7 +84,7 @@ function Pagination({ totalPages, currentPage, onPageChange }) {
                     </li>
                 ))}
 
-                {/* Show dots if not on the last page */}
+                {/* Show dots if the end page is not the last page */}
                 {endPage < totalPages && (
                     <li className="page-item">
                         <span

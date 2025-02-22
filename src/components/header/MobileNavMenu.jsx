@@ -6,26 +6,24 @@ import UserLinks from './UserLinks';
 function MobileNavMenu({ isOpen, closeMenu }) {
     // Get the isAdmin value from the useAuth hook
     const { isAdmin } = useAuth();
-    // Create a reference to the menu element
-    const menuRef = useRef(null);
 
-    // Close the menu when clicking outside of it
+    // Handle the click outside the  menu to close it
+    const menuRef = useRef(null);
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 closeMenu();
             }
         };
-
         if (isOpen) {
             document.addEventListener('mousedown', handleClickOutside);
         } else {
             document.removeEventListener('mousedown', handleClickOutside);
         }
-
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isOpen, closeMenu]);
 
+    // Don't render the menu if it's not open
     if (!isOpen) return null;
 
     return (

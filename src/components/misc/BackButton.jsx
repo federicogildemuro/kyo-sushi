@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function BackButton() {
+    // Handle the back button click
     const navigate = useNavigate();
-
     const handleBack = () => {
         navigate(-1);
         scrollToTop();

@@ -18,10 +18,7 @@ function Copyright() {
                 Federico Gil de Muro
             </Link>
 
-            <p>
-                Proyecto final del curso React JS de Coderhouse
-            </p>
-
+            <p>Proyecto final del curso React JS de Coderhouse</p>
         </div>
     );
 }

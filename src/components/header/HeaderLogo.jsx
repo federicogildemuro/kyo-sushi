@@ -12,7 +12,7 @@ function HeaderLogo() {
             <img
                 src={logo}
                 className="header-logo"
-                alt="Logo de la empresa"
+                alt="Logo de Kyo Sushi"
             />
         </Link>
     );

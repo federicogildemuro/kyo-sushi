@@ -6,14 +6,13 @@ import useCart from '../../hooks/useCart';
 import { scrollToTop } from '../../utils/scrollUtils';
 
 function CartWidget() {
-    // Get the user object and isAdmin value from the useAuth hook
+    // Get the current user and isAdmin value from the useAuth hook
     const { user, isAdmin } = useAuth();
     // Get the cartTotalQuantity value from the useCart hook
     const { cartTotalQuantity } = useCart();
-    // State to handle the animation of the cart widget
-    const [isAnimating, setIsAnimating] = useState(false);
 
-    // Animate the cart widget when the cartTotalQuantity changes
+    // Handle animation
+    const [isAnimating, setIsAnimating] = useState(false);
     useEffect(() => {
         setIsAnimating(true);
         const timer = setTimeout(() => {

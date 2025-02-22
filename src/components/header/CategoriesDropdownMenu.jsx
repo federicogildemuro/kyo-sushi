@@ -1,42 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { fetchCategories } from '../../services/productsServices';
 import useAsync from '../../hooks/useAsync';
+import { fetchCategories } from '../../services/productsServices';
 
 function CategoriesDropdownMenu() {
-    // Fetch the categories using the useAsync hook
+    // Get the products categories
     const { data: categories, loading } = useAsync(fetchCategories);
-    // State to handle the dropdown menu
-    const [isOpen, setisOpen] = useState(false);
-    // State to handle the focused index of the dropdown items
-    const [focusedIndex, setFocusedIndex] = useState(null);
-    // Refs to handle the dropdown menu and items
-    const dropdownRef = useRef(null);
-    const dropdownItemsRef = useRef([]);
 
-    // Handle the toggle of the dropdown menu
+    // Handle menu opening and closing
+    const [isOpen, setisOpen] = useState(false);
+    const dropdownItemsRef = useRef([]);
     const toggleDropdown = () => {
         setisOpen(prev => !prev);
     };
 
-    // Close the dropdown menu when clicking outside of it
+    // Handle the click outside the menu to close it
+    const dropdownRef = useRef(null);
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setisOpen(false);
             }
         };
-
         document.addEventListener('click', handleClickOutside);
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
 
-    // Handle the keyboard navigation of the dropdown menu
+    // Handle the keyboard navigation of the menu
+    const [focusedIndex, setFocusedIndex] = useState(null);
     const handleKeyDown = (event) => {
         if (!isOpen) return;
-
         if (event.key === 'ArrowDown') {
             setFocusedIndex((prev) => Math.min(prev + 1, categories.length - 1));
         } else if (event.key === 'ArrowUp') {
@@ -46,8 +41,8 @@ function CategoriesDropdownMenu() {
         }
     };
 
-    // Render the categories
-    const renderDropdownMenu = () => {
+    // Render menu items
+    const renderMenuItems = () => {
         // If the data is loading, show a loading message
         if (loading) {
             return (
@@ -56,7 +51,6 @@ function CategoriesDropdownMenu() {
                 </li>
             );
         }
-
         // If there are no categories, show a message
         if (!categories || categories.length === 0) {
             return (
@@ -65,8 +59,7 @@ function CategoriesDropdownMenu() {
                 </li>
             );
         }
-
-        // Map the categories to create the dropdown items
+        // Map the categories to create the menu items
         return categories.map((category, index) => (
             <li
                 key={category}
@@ -108,10 +101,10 @@ function CategoriesDropdownMenu() {
                 />
             </button>
 
-            {/* Render the dropdown menu if it is open */}
+            {/* Render the menu if it is open */}
             {isOpen && (
                 <ul className="dropdown-menu d-flex flex-column align-items-center">
-                    {renderDropdownMenu()}
+                    {renderMenuItems()}
                 </ul>
             )}
         </li>

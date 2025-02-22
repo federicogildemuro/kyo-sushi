@@ -1,9 +1,9 @@
 .header-container {
+    background-color: var(--accent-color);
     position: fixed;
     top: 0;
     z-index: 100;
     height: 20vh;
-    background-color: var(--accent-color);
 }
 
 .header-logo {
@@ -21,7 +21,7 @@
 
 .nav-link {
     color: var(--light-color);
-    transition: all .5s ease;
+    transition: color .5s ease;
 }
 
 .nav-link:hover {
@@ -33,9 +33,9 @@
 }
 
 .dropdown-menu {
+    background-color: var(--light-color);
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--light-color);
 }
 
 .dropdown-item {

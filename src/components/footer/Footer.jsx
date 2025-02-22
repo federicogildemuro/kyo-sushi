@@ -7,7 +7,6 @@ import './Footer.css';
 function Footer() {
     // Get the isAdmin value from the useAuth hook
     const { isAdmin } = useAuth();
-
     // Don't render the footer if the user is admin
     if (isAdmin) return null;
 
